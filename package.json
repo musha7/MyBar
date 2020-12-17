@@ -1,0 +1,27 @@
+{
+  "name": "mybar",
+  "version": "1.0.0",
+  "description": "My Bar",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musha7/MyBar.git"
+  },
+  "author": "Michael Shlezinger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/musha7/MyBar/issues"
+  },
+  "homepage": "https://github.com/musha7/MyBar#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
