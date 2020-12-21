@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import Cocktail from '../components/Cocktail';
+import { getCocktailsList } from '../actions/cocktailActions';
 
 const CocktailsScreen = () => {
-    const [cocktails, setCocktails] = useState([])
-    useEffect(() => {
-        const fetchCocktails = async () => {
-            const { data } = await axios.get('/api/cocktails')
 
-            setCocktails(data.cocktails)
-        }
-        fetchCocktails()
-    }, [])
+    const cocktailList = useSelector(state => state.cocktailList);
+    const { loading, error, cocktails } = cocktailList;
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getCocktailsList())
+    }, [dispatch])
 
     return (
         <>
