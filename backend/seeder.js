@@ -7,7 +7,7 @@ import ingredients from './data/ingredients.js'
 import User from './models/userModel.js'
 import Cocktail from './models/cocktailModel.js'
 import Ingredient from './models/ingredientModel.js'
-import Review from './models/reviewModel.js'
+import { Review } from './models/reviewModel.js'
 import connectDB from './config/db.js'
 
 
@@ -16,14 +16,27 @@ connectDB()
 
 const importData = async () => {
     try {
-        await User.deleteMany()
-        await Cocktail.deleteMany()
-        await Ingredient.deleteMany()
-        await Review.deleteMany()
+        await User.deleteMany();
+        await Cocktail.deleteMany();
+        await Ingredient.deleteMany();
+        await Review.deleteMany();
 
-        await User.insertMany(users)
-        await Cocktail.insertMany(cocktails)
-        await Ingredient.insertMany(ingredients)
+        await User.insertMany(users);
+        const createdingredients = await Ingredient.insertMany(ingredients);
+
+        const sampleCocktails = cocktails.map((cocktail) => {
+            const cocktailIngredientsObj = cocktail.simpleIngredients.map(ing => (
+                createdingredients.find(f => f.name.toLowerCase() === ing.toLowerCase())
+            ))
+            const cocktailIngredients = cocktailIngredientsObj.map(i => (
+                { name: i.name, image: i.image, ingredient: i._id }
+            ))
+            return {
+                ...cocktail,
+                ingredients: cocktailIngredients
+            }
+        })
+        await Cocktail.insertMany(sampleCocktails);
 
         console.log('Data Imported!'.green.inverse);
         process.exit();

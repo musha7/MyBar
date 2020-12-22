@@ -20,6 +20,7 @@ export const getCocktailsList = () => async (dispatch) => {
 
 
 export const getCocktailById = (id) => async (dispatch) => {
+    console.log('in getCocktailById action:', id);
     try {
 
         dispatch({ type: 'COCKTAIL_BY_ID_REQUEST' });

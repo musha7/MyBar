@@ -12,11 +12,10 @@ export const cocktailListReducer = (state = { cocktails: [] }, action) => {
     }
 }
 
-export const cocktailByIdReducer = (state = {}, action) => {
-    console.log('action.payload: ', action.payload);
+export const cocktailByIdReducer = (state = { cocktail: { reviews: [], ingredients: [], steps: [] } }, action) => {
     switch (action.type) {
         case 'COCKTAIL_BY_ID_REQUEST':
-            return { loading: true, cocktail: {} }
+            return { loading: true, cocktail: { reviews: [], ingredients: [], steps: [] } }
         case 'COCKTAIL_BY_ID_SUCCESS':
             return { loading: false, cocktail: action.payload.cocktail }
         case 'COCKTAIL_BY_ID_FAIL':

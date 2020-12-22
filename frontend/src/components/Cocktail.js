@@ -5,7 +5,6 @@ import Rating from './Rating'
 
 
 const Cocktail = ({ cocktail, ings }) => {
-    console.log('my cocktail:', cocktail);
     return (
         <Card className='my-3 p-3 rounded'>
             <Link to={`/cocktails/${cocktail._id}`}>

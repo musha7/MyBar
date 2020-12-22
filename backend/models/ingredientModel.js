@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Cocktail from './cocktailModel.js'
 
 const ingredientSchema = mongoose.Schema({
     name: {

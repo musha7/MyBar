@@ -4,11 +4,11 @@ const cocktails = [
         image: '/images/Mojito.jpg',
         rating: 4.5,
         numReviews: 0,
-        ingredients: [],
+        simpleIngredients: ['mint', 'sugar', 'lemon', 'rum'],
         steps: [
             'Put some mint, and a spoon of sugar into a highball glass',
             'Add 30ml of lemon juice and muddle the mint',
-            'Add the glass with ice',
+            'Fill the glass with crushed ice',
             'Pour 60 ml white Rum',
             'Top the glass with soda/Sprite'
         ]
@@ -18,7 +18,7 @@ const cocktails = [
         image: '/images/margarita.jpg',
         rating: 4.1,
         numReviews: 0,
-        ingredients: [],
+        simpleIngredients: ['Tequila', 'Triple sec', 'Lemon'],
         steps: [
             'Rim the glass with salt',
             'Fill a Shaker with ice',
