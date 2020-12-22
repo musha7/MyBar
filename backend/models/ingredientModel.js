@@ -14,6 +14,10 @@ const ingredientSchema = mongoose.Schema({
         type: String,
         default: ''
     },
+    category: {
+        type: String,
+        required: true
+    },
     cocktails: [{
         cocktail: {
             type: mongoose.Schema.Types.ObjectId,
