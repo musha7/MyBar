@@ -78,38 +78,33 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route       POST /api/users/register
 // @access      Public
 const register = asyncHandler(async (req, res) => {
-    const { email, name, password, reEnteredPassword } = req.body;
+    const { email, name, password } = req.body;
     if (await User.findOne({ email })) {
         res.status(400)
         throw new Error('This Email Is Already Registered')
     }
     else {
-        if (password === reEnteredPassword) {
-            const salt = await bcrypt.genSalt(10)
-            const incryptedPassword = await bcrypt.hash(password, salt)
+        const salt = await bcrypt.genSalt(10)
+        const incryptedPassword = await bcrypt.hash(password, salt)
 
-            const user = new User({ email: email, name: name, password: incryptedPassword, cocktails: [], ingredients: [], isAdmin: false })
-            const createdUser = await user.save()
-            const token = generateToken(user._id)
+        const user = new User({ email: email, name: name, password: incryptedPassword, cocktails: [], ingredients: [], isAdmin: false })
+        const createdUser = await user.save()
+        const token = generateToken(user._id)
 
-            if (createdUser) {
-                res.status(201).json({
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    isAdmin: user.isAdmin,
-                    cocktails: user.cocktails,
-                    ingredients: user.ingredients,
-                    token: generateToken(user._id)
-                })
-            }
-            else {
-                res.status(400)
-                throw new Error('Invalid user data')
-            }
-        } else {
-            res.status(401)
-            throw new Error('Passwords Do Not Match')
+        if (createdUser) {
+            res.status(201).json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                cocktails: user.cocktails,
+                ingredients: user.ingredients,
+                token: generateToken(user._id)
+            })
+        }
+        else {
+            res.status(400)
+            throw new Error('Invalid user data')
         }
     }
 })

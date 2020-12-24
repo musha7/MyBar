@@ -1,30 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FormContainer from '../components/FormContainer'
+import Message from '../components/Message';
+import { register } from '../actions/userActions'
+import Loader from '../components/Loader';
 
-const RegisterScreen = () => {
-    const submitHandler = () => { }
+
+const RegisterScreen = ({ history }) => {
+    const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmedPassword, setConfirmedPassword] = useState('')
+    const [passwordMessage, setPasswordMessage] = useState(false)
+
+    const userLogin = useSelector(state => state.userLogin);
+    const { loading, error, userInfo } = userLogin;
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        if (userInfo) {
+            history.push('/')
+        }
+    }, [dispatch, userInfo, history])
+
+    const submitHandler = (e) => {
+        //setPasswordMessage(false)
+        e.preventDefault()
+        if (password === confirmedPassword) {
+            dispatch(register(email, name, password))
+        } else {
+            setPasswordMessage(true)
+        }
+    }
     return (
         <FormContainer>
-            <Form >
-                <Form.Group controlId="formBasicEmail">
+            {passwordMessage && <Message variant='danger'>Passwords Do Not Match</Message>}
+            {loading && <Loader />}
+            {error && (<Message variant='danger'>{error}</Message>)}
+            <Form onSubmit={submitHandler}>
+                <Form.Group controlId="email">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Email" />
+                    <Form.Control type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </Form.Group>
-                <Form.Group controlId="formBasicName">
+                <Form.Group controlId="name">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="email" placeholder="Name" />
+                    <Form.Control type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
                 </Form.Group>
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId="password">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
-                <Form.Group controlId="formBasicConfirmPassword">
+                <Form.Group controlId="confirmedPassword">
                     <Form.Label>Confirm password </Form.Label>
-                    <Form.Control type="password" placeholder="Confirm password" />
+                    <Form.Control type="password" placeholder="Confirm password" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)} />
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={submitHandler}>
+                <Button variant="primary" type="submit">
                     Register
                 </Button>
             </Form>

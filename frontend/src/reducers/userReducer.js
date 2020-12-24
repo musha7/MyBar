@@ -18,9 +18,9 @@ export const userLoginReducer = (state = {}, action) => {
 export const userRegisterReducer = (state = { user: { cocktails: [], ingredients: [] } }, action) => {
     switch (action.type) {
         case 'USER_REGISTER_REQUEST':
-            return { loading: true, user: { reviews: [], ingredients: [], steps: [] } }
+            return { loading: true, success: false }
         case 'USER_REGISTER_SUCCESS':
-            return { loading: false, user: action.payload.user }
+            return { loading: false, user: action.payload.user, success: true }
         case 'USER_REGISTER_FAIL':
             return { loading: false, error: action.payload }
         default:
