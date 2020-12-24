@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, ListGroup, ListGroupItem, Image } from 'react-bootstrap';
-import Cocktail from '../components/Cocktail';
 import { getCocktailById } from '../actions/cocktailActions'
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';

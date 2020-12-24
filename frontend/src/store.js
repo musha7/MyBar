@@ -3,13 +3,19 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { cocktailListReducer, cocktailByIdReducer } from './reducers/cocktailReducer'
 import { ingredientListReducer } from './reducers/ingredientReducer'
+import { userRegisterReducer, userLoginReducer } from './reducers/userReducer'
 
 const reducer = combineReducers({
     cocktailList: cocktailListReducer,
     cocktailById: cocktailByIdReducer,
-    ingredientList: ingredientListReducer
+    ingredientList: ingredientListReducer,
+    userRegister: userRegisterReducer,
+    userLogin: userLoginReducer,
 });
-const initialState = {};
+
+const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
+
+const initialState = { userLogin: { userInfo: userInfoFromStorage } };
 const middleware = [thunk];
 
 const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))
