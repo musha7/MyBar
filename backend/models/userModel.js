@@ -22,6 +22,8 @@ const userSchema = mongoose.Schema({
         default: false
     },
     ingredients: [{
+        name: { type: String, required: true },
+        image: { type: String, required: true },
         ingredient: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
@@ -29,6 +31,8 @@ const userSchema = mongoose.Schema({
         }
     }],
     cocktails: [{
+        name: { type: String, required: true },
+        image: { type: String, required: true },
         cocktail: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
