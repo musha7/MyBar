@@ -1,9 +1,11 @@
 import axios from 'axios'
 
-export const getCocktailsList = () => async (dispatch) => {
+export const getCocktailsList = (token) => async (dispatch) => {
     try {
 
         dispatch({ type: 'COCKTAIL_LIST_REQUEST' });
+
+
 
         const { data } = await axios.get('/api/cocktails')
 
@@ -19,13 +21,18 @@ export const getCocktailsList = () => async (dispatch) => {
 }
 
 
-export const getCocktailById = (id) => async (dispatch) => {
-    console.log('in getCocktailById action:', id);
+export const getCocktailById = (id) => async (dispatch, getState) => {
     try {
 
         dispatch({ type: 'COCKTAIL_BY_ID_REQUEST' });
 
-        const { data } = await axios.get(`/api/cocktails/${id}`)
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` }
+        }
+
+        const { data } = await axios.get(`/api/cocktails/${id}`, config)
 
         dispatch({ type: 'COCKTAIL_BY_ID_SUCCESS', payload: data })
     } catch (error) {

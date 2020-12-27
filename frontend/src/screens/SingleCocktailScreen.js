@@ -7,16 +7,26 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Rating from '../components/Rating';
 
-function SingleCocktailScreen({ match }) {
+function SingleCocktailScreen({ match, history }) {
 
     const cocktailById = useSelector(state => state.cocktailById);
     const { loading, error, cocktail } = cocktailById;
 
     const dispatch = useDispatch();
 
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+
     useEffect(() => {
-        dispatch(getCocktailById(match.params.id))
-    }, [dispatch, match])
+        if (userInfo) {
+            dispatch(getCocktailById(match.params.id))
+        } else {
+            history.push('/login')
+        }
+
+    }, [dispatch, history, match, userInfo])
+
+
 
     return (
         <>

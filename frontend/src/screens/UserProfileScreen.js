@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import FormContainer from '../components/FormContainer'
 import Message from '../components/Message';
-import { register } from '../actions/userActions'
+import { getUserProfile, updateUserProfile } from '../actions/userActions'
 import Loader from '../components/Loader';
 
 
@@ -14,31 +13,51 @@ const RegisterScreen = ({ history }) => {
     const [password, setPassword] = useState('')
     const [confirmedPassword, setConfirmedPassword] = useState('')
     const [passwordMessage, setPasswordMessage] = useState(false)
+    const [updateMessage, setUpdateMessage] = useState(false)
 
-    const userRegister = useSelector(state => state.userRegister);
-    const { loading, error, success } = userRegister;
+    const userGetProfile = useSelector(state => state.userGetProfile);
+    const { loading, error, userInfo } = userGetProfile;
+
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile);
+    const { loading: updateLoading, error: updateError, success } = userUpdateProfile;
 
     const dispatch = useDispatch()
+
     useEffect(() => {
-        if (success) {
-            history.push('/')
+        if (!userInfo) {
+            dispatch(getUserProfile())
         }
-    }, [dispatch, success, history])
+        else {
+            setUpdateMessage(false)
+            if (success) {
+                setUpdateMessage(true)
+            }
+            else {
+                setEmail(userInfo.email)
+                setName(userInfo.name)
+            }
+        }
+    }, [dispatch, success, history, userInfo])
 
     const submitHandler = (e) => {
-        //setPasswordMessage(false)
+        setUpdateMessage(false)
+        setPasswordMessage(false)
         e.preventDefault()
         if (password === confirmedPassword) {
-            dispatch(register(email, name, password))
+            dispatch(updateUserProfile(email, name, password))
+            dispatch(getUserProfile())
         } else {
             setPasswordMessage(true)
         }
     }
     return (
         <FormContainer>
-            {passwordMessage && <Message variant='danger'>Passwords Do Not Match</Message>}
             {loading && <Loader />}
+            {updateLoading && (<Message variant='danger'>{updateLoading}</Message>)}
             {error && (<Message variant='danger'>{error}</Message>)}
+            {updateError && (<Message variant='danger'>{updateError}</Message>)}
+            {passwordMessage && <Message variant='danger'>Passwords Do Not Match</Message>}
+            {updateMessage && <Message variant='light'>Profile Updated</Message>}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId="email">
                     <Form.Label>Email address</Form.Label>
@@ -57,12 +76,9 @@ const RegisterScreen = ({ history }) => {
                     <Form.Control type="password" placeholder="Confirm password" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)} />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                    Register
+                    Update profile
                 </Button>
             </Form>
-            <Row className='py-3'>
-                <Col>Already Registered? <Link to='/login'>Login Now</Link></Col>
-            </Row>
         </FormContainer >
     )
 }

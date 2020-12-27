@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { cocktailListReducer, cocktailByIdReducer } from './reducers/cocktailReducer'
 import { ingredientListReducer } from './reducers/ingredientReducer'
-import { userRegisterReducer, userLoginReducer } from './reducers/userReducer'
+import { userRegisterReducer, userLoginReducer, userGetProfileReducer, userUpdateProfileReducer } from './reducers/userReducer'
 
 const reducer = combineReducers({
     cocktailList: cocktailListReducer,
@@ -11,6 +11,9 @@ const reducer = combineReducers({
     ingredientList: ingredientListReducer,
     userRegister: userRegisterReducer,
     userLogin: userLoginReducer,
+    userGetProfile: userGetProfileReducer,
+    userUpdateProfile: userUpdateProfileReducer
+
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

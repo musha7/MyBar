@@ -16,7 +16,6 @@ const LoginScreen = ({ history }) => {
 
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log(userInfo);
         if (userInfo) {
             history.push('/')
         }
@@ -29,9 +28,9 @@ const LoginScreen = ({ history }) => {
 
     return (
         <>
-            {loading && <Loader />}
-            {error && (<Message variant='danger'>{error}</Message>)}
             <FormContainer>
+                {loading && <Loader />}
+                {error && (<Message variant='danger'>{error}</Message>)}
                 <h1>Sign In</h1>
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId="email">

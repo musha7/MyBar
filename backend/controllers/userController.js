@@ -42,6 +42,7 @@ const login = asyncHandler(async (req, res) => {
                 email: user.email,
                 isAdmin: user.isAdmin,
                 cocktails: user.cocktails,
+                ingredients: user.ingredients,
                 token: generateToken(user._id)
             })
         } else {
@@ -53,25 +54,6 @@ const login = asyncHandler(async (req, res) => {
         throw new Error('Invalid email')
     }
 
-})
-
-// @description Get logged in user profile
-// @route       GET /api/users/profile
-// @access      Private
-const getUserProfile = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id)
-    if (user) {
-        res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            cocktails: user.cocktails,
-        })
-    } else {
-        res.status(401)
-        throw new Error('User Not Found')
-    }
 })
 
 // @description Register new user
@@ -89,7 +71,6 @@ const register = asyncHandler(async (req, res) => {
 
         const user = new User({ email: email, name: name, password: incryptedPassword, cocktails: [], ingredients: [], isAdmin: false })
         const createdUser = await user.save()
-        const token = generateToken(user._id)
 
         if (createdUser) {
             res.status(201).json({
@@ -110,4 +91,74 @@ const register = asyncHandler(async (req, res) => {
 })
 
 
-export { getUsers, login, getUserProfile, register }
+// @description Delete user by id
+// @route       DELETE /api/users
+// @access      Private, Admin
+const deleteUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.body.id)
+    if (user) {
+        const deleted = await User.deleteOne({ _id: user._id })
+        if (deleted) {
+            res.status(200)
+            res.send('Successfully deleted')
+        } else {
+            res.status(401)
+            throw new Error('Could not delete user')
+        }
+    } else {
+        res.status(401)
+        throw new Error('User not found, could not delete')
+    }
+
+})
+
+// @description Get logged in user profile
+// @route       GET /api/users/profile
+// @access      Private
+const getUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (user) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            cocktails: user.cocktails,
+            ingredients: user.ingredients,
+        })
+    } else {
+        res.status(401)
+        throw new Error('User Not Found')
+    }
+})
+
+
+// @description Update user profile
+// @route       PUT /api/users/profile
+// @access      Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    const { email, name, password } = req.body
+    if (user) {
+        user.email = email || user.email
+        user.name = name || user.name
+        if (password) {
+            const salt = await bcrypt.genSalt(10)
+            const incryptedPassword = await bcrypt.hash(password, salt)
+            user.password = incryptedPassword
+        }
+        await user.save()
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            cocktails: user.cocktails,
+            ingredients: user.ingredients,
+        })
+    } else {
+        res.status(401)
+        throw new Error('User Not Found')
+    }
+})
+export { getUsers, login, getUserProfile, register, deleteUser, getUserById, updateUserProfile }
