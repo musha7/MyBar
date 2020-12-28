@@ -3,6 +3,7 @@ import generateToken from '../generateToken.js'
 import bcrypt from 'bcryptjs'
 import User from '../models/userModel.js'
 import Ingredient from '../models/ingredientModel.js'
+import Cocktail from '../models/cocktailModel.js'
 
 // @description Fetch all users
 // @route       GET /api/users
@@ -218,4 +219,64 @@ const removeIngredientFromUser = asyncHandler(async (req, res) => {
         throw new Error('Not Connected')
     }
 })
-export { getUsers, login, getUserProfile, register, deleteUser, getUserById, updateUserProfile, addIngredientToUser, removeIngredientFromUser }
+
+// @description Get user's cocktails according to his ingredients
+// @route       GET /api/users/cocktails
+// @access      Private
+const getUserCocktails = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    const userIngredients = user.ingredients
+    const allCocktails = await Cocktail.find({})
+    // const currUserCocktails = user.cocktails
+    // const cocktailsToCheck = allCocktails.filter((cocktail)=> {
+    //     if(currUserCocktails.find((c)=> cocktail._id.toString()===c.cocktail.toString())){
+    //         return false
+    //     }
+    //     return true
+    // })
+
+    let newUsersCocktails = []
+    if (user) {
+        if (userIngredients) {
+            // go through all available cocktails.
+            // for each go through thier ingredients,
+            // and check if all of them are present in the user ingredients
+            newUsersCocktails = allCocktails.filter((cocktail) => {
+                const numOfIngs = cocktail.ingredients.length
+                const presentIngredients = cocktail.ingredients.filter((ing) => {
+                    if (userIngredients.find((userIng => {
+                        return userIng.ingredient.toString() === ing.ingredient.toString()
+                    }))) {
+                        return true
+                    }
+                    return false
+                })
+                if (numOfIngs === presentIngredients.length) {
+                    return true
+                }
+                return false
+            })
+            if (newUsersCocktails) {
+                user.cocktails = newUsersCocktails.map(newCocktail => { return { name: newCocktail.name, image: newCocktail.image, cocktail: newCocktail._id } })
+                await user.save()
+            }
+            if (user.cocktails.length === 0) {
+                res.status(400)
+                throw new Error('Sorry, You Do Not Have Enough Ingredients For Any Of Our Current Cocktails')
+            }
+            res.status(200).json({ cocktails: user.cocktails })
+        } else {
+            res.status(400)
+            throw new Error('No Ingredients In Your Bar')
+        }
+        res.status(400)
+        throw new Error('Not Connected')
+    }
+})
+
+
+export {
+    getUsers, login, getUserProfile, register, deleteUser, getUserById,
+    updateUserProfile, addIngredientToUser, removeIngredientFromUser,
+    getUserCocktails
+}
