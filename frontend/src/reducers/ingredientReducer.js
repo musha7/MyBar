@@ -11,3 +11,16 @@ export const ingredientListReducer = (state = { ingredients: [] }, action) => {
             return state;
     }
 }
+
+export const ingredientAddToBarReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'INGREDIENT_ADD_TO_BAR_REQUEST':
+            return { loading: true }
+        case 'INGREDIENT_ADD_TO_BAR_SUCCESS':
+            return { loading: false, message: action.payload }
+        case 'INGREDIENT_ADD_TO_BAR_FAIL':
+            return { loading: false, error: action.payload }
+        default:
+            return state;
+    }
+}

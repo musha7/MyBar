@@ -29,7 +29,6 @@ export const userRegisterReducer = (state = {}, action) => {
 }
 
 export const userGetProfileReducer = (state = {}, action) => {
-    console.log(action.payload);
     switch (action.type) {
         case 'USER_GET_PROFILE_REQUEST':
             return { loading: true }

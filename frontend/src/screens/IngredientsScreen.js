@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
 import Ingredient from '../components/Ingredient'
-import { getIngredientsList } from '../actions/ingredientAction'
+import { getIngredientsList, addIngredientToBar } from '../actions/ingredientAction'
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -15,22 +15,29 @@ const IngredientsScreen = ({ history }) => {
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
+    const ingredientAddToBar = useSelector(state => state.ingredientAddToBar);
+    const { error: addedToBarError, message: addedToBarMessage } = ingredientAddToBar;
+
     useEffect(() => {
-        dispatch(getIngredientsList())
+        if (ingredients.length === 0) { dispatch(getIngredientsList()) }
+
         setMessage('')
-    }, [dispatch])
+        if (addedToBarMessage) {
+            setMessage(addedToBarMessage)
+        }
+        else {
+            if (addedToBarError) {
+                setMessage(addedToBarError)
+            }
+        }
+    }, [dispatch, addedToBarMessage, addedToBarError])
 
     const alcoholIngredients = ingredients.filter(ing => ing.category === 'alcohol');
     const notAlcoholIngredients = ingredients.filter(ing => ing.category !== 'alcohol');
     const addHandle = (e, ingredient) => {
         if (userInfo) {
-            if (!userInfo.ingredients.includes(ingredient)) {
-                userInfo.ingredients.push(ingredient)
-                setMessage(`${ingredient.name} was added to your bar`)
-            }
-            else {
-                setMessage(`${ingredient.name} is already in your bar`)
-            }
+            const dis = dispatch(addIngredientToBar(ingredient._id))
+            console.log('dis:', dis);
         } else {
             history.push('/login')
         }
@@ -43,7 +50,6 @@ const IngredientsScreen = ({ history }) => {
     const showIngredients = (ings) => {
         return (
             <>
-                {message && (<Message variant='danger'>{message}</Message>)}
                 <Row>
                     {ings.map((ingredient, index) => (
                         <Col key={index} sm={12} md={6} lg={4} xl={3} >
@@ -64,9 +70,11 @@ const IngredientsScreen = ({ history }) => {
     return (
         <>
             {loading && <Loader />}
+
             {error ? (<Message variant='danger'>{error}</Message>) : (
                 <>
                     <h1 className='text-center'>Ingredients</h1>
+                    {message && (<Message>{message}</Message>)}
                     <h3> Alcohol Ingredients</h3>
                     {showIngredients(alcoholIngredients)}
                     <h3> Not Alcohol Ingredients</h3>
