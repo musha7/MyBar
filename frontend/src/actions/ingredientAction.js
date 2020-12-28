@@ -41,3 +41,27 @@ export const addIngredientToBar = (id) => async (dispatch, getState) => {
         })
     }
 }
+
+export const removeIngredientFromBar = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: 'INGREDIENT_REMOVE_FROM_BAR_REQUEST' });
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` },
+            data: { id: id }
+        }
+
+        const { data } = await axios.delete('/api/ingredients', config)
+
+        dispatch({ type: 'INGREDIENT_REMOVE_FROM_BAR_SUCCESS', payload: data })
+    } catch (error) {
+        dispatch({
+            type: 'INGREDIENT_REMOVE_FROM_BAR_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}

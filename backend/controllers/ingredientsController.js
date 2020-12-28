@@ -41,7 +41,7 @@ const addIngredientToBar = asyncHandler(async (req, res) => {
                 res.status(200).send(`${ingredient.name} Was Added To Your Bar`)
             } else {
                 res.status(400)
-                throw new Error('Ingredient Already In Your Bar')
+                throw new Error(`${ingredient.name} Is Already In Your Bar`)
             }
         } else {
             res.status(400)
@@ -53,4 +53,32 @@ const addIngredientToBar = asyncHandler(async (req, res) => {
     }
 })
 
-export { getIngredients, getIngredientById, addIngredientToBar }
+// @description Remove ingredient from user's ingredients
+// @route       DELETE /api/ingredients
+// @access      Private
+const removeIngredientFromBar = asyncHandler(async (req, res) => {
+    const ingredient = await Ingredient.findById(req.body.id)
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        if (ingredient) {
+            const indexForRemove = user.ingredients.findIndex(ing => ing.ingredient.toString() == ingredient._id.toString())
+            if (indexForRemove > -1) {
+                user.ingredients.splice(indexForRemove, 1)
+                await user.save()
+                res.status(200).send(`${ingredient.name} Was Removed From Your Bar`)
+            } else {
+                res.status(400)
+                throw new Error(`You Dont Have ${ingredient.name} In Your Bar`)
+            }
+        } else {
+            res.status(400)
+            throw new Error('Ingredient Not Found')
+        }
+    } else {
+        res.status(400)
+        throw new Error('Not Connected')
+    }
+})
+
+export { getIngredients, getIngredientById, addIngredientToBar, removeIngredientFromBar }

@@ -1,50 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
-import Ingredient from '../components/Ingredient'
-import { getIngredientsList, addIngredientToBar } from '../actions/ingredientAction'
+import { getIngredientsList, addIngredientToBar, removeIngredientFromBar } from '../actions/ingredientAction'
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
 const IngredientsScreen = ({ history }) => {
     const dispatch = useDispatch()
-    const [message, setMessage] = useState('')
+    const [changeMessage, setChangeMessage] = useState('')
+    //const [removeMessage, setRemoveMessage] = useState('')
+
     const ingredientList = useSelector(state => state.ingredientList);
     const { loading, error, ingredients } = ingredientList;
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
-    const ingredientAddToBar = useSelector(state => state.ingredientAddToBar);
-    const { error: addedToBarError, message: addedToBarMessage } = ingredientAddToBar;
+    const ingredientChangeInBar = useSelector(state => state.ingredientChangeInBar);
+    const { error: ChangeInBarError, message: ChangeInBarMessage } = ingredientChangeInBar;
 
     useEffect(() => {
         if (ingredients.length === 0) { dispatch(getIngredientsList()) }
 
-        setMessage('')
-        if (addedToBarMessage) {
-            setMessage(addedToBarMessage)
+        setChangeMessage('')
+        if (ChangeInBarMessage) {
+            setChangeMessage(ChangeInBarMessage)
         }
         else {
-            if (addedToBarError) {
-                setMessage(addedToBarError)
+            if (ChangeInBarError) {
+                setChangeMessage(ChangeInBarError)
             }
         }
-    }, [dispatch, addedToBarMessage, addedToBarError])
+    }, [dispatch, ChangeInBarMessage, ChangeInBarError, ingredients.length])
 
     const alcoholIngredients = ingredients.filter(ing => ing.category === 'alcohol');
     const notAlcoholIngredients = ingredients.filter(ing => ing.category !== 'alcohol');
     const addHandle = (e, ingredient) => {
         if (userInfo) {
-            const dis = dispatch(addIngredientToBar(ingredient._id))
-            console.log('dis:', dis);
+            dispatch(addIngredientToBar(ingredient._id))
         } else {
             history.push('/login')
         }
     }
 
-    const deleteHandle = () => {
-
+    const deleteHandle = (e, ingredient) => {
+        if (userInfo) {
+            dispatch(removeIngredientFromBar(ingredient._id))
+        } else {
+            history.push('/login')
+        }
     }
 
     const showIngredients = (ings) => {
@@ -59,7 +63,7 @@ const IngredientsScreen = ({ history }) => {
                                     <Card.Title className='text-center'>{ingredient.name}</Card.Title>
                                 </Card.Body>
                                 <Button size='sm' variant='secondary' onClick={(e) => { addHandle(e, ingredient) }}>Add To My Bar</Button>
-                                <Button size='sm' variant='danger' onClick={deleteHandle}>Delete From My Bar</Button>
+                                <Button size='sm' variant='danger' onClick={(e) => { deleteHandle(e, ingredient) }}>Delete From My Bar</Button>
                             </Card>
                         </Col>
                     ))}
@@ -74,7 +78,7 @@ const IngredientsScreen = ({ history }) => {
             {error ? (<Message variant='danger'>{error}</Message>) : (
                 <>
                     <h1 className='text-center'>Ingredients</h1>
-                    {message && (<Message>{message}</Message>)}
+                    {changeMessage && (<Message variant={ChangeInBarMessage ? 'light' : 'danger'}>{changeMessage}</Message>)}
                     <h3> Alcohol Ingredients</h3>
                     {showIngredients(alcoholIngredients)}
                     <h3> Not Alcohol Ingredients</h3>
