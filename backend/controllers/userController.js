@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import generateToken from '../generateToken.js'
 import bcrypt from 'bcryptjs'
 import User from '../models/userModel.js'
+import Ingredient from '../models/ingredientModel.js'
 
 // @description Fetch all users
 // @route       GET /api/users
@@ -161,4 +162,60 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         throw new Error('User Not Found')
     }
 })
-export { getUsers, login, getUserProfile, register, deleteUser, getUserById, updateUserProfile }
+
+// @description Add ingredient to user's ingredients
+// @route       PUT /api/users/ingredients
+// @access      Private
+const addIngredientToUser = asyncHandler(async (req, res) => {
+    const ingredient = await Ingredient.findById(req.body.id)
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        if (ingredient) {
+            if (!user.ingredients.find(ing => ing.ingredient.toString() == ingredient._id.toString())) {
+                const ingredientToAdd = { name: ingredient.name, image: ingredient.image, ingredient: ingredient._id }
+                user.ingredients.push(ingredientToAdd)
+                await user.save()
+                res.status(200).send(`${ingredient.name} Was Added To Your Bar`)
+            } else {
+                res.status(400)
+                throw new Error(`${ingredient.name} Is Already In Your Bar`)
+            }
+        } else {
+            res.status(400)
+            throw new Error('Ingredient Not Found')
+        }
+    } else {
+        res.status(400)
+        throw new Error('Not Connected')
+    }
+})
+
+// @description Remove ingredient from user's ingredients
+// @route       DELETE /api/users/ingredients
+// @access      Private
+const removeIngredientFromUser = asyncHandler(async (req, res) => {
+    const ingredient = await Ingredient.findById(req.body.id)
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        if (ingredient) {
+            const indexForRemove = user.ingredients.findIndex(ing => ing.ingredient.toString() == ingredient._id.toString())
+            if (indexForRemove > -1) {
+                user.ingredients.splice(indexForRemove, 1)
+                await user.save()
+                res.status(200).send(`${ingredient.name} Was Removed From Your Bar`)
+            } else {
+                res.status(400)
+                throw new Error(`You Dont Have ${ingredient.name} In Your Bar`)
+            }
+        } else {
+            res.status(400)
+            throw new Error('Ingredient Not Found')
+        }
+    } else {
+        res.status(400)
+        throw new Error('Not Connected')
+    }
+})
+export { getUsers, login, getUserProfile, register, deleteUser, getUserById, updateUserProfile, addIngredientToUser, removeIngredientFromUser }

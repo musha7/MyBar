@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
-import { getIngredientsList, addIngredientToBar, removeIngredientFromBar } from '../actions/ingredientAction'
+import { getIngredientsList } from '../actions/ingredientAction'
+import { addIngredientToUser, removeIngredientFromUser } from '../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -8,7 +9,6 @@ import Message from '../components/Message';
 const IngredientsScreen = ({ history }) => {
     const dispatch = useDispatch()
     const [changeMessage, setChangeMessage] = useState('')
-    //const [removeMessage, setRemoveMessage] = useState('')
 
     const ingredientList = useSelector(state => state.ingredientList);
     const { loading, error, ingredients } = ingredientList;
@@ -16,8 +16,8 @@ const IngredientsScreen = ({ history }) => {
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
-    const ingredientChangeInBar = useSelector(state => state.ingredientChangeInBar);
-    const { error: ChangeInBarError, message: ChangeInBarMessage } = ingredientChangeInBar;
+    const userIngredientChange = useSelector(state => state.userIngredientChange);
+    const { error: ChangeInBarError, message: ChangeInBarMessage } = userIngredientChange;
 
     useEffect(() => {
         if (ingredients.length === 0) { dispatch(getIngredientsList()) }
@@ -37,7 +37,7 @@ const IngredientsScreen = ({ history }) => {
     const notAlcoholIngredients = ingredients.filter(ing => ing.category !== 'alcohol');
     const addHandle = (e, ingredient) => {
         if (userInfo) {
-            dispatch(addIngredientToBar(ingredient._id))
+            dispatch(addIngredientToUser(ingredient._id))
         } else {
             history.push('/login')
         }
@@ -45,7 +45,7 @@ const IngredientsScreen = ({ history }) => {
 
     const deleteHandle = (e, ingredient) => {
         if (userInfo) {
-            dispatch(removeIngredientFromBar(ingredient._id))
+            dispatch(removeIngredientFromUser(ingredient._id))
         } else {
             history.push('/login')
         }

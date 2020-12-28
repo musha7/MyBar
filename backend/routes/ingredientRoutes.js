@@ -1,10 +1,9 @@
 import express from 'express'
-import { getIngredients, getIngredientById, addIngredientToBar, removeIngredientFromBar } from '../controllers/ingredientsController.js'
-import { protect } from '../middleware/authMiddleware.js'
+import { getIngredients, getIngredientById } from '../controllers/ingredientsController.js'
 
 const router = express.Router();
 
-router.route('/').get(getIngredients).put(protect, addIngredientToBar).delete(protect, removeIngredientFromBar)
+router.route('/').get(getIngredients)
 router.route('/:id').get(getIngredientById)
 
 export default router

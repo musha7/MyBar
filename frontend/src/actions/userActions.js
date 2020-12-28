@@ -114,3 +114,50 @@ export const updateUserProfile = (email, name, password) => async (dispatch, get
         })
     }
 }
+
+export const addIngredientToUser = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: 'USER_INGREDIENT_ADD_REQUEST' });
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` }
+        }
+
+        const { data } = await axios.put('/api/users/ingredients', { id }, config)
+
+        dispatch({ type: 'USER_INGREDIENT_ADD_SUCCESS', payload: data })
+    } catch (error) {
+        dispatch({
+            type: 'USER_INGREDIENT_ADD_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}
+
+export const removeIngredientFromUser = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: 'USER_INGREDIENT_REMOVE_REQUEST' });
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` },
+            data: { id: id }
+        }
+
+        const { data } = await axios.delete('/api/users/ingredients', config)
+
+        dispatch({ type: 'USER_INGREDIENT_REMOVE_SUCCESS', payload: data })
+    } catch (error) {
+        dispatch({
+            type: 'USER_INGREDIENT_REMOVE_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}

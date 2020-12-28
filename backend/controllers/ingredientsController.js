@@ -1,6 +1,5 @@
 import asyncHandler from 'express-async-handler'
 import Ingredient from '../models/ingredientModel.js'
-import User from '../models/userModel.js'
 
 // @description Fetch all ingredients
 // @route       GET /api/ingredients
@@ -25,60 +24,4 @@ const getIngredientById = asyncHandler(async (req, res) => {
     }
 })
 
-// @description Add ingredient to user's ingredients
-// @route       PUT /api/ingredients
-// @access      Private
-const addIngredientToBar = asyncHandler(async (req, res) => {
-    const ingredient = await Ingredient.findById(req.body.id)
-    const user = await User.findById(req.user._id)
-
-    if (user) {
-        if (ingredient) {
-            if (!user.ingredients.find(ing => ing.ingredient.toString() == ingredient._id.toString())) {
-                const ingredientToAdd = { name: ingredient.name, image: ingredient.image, ingredient: ingredient._id }
-                user.ingredients.push(ingredientToAdd)
-                await user.save()
-                res.status(200).send(`${ingredient.name} Was Added To Your Bar`)
-            } else {
-                res.status(400)
-                throw new Error(`${ingredient.name} Is Already In Your Bar`)
-            }
-        } else {
-            res.status(400)
-            throw new Error('Ingredient Not Found')
-        }
-    } else {
-        res.status(400)
-        throw new Error('Not Connected')
-    }
-})
-
-// @description Remove ingredient from user's ingredients
-// @route       DELETE /api/ingredients
-// @access      Private
-const removeIngredientFromBar = asyncHandler(async (req, res) => {
-    const ingredient = await Ingredient.findById(req.body.id)
-    const user = await User.findById(req.user._id)
-
-    if (user) {
-        if (ingredient) {
-            const indexForRemove = user.ingredients.findIndex(ing => ing.ingredient.toString() == ingredient._id.toString())
-            if (indexForRemove > -1) {
-                user.ingredients.splice(indexForRemove, 1)
-                await user.save()
-                res.status(200).send(`${ingredient.name} Was Removed From Your Bar`)
-            } else {
-                res.status(400)
-                throw new Error(`You Dont Have ${ingredient.name} In Your Bar`)
-            }
-        } else {
-            res.status(400)
-            throw new Error('Ingredient Not Found')
-        }
-    } else {
-        res.status(400)
-        throw new Error('Not Connected')
-    }
-})
-
-export { getIngredients, getIngredientById, addIngredientToBar, removeIngredientFromBar }
+export { getIngredients, getIngredientById }
