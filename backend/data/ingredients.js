@@ -30,6 +30,31 @@ const ingredients = [
         category: 'no alcohol'
     },
     {
+        name: 'Cola',
+        image: '/images/cola.jpg',
+        category: 'no alcohol'
+    },
+    {
+        name: 'Cranberry Juice',
+        image: '/images/cranberryjuice.jpg',
+        category: 'no alcohol'
+    },
+    {
+        name: 'Cream',
+        image: '/images/cream.jpg',
+        category: 'no alcohol'
+    },
+    {
+        name: 'Salt',
+        image: '/images/salt.jpg',
+        category: 'no alcohol'
+    },
+    {
+        name: 'Tonic',
+        image: '/images/tonic.jpg',
+        category: 'no alcohol'
+    },
+    {
         name: 'Rum',
         image: '/images/whiteRum.jpg',
         category: 'alcohol'
@@ -42,6 +67,41 @@ const ingredients = [
     {
         name: 'Triple sec',
         image: '/images/tripleSec.jpg',
+        category: 'alcohol'
+    },
+    {
+        name: 'Baileys',
+        image: '/images/baileys.jpg',
+        category: 'alcohol'
+    },
+    {
+        name: 'Brandy',
+        image: '/images/brandy.jpg',
+        category: 'alcohol'
+    },
+    {
+        name: 'Bombay Gin',
+        image: '/images/ginbombay.jpg',
+        category: 'alcohol'
+    },
+    {
+        name: 'Jamson',
+        image: '/images/jamson.jpg',
+        category: 'alcohol'
+    },
+    {
+        name: 'Kahlua',
+        image: '/images/kahlua.jpg',
+        category: 'alcohol'
+    },
+    {
+        name: 'Midori',
+        image: '/images/midori.jpg',
+        category: 'alcohol'
+    },
+    {
+        name: 'Ketel One Vodka',
+        image: '/images/vodkaketelone.jpg',
         category: 'alcohol'
     },
 ]

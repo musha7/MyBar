@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { logout } from '../actions/userActions';
+import { getUserProfile, logout } from '../actions/userActions';
 
 
 const Header = ({ history }) => {
@@ -14,6 +14,13 @@ const Header = ({ history }) => {
 
     const logoutPressed = () => {
         dispatch(logout())
+    }
+
+    const ingredientsPressed = () => {
+        dispatch({ type: 'USER_INGREDIENT_CHANGE_RESET' })
+    }
+    const profilePressed = () => {
+        dispatch(getUserProfile())
     }
 
     return (
@@ -34,13 +41,13 @@ const Header = ({ history }) => {
                                 </LinkContainer>
 
                                 <LinkContainer to='/myIngredients'>
-                                    <NavDropdown.Item >
+                                    <NavDropdown.Item onClick={ingredientsPressed}>
                                         My Ingredients
                                 </NavDropdown.Item>
                                 </LinkContainer>
 
                                 <LinkContainer to='/profile'>
-                                    <NavDropdown.Item >
+                                    <NavDropdown.Item onClick={profilePressed}>
                                         Profile
                                 </NavDropdown.Item>
                                 </LinkContainer>
@@ -59,7 +66,7 @@ const Header = ({ history }) => {
                             <Nav.Link > Cocktails </Nav.Link>
                         </LinkContainer>
                         <LinkContainer to='/ingredients'>
-                            <Nav.Link > Ingredients</Nav.Link>
+                            <Nav.Link onClick={ingredientsPressed}> Ingredients</Nav.Link>
                         </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>

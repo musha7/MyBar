@@ -28,16 +28,16 @@ export const userRegisterReducer = (state = {}, action) => {
     }
 }
 
-export const userGetProfileReducer = (state = {}, action) => {
+export const userGetProfileReducer = (state = { userInfo: { cocktails: [], ingredients: [] } }, action) => {
     switch (action.type) {
         case 'USER_GET_PROFILE_REQUEST':
-            return { loading: true }
+            return { loading: true, userInfo: { cocktails: [], ingredients: [] } }
         case 'USER_GET_PROFILE_SUCCESS':
             return { loading: false, userInfo: action.payload }
         case 'USER_GET_PROFILE_FAIL':
             return { loading: false, error: action.payload }
         case 'USER_GET_PROFILE_LOGOUT':
-            return {}
+            return { cocktails: [], ingredients: [] }
         default:
             return state;
     }
@@ -72,6 +72,23 @@ export const userIngredientChangeReducer = (state = {}, action) => {
             return { loading: false, message: action.payload }
         case 'USER_INGREDIENT_REMOVE_FAIL':
             return { loading: false, error: action.payload }
+        case 'USER_INGREDIENT_CHANGE_RESET':
+            return {}
+        default:
+            return state;
+    }
+}
+
+export const userGetCocktailsReducer = (state = { cocktails: [] }, action) => {
+    switch (action.type) {
+        case 'USER_GET_COCKTAIL_REQUEST':
+            return { loading: true, cocktails: [] }
+        case 'USER_GET_COCKTAIL_SUCCESS':
+            return { loading: false, cocktails: action.payload.cocktails }
+        case 'USER_GET_COCKTAIL_FAIL':
+            return { loading: false, error: action.payload }
+        case 'USER_GET_COCKTAIL_LOGOUT':
+            return {}
         default:
             return state;
     }

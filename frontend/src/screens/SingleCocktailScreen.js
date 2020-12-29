@@ -37,14 +37,14 @@ function SingleCocktailScreen({ match, history }) {
                     <h1> {cocktail.name} </h1>
                     <Row>
                         <Col md={4}>
-                            <ListGroup>
-                                <ListGroupItem><Image src={cocktail.image} alt={cocktail.name} fluid /></ListGroupItem>
+                            <ListGroup >
+                                <ListGroupItem><Image src={cocktail.image} alt={cocktail.name} fluid rounded /></ListGroupItem>
                                 <ListGroupItem><Rating value={cocktail.rating} text={`${cocktail.numReviews} reviews`} /></ListGroupItem>
                             </ListGroup>
                         </Col>
                         <Col md={3}>
                             <h3> Ingredients</h3>
-                            <ListGroup>
+                            <ListGroup >
                                 {cocktail.ingredients.map((ing, index) => (
                                     <ListGroupItem key={index} >
                                         <Row >
@@ -58,7 +58,7 @@ function SingleCocktailScreen({ match, history }) {
                         </Col>
                         <Col md={3}>
                             <h3>Steps</h3>
-                            <ListGroup>
+                            <ListGroup >
                                 {cocktail.steps.map((s, index) => (
                                     <ListGroupItem>{`${index + 1}. ${s}`}</ListGroupItem>
                                 ))}

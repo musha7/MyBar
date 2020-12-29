@@ -18,8 +18,8 @@ const IngredientsScreen = ({ history }) => {
 
     const userIngredientChange = useSelector(state => state.userIngredientChange);
     const { error: ChangeInBarError, message: ChangeInBarMessage } = userIngredientChange;
-
     useEffect(() => {
+
         if (ingredients.length === 0) { dispatch(getIngredientsList()) }
 
         setChangeMessage('')
@@ -81,7 +81,7 @@ const IngredientsScreen = ({ history }) => {
                     {changeMessage && (<Message variant={ChangeInBarMessage ? 'light' : 'danger'}>{changeMessage}</Message>)}
                     <h3> Alcohol Ingredients</h3>
                     {showIngredients(alcoholIngredients)}
-                    <h3> Not Alcohol Ingredients</h3>
+                    <h3> No Alcohol Ingredients</h3>
                     {showIngredients(notAlcoholIngredients)}
                 </>
             )}
