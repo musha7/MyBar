@@ -48,7 +48,7 @@ const rating = ({ value, text }) => {
                             : 'far fa-star'
                 }></i>
             </span>
-            <span>{text ? text : ''}</span>
+            <span> {text ? text : ''}</span>
         </div>
     )
 }

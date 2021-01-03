@@ -24,4 +24,39 @@ const getIngredientById = asyncHandler(async (req, res) => {
     }
 })
 
-export { getIngredients, getIngredientById }
+// @description Add a new ingredient to the app
+// @route       POST /api/ingredients
+// @access      Private
+const addIngredient = asyncHandler(async (req, res) => {
+    const { name, image, category } = req.body;
+    if (await Ingredient.findOne({ name })) {
+        res.status(400)
+        throw new Error('This Ingredient Is Already In The System')
+    }
+    else {
+        if (!image) {
+            if (category === 'no alcohol') {
+                image = '/images/noalcoholdefault.jpg'
+            }
+            else {
+                image = '/images/alcoholdefault.jpg'
+            }
+        }
+        const newIngredient = new Ingredient({ name: name, image: image, category: category })
+        const createdIngredient = await newIngredient.save()
+        if (createdIngredient) {
+            res.status(200).json({
+                name: createdIngredient.name,
+                image: createdIngredient.image,
+                category: createdIngredient.category,
+            })
+        } else {
+            res.status(400)
+            throw new Error('Could Not Create Ingredient')
+        }
+    }
+    res.json({ ingredients })
+})
+
+
+export { getIngredients, getIngredientById, addIngredient }

@@ -33,6 +33,7 @@ export const logout = () => async (dispatch) => {
         dispatch({ type: 'USER_LOGOUT' })
         dispatch({ type: 'USER_GET_PROFILE_LOGOUT' })
         dispatch({ type: 'USER_UPDATE_PROFILE_LOGOUT' })
+        dispatch({ type: 'USER_INGREDIENT_CHANGE_RESET' })
     } catch (error) {
         dispatch({
             type: 'USER_LOGOUT_FAIL',

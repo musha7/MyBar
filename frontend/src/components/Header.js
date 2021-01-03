@@ -33,29 +33,46 @@ const Header = ({ history }) => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         {userInfo ? (
-                            <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                                <LinkContainer to='/myCocktails'>
-                                    <NavDropdown.Item >
-                                        My Cocktails
+                            <>
+                                <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                                    <LinkContainer to='/myCocktails'>
+                                        <NavDropdown.Item >
+                                            My Cocktails
                                 </NavDropdown.Item>
-                                </LinkContainer>
+                                    </LinkContainer>
 
-                                <LinkContainer to='/myIngredients'>
-                                    <NavDropdown.Item onClick={ingredientsPressed}>
-                                        My Ingredients
+                                    <LinkContainer to='/myIngredients'>
+                                        <NavDropdown.Item onClick={ingredientsPressed}>
+                                            My Ingredients
                                 </NavDropdown.Item>
-                                </LinkContainer>
+                                    </LinkContainer>
 
-                                <LinkContainer to='/profile'>
-                                    <NavDropdown.Item onClick={profilePressed}>
-                                        Profile
+                                    <LinkContainer to='/profile'>
+                                        <NavDropdown.Item onClick={profilePressed}>
+                                            Profile
                                 </NavDropdown.Item>
-                                </LinkContainer>
-                                <NavDropdown.Divider />
-                                <LinkContainer to='/'>
-                                    <NavDropdown.Item onClick={logoutPressed}>Logout</NavDropdown.Item>
-                                </LinkContainer>
-                            </NavDropdown>) :
+                                    </LinkContainer>
+                                    <NavDropdown.Divider />
+                                    <LinkContainer to='/'>
+                                        <NavDropdown.Item onClick={logoutPressed}>Logout</NavDropdown.Item>
+                                    </LinkContainer>
+                                </NavDropdown>
+
+                                <NavDropdown title='Add To Our Bar' id="basic-nav-dropdown">
+                                    <LinkContainer to='/addCocktail'>
+                                        <NavDropdown.Item >
+                                            Add Cocktail
+                            </NavDropdown.Item>
+                                    </LinkContainer>
+
+                                    <LinkContainer to='/addIngredient'>
+                                        <NavDropdown.Item >
+                                            Add Ingredient
+                            </NavDropdown.Item>
+                                    </LinkContainer>
+
+                                </NavDropdown>
+                            </>) :
                             (
                                 <LinkContainer to='/login'>
                                     <Nav.Link ><i className='fas fa-user'></i> Sign In</Nav.Link>

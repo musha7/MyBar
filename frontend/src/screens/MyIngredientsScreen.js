@@ -18,6 +18,9 @@ const MyIngredientsScreen = ({ history }) => {
 
     useEffect(() => {
         dispatch(getUserProfile())
+        // if (userInfo.ingredients.length === 0) {
+        //     setChangeMessage('You Do Not Have Ingredients Right Now')
+        // }
         if (ChangeInBarMessage) {
             setChangeMessage(ChangeInBarMessage)
         }

@@ -177,7 +177,7 @@ const addIngredientToUser = asyncHandler(async (req, res) => {
                 const ingredientToAdd = { name: ingredient.name, image: ingredient.image, ingredient: ingredient._id }
                 user.ingredients.push(ingredientToAdd)
                 await user.save()
-                res.status(200).send(`${ingredient.name} Was Added To Your Bar`)
+                res.status(200).json({ message: `${ingredient.name} Was Added To Your Bar` })
             } else {
                 res.status(400)
                 throw new Error(`${ingredient.name} Is Already In Your Bar`)
@@ -205,7 +205,7 @@ const removeIngredientFromUser = asyncHandler(async (req, res) => {
             if (indexForRemove > -1) {
                 user.ingredients.splice(indexForRemove, 1)
                 await user.save()
-                res.status(200).send(`${ingredient.name} Was Removed From Your Bar`)
+                res.status(200).json({ message: `${ingredient.name} Was Removed From Your Bar` })
             } else {
                 res.status(400)
                 throw new Error(`You Dont Have ${ingredient.name} In Your Bar`)

@@ -4,11 +4,10 @@ import asyncHandler from 'express-async-handler'
 
 const protect = asyncHandler(async (req, res, next) => {
     const auth = req.headers.authorization
-    console.log(auth);
     if (auth) {
         const [start, token] = auth.split(' ');
-        console.log('start:', start);
-        console.log('token:', token);
+        // console.log('start:', start);
+        // console.log('token:', token);
         if (token && start === 'Bearer') {
             try {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);

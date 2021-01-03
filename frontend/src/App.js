@@ -9,6 +9,7 @@ import Login from './screens/LoginScreen'
 import Register from './screens/RegisterScreen'
 import MyCocktailsScreen from './screens/MyCocktailsScreen'
 import MyIngredientsScreen from './screens/MyIngredientsScreen'
+import AddIngredientScreen from './screens/AddIngredientScreen'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -27,7 +28,7 @@ const App = () => {
           <Route path='/profile' component={UserProfileScreen} />
           <Route path='/myCocktails' component={MyCocktailsScreen} />
           <Route path='/myIngredients' component={MyIngredientsScreen} />
-
+          <Route path='/addIngredient' component={AddIngredientScreen} />
         </Container>
       </main>
       <Footer />

@@ -4,7 +4,7 @@ const cocktails = [
         image: '/images/mojito.jpg',
         rating: 4.5,
         numReviews: 4,
-        simpleIngredients: ['rum', 'mint', 'sugar', 'lemon', 'ice'],
+        simpleIngredients: ['rum', 'mint', 'sugar', 'lemon', 'soda', 'ice'],
         steps: [
             'Put some mint, and a spoon of sugar into a highball glass',
             'Add 30ml of lemon juice and muddle the mint',
