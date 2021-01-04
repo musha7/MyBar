@@ -45,6 +45,7 @@ const login = asyncHandler(async (req, res) => {
                 isAdmin: user.isAdmin,
                 cocktails: user.cocktails,
                 ingredients: user.ingredients,
+                //reviews: user.reviews,
                 token: generateToken(user._id)
             })
         } else {
@@ -82,6 +83,7 @@ const register = asyncHandler(async (req, res) => {
                 isAdmin: user.isAdmin,
                 cocktails: user.cocktails,
                 ingredients: user.ingredients,
+                reviews: user.reviews,
                 token: generateToken(user._id)
             })
         }
@@ -125,8 +127,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            cocktails: user.cocktails,
+            //cocktails: user.cocktails,
             ingredients: user.ingredients,
+            reviews: user.reviews,
         })
     } else {
         res.status(401)
@@ -155,8 +158,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            cocktails: user.cocktails,
+            // cocktails: user.cocktails,
             ingredients: user.ingredients,
+            reviews: user.reviews,
         })
     } else {
         res.status(401)
@@ -274,10 +278,71 @@ const getUserCocktails = asyncHandler(async (req, res) => {
     }
 })
 
+// @description Get all user's reviews 
+// @route       GET /api/users/reviews
+// @access      Private
+const getMyReviews = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (user) {
+        const reviews = user.reviews
+        res.status(200).json({ reviews })
+    } else {
+        res.status(400)
+        throw new Error('Not Connected')
+    }
+})
 
+// @description Update user's review
+// @route       PUT /api/users/reviews
+// @access      Private
+const updateReview = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    const { reviewId, rating, comment } = req.body
+    if (user) {
+        const userReview = user.reviews.find((rev => rev._id.toString() === reviewId.toString()))
+        const cocktail = await Cocktail.findById(userReview.cocktail)
+        console.log('userReview: ', userReview);
+        if (cocktail) {
+            userReview.rating = rating || userReview.rating
+            userReview.comment = comment || userReview.comment
+            await user.save();
+            const cocktailReview = cocktail.reviews.find((rev => rev.user.toString() === user._id.toString()))
+            console.log('cocktailReview: ', cocktailReview);
+            cocktailReview.rating = rating || cocktailReview.rating
+            cocktailReview.comment = comment || cocktailReview.comment
+            await cocktail.save();
+            res.status(200).json({ message: 'Review Updated' })
+        } else {
+            res.status(400)
+            throw new Error('Cocktail Not Found')
+        }
+    }
+    else {
+        res.status(401)
+        throw new Error('Not Connected')
+    }
+    // const { id, rating, comment } = req.body
+    // const review = await Review.findById(id)
+    // console.log('review: ', review);
+    // if (user) {
+    //     if (review) {
+    //         review.rating = rating || review.rating
+    //         review.comment = comment || review.comment
+    //         await review.save();
+    //         res.status(200).json({ message: 'Review Updated' })
+    //     } else {
+    //         res.status(400)
+    //         throw new Error('Review Not Found')
+    //     }
+    // }
+    // else {
+    //     res.status(401)
+    //     throw new Error('Not Connected')
+    // }
+})
 
 export {
     getUsers, login, getUserProfile, register, deleteUser, getUserById,
     updateUserProfile, addIngredientToUser, removeIngredientFromUser,
-    getUserCocktails
+    getUserCocktails, getMyReviews, updateReview
 }

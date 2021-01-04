@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import { reviewSchema } from './reviewModel.js'
 import Ingredient from './ingredientModel.js'
+import reviewSchema from './reviewModel.js'
 
 const cocktailSchema = mongoose.Schema({
   name: {
@@ -25,7 +25,17 @@ const cocktailSchema = mongoose.Schema({
     required: true,
     default: 0
   },
-  reviews: [reviewSchema],
+  reviews: [
+    {
+      rating: { type: Number, required: true, },
+      comment: { type: String, required: true },
+      user_name: { type: String, required: true },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+      },
+    }],
   ingredients: [
     {
       name: { type: String, required: true },

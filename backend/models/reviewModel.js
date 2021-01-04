@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import User from './userModel.js'
+import Cocktail from './cocktailModel.js'
 
 const reviewSchema = mongoose.Schema({
     rating: {
@@ -9,17 +11,21 @@ const reviewSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    name: {
+    user_name: {
         type: String,
-        required: true
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'User'
-    }
+    },
+    cocktail_name: { type: String, },
+    cocktail_image: { type: String, },
+    cocktail: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cocktail'
+    },
 }, { timestamps: true });
 
-const Review = mongoose.model('Review', reviewSchema)
+//const Review = mongoose.model('Review', reviewSchema)
 
-export { Review, reviewSchema }
+export default reviewSchema 

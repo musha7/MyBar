@@ -4,7 +4,7 @@ import { Row, Col, ListGroup, ListGroupItem, Image } from 'react-bootstrap';
 import { getCocktailById } from '../actions/cocktailActions'
 import { getReviewsForCocktail } from '../actions/reviewActions'
 import { Link } from 'react-router-dom';
-import moment from 'moment';
+// import moment from 'moment';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Rating from '../components/Rating';
@@ -73,9 +73,9 @@ function SingleCocktailScreen({ match, history }) {
                                     </ListGroup>
                                 </Col>
                             </Row>
-
+                            <hr />
                             <CocktailReview cocktail={cocktail} />
-
+                            <hr />
                             {reviewForCocktailError ? <Message variant='danger'>{reviewForCocktailError}</Message> :
                                 reviews.length === 0 ? <Message variant='light'>No reviews yet, be the first to review!</Message> :
                                     (
@@ -84,8 +84,8 @@ function SingleCocktailScreen({ match, history }) {
                                             {reviews.map((review) => (
                                                 <Row key={review._id} className='p-3 m-3'>
                                                     <Col md={2}>
-                                                        <h5>{review.name}:</h5>
-                                                        {moment(review.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD HH:mm:ss')}
+                                                        <h5>{review.user_name}:</h5>
+                                                        {/* {moment(review.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD HH:mm:ss')} */}
                                                     </Col>
                                                     <Col md={4}>
                                                         <ListGroup variant="flush">
@@ -93,6 +93,7 @@ function SingleCocktailScreen({ match, history }) {
                                                             <ListGroupItem>{review.comment}</ListGroupItem>
                                                         </ListGroup>
                                                     </Col>
+                                                    <hr />
                                                 </Row>
                                             ))}
                                         </>

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
-
+import reviewSchema from './reviewModel.js'
 
 const userSchema = mongoose.Schema({
     name: {
@@ -39,6 +39,22 @@ const userSchema = mongoose.Schema({
             ref: 'Cocktail'
         }
     }],
+    reviews: [reviewSchema],    //     {
+    //     rating: { type: Number, required: true, },
+    //     comment: { type: String, required: true },
+    //     review: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         required: true,
+    //         ref: 'Review'
+    //     },
+    //     cocktailName: { type: String, required: true },
+    //     cocktailImage: { type: String, required: true },
+    //     cocktail: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         required: true,
+    //         ref: 'Cocktail'
+    //     }
+    // }
 
 }, { timestamps: true });
 

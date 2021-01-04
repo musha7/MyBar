@@ -1,6 +1,5 @@
 import asyncHandler from 'express-async-handler'
 import Cocktail from '../models/cocktailModel.js'
-import { Review } from '../models/reviewModel.js'
 import User from '../models/userModel.js'
 
 // @description Fetch all products
@@ -38,8 +37,11 @@ const addReview = asyncHandler(async (req, res) => {
         if (cocktail) {
             if (!cocktail.reviews.find(rev => rev.user.toString() === user._id.toString())) {
                 if (rating && comment) {
-                    const review = new Review({ rating, comment, user: user._id, name: user.name })
-                    const createdReview = await review.save()
+                    const reviewForCocktail = { rating, comment, user: user._id, user_name: user.name }
+                    const reviewForUser = { rating, comment, cocktail: cocktail._id, cocktail_name: cocktail.name, cocktail_image: cocktail.image }
+                    // const review = new Review({ rating, comment, user: user._id, name: user.name })
+                    // const createdReview = await review.save()
+                    // const reviewToSave = { rating, comment, user: user._id, name: user.name, review: createdReview._id }
                     if (cocktail.reviews.length === 0) {
                         cocktail.numReviews = 1
                         cocktail.rating = rating
@@ -48,8 +50,10 @@ const addReview = asyncHandler(async (req, res) => {
                         cocktail.rating = (numReviews * cocktail.rating + rating) / (numReviews + 1)
                         cocktail.numReviews = numReviews + 1
                     }
-                    cocktail.reviews.push(createdReview)
+                    cocktail.reviews.push(reviewForCocktail)
                     await cocktail.save()
+                    user.reviews.push(reviewForUser)
+                    await user.save()
                     res.status(201).json({ message: `Your Review Was Added` })
                 } else {
                     res.status(400)
@@ -57,8 +61,7 @@ const addReview = asyncHandler(async (req, res) => {
                 }
             } else {
                 res.status(400)
-                throw new Error('You Already Made A Review For This Cocktail.')
-                //  Add Functionality: You Can Change It In Your Profile
+                throw new Error('You already made a review for this cocktail. You can change it in your profile')
             }
 
         } else {

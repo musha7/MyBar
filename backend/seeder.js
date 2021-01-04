@@ -7,7 +7,7 @@ import ingredients from './data/ingredients.js'
 import User from './models/userModel.js'
 import Cocktail from './models/cocktailModel.js'
 import Ingredient from './models/ingredientModel.js'
-import { Review } from './models/reviewModel.js'
+import Review from './models/reviewModel.js'
 import connectDB from './config/db.js'
 
 
@@ -19,10 +19,10 @@ const importData = async () => {
         await User.deleteMany();
         await Cocktail.deleteMany();
         await Ingredient.deleteMany();
-        await Review.deleteMany();
+        //await Review.deleteMany();
 
-        await User.insertMany(users);
         const createdingredients = await Ingredient.insertMany(ingredients);
+        await User.insertMany(users);
 
         const sampleCocktails = cocktails.map((cocktail) => {
             const cocktailIngredientsObj = cocktail.simpleIngredients.map(ing => (

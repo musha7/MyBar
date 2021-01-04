@@ -27,7 +27,7 @@ const MyCocktailsScreen = () => {
                     error ? (
                         <>
                             <Message variant='danger'>{error}</Message>
-                            <Link className='btn btn-light my-3' to='/ingredients' >Add Some New Ingredients To Your Bar</Link>
+                            <Link className='btn btn-light my-3' to='/ingredients'>Add some new ingredients to your bar</Link>
                         </>) : (
                             profileErorr ? (<Message variant='danger'>{profileErorr}</Message>) : (
                                 <>
