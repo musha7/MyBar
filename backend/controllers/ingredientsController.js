@@ -29,33 +29,34 @@ const getIngredientById = asyncHandler(async (req, res) => {
 // @access      Private
 const addIngredient = asyncHandler(async (req, res) => {
     const { name, image, category } = req.body;
-    if (await Ingredient.findOne({ name })) {
-        res.status(400)
-        throw new Error('This Ingredient Is Already In The System')
+    if (name && category) {
+        if (await Ingredient.findOne({ name })) {
+            res.status(400)
+            throw new Error('This Ingredient Is Already In The System')
+        }
+        else {
+            if (!image) {
+                if (category === 'no alcohol') {
+                    image = '/images/noalcoholdefault.jpg'
+                }
+                else {
+                    image = '/images/alcoholdefault.jpg'
+                }
+            }
+            const newIngredient = new Ingredient({ name: name, image: image, category: category })
+            const createdIngredient = await newIngredient.save()
+            if (createdIngredient) {
+                res.status(200).json({ message: `${name} was added to our bar` })
+            } else {
+                res.status(400)
+                throw new Error('Could Not Create Ingredient')
+            }
+        }
     }
     else {
-        if (!image) {
-            if (category === 'no alcohol') {
-                image = '/images/noalcoholdefault.jpg'
-            }
-            else {
-                image = '/images/alcoholdefault.jpg'
-            }
-        }
-        const newIngredient = new Ingredient({ name: name, image: image, category: category })
-        const createdIngredient = await newIngredient.save()
-        if (createdIngredient) {
-            res.status(200).json({
-                name: createdIngredient.name,
-                image: createdIngredient.image,
-                category: createdIngredient.category,
-            })
-        } else {
-            res.status(400)
-            throw new Error('Could Not Create Ingredient')
-        }
+        res.status(400)
+        throw new Error('Problem with name or category of ingredient')
     }
-    res.json({ ingredients })
 })
 
 

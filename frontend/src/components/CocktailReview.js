@@ -62,6 +62,7 @@ const CocktailReview = ({ cocktail }) => {
                                     onChange={(e) => setRating(1)}
                                     name='rating'
                                     value={1}
+                                    checked={rating && rating === 1}
                                 />
                                 <Form.Check
                                     type="radio"
@@ -69,6 +70,7 @@ const CocktailReview = ({ cocktail }) => {
                                     onChange={(e) => setRating(2)}
                                     name='rating'
                                     value={2}
+                                    checked={rating && rating === 2}
                                 />
                                 <Form.Check
                                     type="radio"
@@ -76,6 +78,7 @@ const CocktailReview = ({ cocktail }) => {
                                     onChange={(e) => setRating(3)}
                                     name='rating'
                                     value={3}
+                                    checked={rating && rating === 3}
                                 />
                                 <Form.Check
                                     type="radio"
@@ -83,6 +86,7 @@ const CocktailReview = ({ cocktail }) => {
                                     onChange={(e) => setRating(4)}
                                     name='rating'
                                     value={4}
+                                    checked={rating && rating === 4}
                                 />
                                 <Form.Check
                                     type="radio"
@@ -90,6 +94,7 @@ const CocktailReview = ({ cocktail }) => {
                                     onChange={(e) => setRating(5)}
                                     name='rating'
                                     value={5}
+                                    checked={rating && rating === 5}
                                 />
                             </Form.Group>
                             <Form.Group >
