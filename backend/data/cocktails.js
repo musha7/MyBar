@@ -75,7 +75,7 @@ const cocktails = [
         simpleIngredients: ['Jamson', 'Lemon', 'Sugar', 'Ice'],
         steps: [
             'Fill a Shaker with ice',
-            'Pour  60 ml Whiskey, 20 ml Midori, 20 ml lemon juice, 20 ml sugar water',
+            'Pour  60 ml Whiskey, 20 ml lemon juice, 20 ml sugar water',
             'Shake it up',
             'Pour inside the glass',
         ]

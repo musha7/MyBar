@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Cocktail from '../models/cocktailModel.js'
 import User from '../models/userModel.js'
+import Ingredient from '../models/ingredientModel.js'
 
 // @description Fetch all products
 // @route       GET /api/cocktails
@@ -86,4 +87,58 @@ const getReviews = asyncHandler(async (req, res) => {
     }
 })
 
-export { getCocktails, getCocktailById, addReview, getReviews }
+// @description Add a new cocktail to the app
+// @route       POST /api/cocktails
+// @access      Private
+const addCocktail = asyncHandler(async (req, res) => {
+    const { name, image, rating, ingredients, steps } = req.body;
+    if (name) {
+        if (await Cocktail.findOne({ name })) {
+            res.status(400)
+            throw new Error('This Cocktail Is Already In The System')
+        }
+        else {
+            if (!ingredients || ingredients.length === 0 || !steps || steps.length === 0) {
+                res.status(400)
+                throw new Error('Problem with entered ingredients')
+            }
+            else {
+                if (!steps || steps.length === 0) {
+                    res.status(400)
+                    throw new Error('Problem with entered steps')
+                }
+                else {
+                    const allIngredientsFromDb = await Ingredient.find({})
+                    console.log(ingredients);
+                    const ingredientsFromDB = ingredients.map(ingredient => {
+                        const foundIngredient = allIngredientsFromDb.find(ing => ing.name.toString() === ingredient.toString())
+                        if (foundIngredient) {
+                            return foundIngredient
+                        }
+                        else {
+                            res.status(400)
+                            throw new Error(`Could not find ${ingredient.name} in the system, add ${ingredient.name} to the ingredients first`)
+                        }
+                    })
+                    const ingredientsForCocktail = ingredientsFromDB.map(ingredient => {
+                        return { name: ingredient.name, image: ingredient.image, sub_category: ingredient.sub_category, ingredient: ingredient._id }
+                    })
+                    const newCocktail = new Cocktail({ name: name, rating: rating, numReviews: 1, image: image, ingredients: ingredientsForCocktail, steps: steps })
+                    const createdCocktail = await newCocktail.save()
+                    if (createdCocktail) {
+                        res.status(200).json({ message: `${name} was added to our bar` })
+                    } else {
+                        res.status(400)
+                        throw new Error('Could Not Create Cocktail')
+                    }
+                }
+            }
+        }
+    }
+    else {
+        res.status(400)
+        throw new Error('Problem with name of cocktail')
+    }
+})
+
+export { getCocktails, getCocktailById, addReview, getReviews, addCocktail }

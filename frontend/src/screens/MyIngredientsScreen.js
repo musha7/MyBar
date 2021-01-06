@@ -37,11 +37,7 @@ const MyIngredientsScreen = ({ history }) => {
 
     const deleteHandle = (e, ingredient) => {
         e.preventDefault()
-        if (userInfo) {
-            dispatch(removeIngredientFromUser(ingredient.ingredient))
-        } else {
-            history.push('/login')
-        }
+        dispatch(removeIngredientFromUser(ingredient.ingredient))
     }
     return (
         <>
