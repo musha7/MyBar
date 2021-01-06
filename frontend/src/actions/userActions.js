@@ -166,6 +166,32 @@ export const removeIngredientFromUser = (id) => async (dispatch, getState) => {
     }
 }
 
+export const getUserIngredients = () => async (dispatch, getState) => {
+    try {
+
+        dispatch({ type: 'USER_GET_INGREDIENTS_REQUEST' });
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` }
+        }
+
+        const { data } = await axios.get('/api/users/ingredients', config)
+
+        dispatch({ type: 'USER_GET_INGREDIENTS_SUCCESS', payload: data })
+
+    } catch (error) {
+        dispatch({
+            type: 'USER_GET_INGREDIENTS_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}
+
+
 export const getUserCocktails = () => async (dispatch, getState) => {
     try {
 

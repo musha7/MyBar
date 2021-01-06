@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { getUserProfile, logout } from '../actions/userActions';
+import { getUserProfile, logout, getUserIngredients } from '../actions/userActions';
 
 
 const Header = ({ history }) => {
@@ -18,6 +18,7 @@ const Header = ({ history }) => {
 
     const ingredientsPressed = () => {
         dispatch({ type: 'USER_INGREDIENT_CHANGE_RESET' })
+        dispatch(getUserIngredients())
     }
     const profilePressed = () => {
         dispatch(getUserProfile())

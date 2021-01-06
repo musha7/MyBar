@@ -168,6 +168,20 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
+// @description Get all user's ingredients 
+// @route       GET /api/users/ingredients
+// @access      Private
+const getUserIngredients = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (user) {
+        const ingredients = user.ingredients
+        res.status(200).json({ ingredients })
+    } else {
+        res.status(400)
+        throw new Error('Not Connected')
+    }
+})
+
 // @description Add ingredient to user's ingredients
 // @route       PUT /api/users/ingredients
 // @access      Private
@@ -249,11 +263,6 @@ const getUserCocktails = asyncHandler(async (req, res) => {
                 const numOfIngs = cocktail.ingredients.length
                 const presentIngredients = cocktail.ingredients.filter((ing) => {
                     if (userIngredients.find((userIng => {
-
-
-
-
-
                         if (userIng.ingredient.toString() === ing.ingredient.toString()) {
                             return true
                         }
@@ -262,7 +271,6 @@ const getUserCocktails = asyncHandler(async (req, res) => {
                                 //same alcohol category but a different kind of brand
                                 return true;
                             }
-                            //}
                         }
                         return false
                     }))) {
@@ -344,6 +352,6 @@ const updateReview = asyncHandler(async (req, res) => {
 
 export {
     getUsers, login, getUserProfile, register, deleteUser, getUserById,
-    updateUserProfile, addIngredientToUser, removeIngredientFromUser,
+    updateUserProfile, getUserIngredients, addIngredientToUser, removeIngredientFromUser,
     getUserCocktails, getMyReviews, updateReview
 }

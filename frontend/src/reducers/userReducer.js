@@ -93,3 +93,18 @@ export const userGetCocktailsReducer = (state = { cocktails: [] }, action) => {
             return state;
     }
 }
+
+export const userGetIngredientsReducer = (state = { ingredients: [] }, action) => {
+    switch (action.type) {
+        case 'USER_GET_INGREDIENTS_REQUEST':
+            return { loading: true, ingredients: [] }
+        case 'USER_GET_INGREDIENTS_SUCCESS':
+            return { loading: false, ingredients: action.payload.ingredients }
+        case 'USER_GET_INGREDIENTS_FAIL':
+            return { loading: false, error: action.payload }
+        case 'USER_GET_INGREDIENTS_LOGOUT':
+            return {}
+        default:
+            return state;
+    }
+}
