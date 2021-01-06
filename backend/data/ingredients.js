@@ -55,54 +55,65 @@ const ingredients = [
         category: 'no alcohol'
     },
     {
-        name: 'Rum',
-        image: '/images/whiteRum.jpg',
-        category: 'alcohol'
+        name: 'Bacardi',
+        image: '/images/bacardi.jpg',
+        category: 'alcohol',
+        sub_category: 'Rum'
     },
     {
-        name: 'Tequila',
-        image: '/images/silverTequila.jpg',
-        category: 'alcohol'
+        name: 'Jose Cuervo Silver',
+        image: '/images/joseCuervoSilver.jpg',
+        category: 'alcohol',
+        sub_category: 'Tequila'
     },
     {
         name: 'Triple sec',
         image: '/images/tripleSec.jpg',
-        category: 'alcohol'
+        category: 'alcohol',
+        sub_category: 'Liqueur'
     },
     {
         name: 'Baileys',
         image: '/images/baileys.jpg',
-        category: 'alcohol'
+        category: 'alcohol',
+        sub_category: 'Liqueur'
     },
     {
-        name: 'Brandy',
+        name: 'E&J Brandy',
         image: '/images/brandy.jpg',
-        category: 'alcohol'
+        category: 'alcohol',
+        sub_category: 'Brandy'
     },
     {
-        name: 'Bombay Gin',
-        image: '/images/ginbombay.jpg',
-        category: 'alcohol'
+        name: 'Bombay Sapphire',
+        image: '/images/bombaySapphire.jpg',
+        category: 'alcohol',
+        sub_category: 'Gin'
     },
     {
         name: 'Jamson',
         image: '/images/jamson.jpg',
-        category: 'alcohol'
+        category: 'alcohol',
+        sub_category: 'Whiskey'
+
     },
     {
         name: 'Kahlua',
         image: '/images/kahlua.jpg',
-        category: 'alcohol'
+        category: 'alcohol',
+        sub_category: 'Liqueur'
     },
     {
         name: 'Midori',
         image: '/images/midori.jpg',
-        category: 'alcohol'
+        category: 'alcohol',
+        sub_category: 'Liqueur'
     },
     {
-        name: 'Ketel One Vodka',
-        image: '/images/vodkaketelone.jpg',
-        category: 'alcohol'
+        name: 'Ketel One',
+        image: '/images/ketelOne.jpg',
+        category: 'alcohol',
+        sub_category: 'Vodka'
     },
 ]
 

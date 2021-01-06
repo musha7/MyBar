@@ -178,7 +178,7 @@ const addIngredientToUser = asyncHandler(async (req, res) => {
     if (user) {
         if (ingredient) {
             if (!user.ingredients.find(ing => ing.ingredient.toString() == ingredient._id.toString())) {
-                const ingredientToAdd = { name: ingredient.name, image: ingredient.image, ingredient: ingredient._id }
+                const ingredientToAdd = { name: ingredient.name, image: ingredient.image, sub_category: ingredient.sub_category, ingredient: ingredient._id }
                 user.ingredients.push(ingredientToAdd)
                 await user.save()
                 res.status(200).json({ message: `${ingredient.name} Was Added To Your Bar` })
@@ -244,12 +244,27 @@ const getUserCocktails = asyncHandler(async (req, res) => {
         if (userIngredients) {
             // go through all available cocktails.
             // for each go through thier ingredients,
-            // and check if all of them are present in the user ingredients
+            // and check if all of them are present in the user ingredients(or an ingredient from the same category)
             newUsersCocktails = allCocktails.filter((cocktail) => {
                 const numOfIngs = cocktail.ingredients.length
                 const presentIngredients = cocktail.ingredients.filter((ing) => {
                     if (userIngredients.find((userIng => {
-                        return userIng.ingredient.toString() === ing.ingredient.toString()
+
+
+
+
+
+                        if (userIng.ingredient.toString() === ing.ingredient.toString()) {
+                            return true
+                        }
+                        else {
+                            if (ing.sub_category && ing.sub_category !== 'Liquer' && ing.sub_category === userIng.sub_category) {
+                                //same alcohol category but a different kind of brand
+                                return true;
+                            }
+                            //}
+                        }
+                        return false
                     }))) {
                         return true
                     }
@@ -273,9 +288,13 @@ const getUserCocktails = asyncHandler(async (req, res) => {
             res.status(400)
             throw new Error('No Ingredients In Your Bar')
         }
+    }
+    else {
         res.status(400)
         throw new Error('Not Connected')
     }
+
+
 })
 
 // @description Get all user's reviews 
@@ -321,24 +340,6 @@ const updateReview = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('Not Connected')
     }
-    // const { id, rating, comment } = req.body
-    // const review = await Review.findById(id)
-    // console.log('review: ', review);
-    // if (user) {
-    //     if (review) {
-    //         review.rating = rating || review.rating
-    //         review.comment = comment || review.comment
-    //         await review.save();
-    //         res.status(200).json({ message: 'Review Updated' })
-    //     } else {
-    //         res.status(400)
-    //         throw new Error('Review Not Found')
-    //     }
-    // }
-    // else {
-    //     res.status(401)
-    //     throw new Error('Not Connected')
-    // }
 })
 
 export {

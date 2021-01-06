@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer'
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { addIngredient } from '../actions/ingredientAction'
+import { addIngredient, getIngredientsList } from '../actions/ingredientAction'
 import { Link } from 'react-router-dom';
 
 
@@ -12,6 +12,8 @@ const AddIngredientScreen = ({ history }) => {
     const [name, setName] = useState('')
     const [image, setImage] = useState('')
     const [category, setCategory] = useState('')
+    const [subCategory, setSubCategory] = useState('')
+    const [addSubCategory, setAddSubCategory] = useState(false)
     const [addMessage, setAddMessage] = useState('')
 
     const userLogin = useSelector(state => state.userLogin);
@@ -30,24 +32,32 @@ const AddIngredientScreen = ({ history }) => {
             setName('')
             setImage('')
             setCategory('')
+            setSubCategory('')
+            setAddSubCategory(false)
             dispatch({ type: 'INGREDIENT_ADD_TO_APP_RESET' })
+            dispatch(getIngredientsList())
         }
-    }, [dispatch, success, history, userInfo, message])
+        if (category === 'alcohol') {
+            setAddSubCategory(true)
+        }
+        else {
+            setAddSubCategory(false)
+        }
+
+    }, [dispatch, success, history, userInfo, message, category, subCategory])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log(e.target.children[2]);
         const imgExts = /jpg|jpeg|png|gif/
-        const currExtension = image.split(/[#?]/)[0].split('.').pop().trim()
+        const currExtension = image.split(/[#?]/)[0].split('.').pop().trim()  // gets the extension
         if (imgExts.test(currExtension)) {
             const formatedName = name.split(' ').reduce((acc, curr) => acc + curr[0].toUpperCase() + curr.slice(1).toLowerCase() + ' ', '').slice(0, -1)
-            dispatch(addIngredient(formatedName, image, category))
+            dispatch(addIngredient(formatedName, image, category, subCategory))
             setCategory('')
         }
         else {
             setAddMessage('Please enter a url with a jpg|jpeg|png|gif extension')
         }
-
     }
     return (
         <>
@@ -90,7 +100,25 @@ const AddIngredientScreen = ({ history }) => {
                         />
 
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Form.Control
+                        as="select"
+                        className=" mb-3"
+                        id="subCategorySelect"
+                        disabled={!addSubCategory}
+                        custom
+                        onChange={(e) => setSubCategory(e.target.value)}
+                    >
+                        <option value="0">Choose Sub Category</option>
+                        <option value="Rum">Rum</option>
+                        <option value="Vodka">Vodka</option>
+                        <option value="Tequila">Tequila</option>
+                        <option value="Gin">Gin</option>
+                        <option value="Liqueur">Liqueur</option>
+                        <option value="Brandy">Brandy</option>
+                        <option value="Cognac">Cognac</option>
+                        <option value="Other">Other</option>
+                    </Form.Control>
+                    <Button variant="primary" type="submit" className="mt-3">
                         Add Ingredient
                 </Button>
                 </Form>

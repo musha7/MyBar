@@ -18,6 +18,7 @@ const ingredientSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    sub_category: { type: String },
     cocktails: [{
         cocktail: {
             type: mongoose.Schema.Types.ObjectId,

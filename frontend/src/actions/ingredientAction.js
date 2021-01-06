@@ -18,7 +18,7 @@ export const getIngredientsList = () => async (dispatch) => {
     }
 }
 
-export const addIngredient = (name, image, category) => async (dispatch, getState) => {
+export const addIngredient = (name, image, category, sub_category) => async (dispatch, getState) => {
     try {
 
         dispatch({ type: 'INGREDIENT_ADD_TO_APP_REQUEST' });
@@ -29,7 +29,7 @@ export const addIngredient = (name, image, category) => async (dispatch, getStat
             headers: { 'Authorization': `Bearer ${userInfo.token}` }
         }
 
-        const { data } = await axios.post('/api/ingredients', { name, image, category }, config)
+        const { data } = await axios.post('/api/ingredients', { name, image, category, sub_category }, config)
 
         dispatch({ type: 'INGREDIENT_ADD_TO_APP_SUCCESS', payload: data })
 

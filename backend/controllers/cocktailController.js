@@ -39,9 +39,6 @@ const addReview = asyncHandler(async (req, res) => {
                 if (rating && comment) {
                     const reviewForCocktail = { rating, comment, user: user._id, user_name: user.name }
                     const reviewForUser = { rating, comment, cocktail: cocktail._id, cocktail_name: cocktail.name, cocktail_image: cocktail.image }
-                    // const review = new Review({ rating, comment, user: user._id, name: user.name })
-                    // const createdReview = await review.save()
-                    // const reviewToSave = { rating, comment, user: user._id, name: user.name, review: createdReview._id }
                     if (cocktail.reviews.length === 0) {
                         cocktail.numReviews = 1
                         cocktail.rating = rating

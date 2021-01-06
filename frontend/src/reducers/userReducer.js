@@ -69,7 +69,7 @@ export const userIngredientChangeReducer = (state = {}, action) => {
         case 'USER_INGREDIENT_REMOVE_REQUEST':
             return { loading: true }
         case 'USER_INGREDIENT_REMOVE_SUCCESS':
-            return { loading: false, message: action.payload }
+            return { loading: false, message: action.payload.message }
         case 'USER_INGREDIENT_REMOVE_FAIL':
             return { loading: false, error: action.payload }
         case 'USER_INGREDIENT_CHANGE_RESET':

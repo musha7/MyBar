@@ -29,7 +29,7 @@ const importData = async () => {
                 createdingredients.find(f => f.name.toLowerCase() === ing.toLowerCase())
             ))
             const cocktailIngredients = cocktailIngredientsObj.map(i => (
-                { name: i.name, image: i.image, ingredient: i._id }
+                { name: i.name, image: i.image, sub_category: i.sub_category, ingredient: i._id }
             ))
             return {
                 ...cocktail,

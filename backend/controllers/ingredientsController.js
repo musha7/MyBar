@@ -28,7 +28,7 @@ const getIngredientById = asyncHandler(async (req, res) => {
 // @route       POST /api/ingredients
 // @access      Private
 const addIngredient = asyncHandler(async (req, res) => {
-    const { name, image, category } = req.body;
+    const { name, image, category, sub_category } = req.body;
     if (name && category) {
         if (await Ingredient.findOne({ name })) {
             res.status(400)
@@ -43,7 +43,7 @@ const addIngredient = asyncHandler(async (req, res) => {
                     image = '/images/alcoholdefault.jpg'
                 }
             }
-            const newIngredient = new Ingredient({ name: name, image: image, category: category })
+            const newIngredient = new Ingredient({ name: name, image: image, category: category, sub_category: sub_category })
             const createdIngredient = await newIngredient.save()
             if (createdIngredient) {
                 res.status(200).json({ message: `${name} was added to our bar` })
