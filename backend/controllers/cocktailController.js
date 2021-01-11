@@ -91,7 +91,7 @@ const getReviews = asyncHandler(async (req, res) => {
 // @route       POST /api/cocktails
 // @access      Private
 const addCocktail = asyncHandler(async (req, res) => {
-    const { name, image, rating, ingredients, steps } = req.body;
+    const { name, image, ingredients, steps } = req.body;
     if (name) {
         if (await Cocktail.findOne({ name })) {
             res.status(400)
@@ -123,10 +123,10 @@ const addCocktail = asyncHandler(async (req, res) => {
                     const ingredientsForCocktail = ingredientsFromDB.map(ingredient => {
                         return { name: ingredient.name, image: ingredient.image, sub_category: ingredient.sub_category, ingredient: ingredient._id }
                     })
-                    const newCocktail = new Cocktail({ name: name, rating: rating, numReviews: 1, image: image, ingredients: ingredientsForCocktail, steps: steps })
+                    const newCocktail = new Cocktail({ name: name, rating: 0, numReviews: 0, image: image, ingredients: ingredientsForCocktail, steps: steps })
                     const createdCocktail = await newCocktail.save()
                     if (createdCocktail) {
-                        res.status(200).json({ message: `${name} was added to our bar` })
+                        res.status(200).json({ id: createdCocktail._id, name: createdCocktail.name, message: `${name} was added to our bar` })
                     } else {
                         res.status(400)
                         throw new Error('Could Not Create Cocktail')

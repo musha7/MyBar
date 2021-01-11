@@ -62,7 +62,7 @@ const UserProfileScreen = ({ history }) => {
             {updateError && (<Message variant='danger'>{updateError}</Message>)}
             {passwordMessage && <Message variant='danger'>Passwords Do Not Match</Message>}
             {updateMessage && <Message variant='light'>Profile Updated</Message>}
-            <h1>{userInfo.name}'s Profile</h1>
+            <h1 className='text-center'>{userInfo.name}'s Profile</h1>
             <FormContainer>
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId="email">

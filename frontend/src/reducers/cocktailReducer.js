@@ -24,3 +24,18 @@ export const cocktailByIdReducer = (state = { cocktail: { reviews: [], ingredien
             return state;
     }
 }
+
+export const cocktailAddToAppReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'COCKTAIL_ADD_TO_APP_REQUEST':
+            return { loading: true, success: false }
+        case 'COCKTAIL_ADD_TO_APP_SUCCESS':
+            return { loading: false, payload: action.payload, success: true }
+        case 'COCKTAIL_ADD_TO_APP_FAIL':
+            return { loading: false, error: action.payload }
+        case 'COCKTAIL_ADD_TO_APP_RESET':
+            return {}
+        default:
+            return state;
+    }
+}
