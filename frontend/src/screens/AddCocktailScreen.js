@@ -108,16 +108,17 @@ const AddCocktailScreen = ({ history }) => {
                 {addMessage && (<Message variant='light'>{addMessage}</Message>)}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId="name">
-                        <Form.Label>Cocktail Name</Form.Label>
-                        <Form.Control type="text" placeholder="Cocktail Name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <Form.Label><strong>Cocktail Name</strong></Form.Label>
+                        <Form.Control type="text" placeholder="Cocktail Name" required
+                            value={name} onChange={(e) => setName(e.target.value)} />
                     </Form.Group>
                     {/* <Form.Group controlId="image">
                 <Form.Label>Ingredient Image</Form.Label>
                     <Form.File label="Ingredient Image" custom onChange={uploadFileHandler}/>
                 </Form.Group> */}
                     <Form.Group controlId="image">
-                        <Form.Label>Cocktail image url</Form.Label>
-                        <Form.Control type="text" placeholder="Image url"
+                        <Form.Label><strong>Cocktail image url</strong></Form.Label>
+                        <Form.Control type="text" placeholder="Image url" required
                             value={image} onChange={(e) => setImage(e.target.value)} />
                     </Form.Group>
                     {ingredientsLoading ? <Loader /> :
@@ -126,14 +127,13 @@ const AddCocktailScreen = ({ history }) => {
                                 <Form.Row>
                                     <Col>
                                         <Form.Group controlId="alcoholIngredient">
-                                            <Form.Label>Alcohol Ingredients</Form.Label>
+                                            <Form.Label><strong>Alcohol Ingredients</strong></Form.Label>
                                             <Form.Control
                                                 as="select"
-                                                className=" mb-3"
                                                 custom
                                                 onChange={(e) => setCurrIngredient(e.target.value)}
                                             >
-                                                <option value="0">Choose Ingredient</option>
+                                                <option value="">Choose Ingredient</option>
                                                 {listOfIngredients.map(ing => (
                                                     <option key={ing._id} value={ing.name}>{ing.name}</option>
                                                 ))}
@@ -147,9 +147,10 @@ const AddCocktailScreen = ({ history }) => {
                                         </Button>
                                     </Col>
                                 </Form.Row>
+                                {ingredients.length !== 0 && <strong> Added Ingredients </strong>}
                                 {ingredients.map((ing, index) => (
-                                    <Form.Row key={index}>
-                                        <Col>
+                                    <Form.Row key={index} >
+                                        <Col >
                                             {ing}
                                         </Col>
                                         <Col>
@@ -164,13 +165,13 @@ const AddCocktailScreen = ({ history }) => {
                         )
                     }
 
-                    <Form.Label>Steps for making the Cocktail</Form.Label>
+                    <Form.Label><strong>Steps for making the Cocktail</strong></Form.Label>
                     {[...Array(numOfSteps)].map((x, i) => (
                         <Form.Row key={i}>
                             <Col xs={1}>{i + 1}.</Col>
                             <Col >
                                 <Form.Group controlId="steps">
-                                    <Form.Control type="text" placeholder="Cocktail Steps"
+                                    <Form.Control type="text" placeholder="Cocktail Steps" required
                                         onChange={(e) => handleInputStep(e, i)} />
                                 </Form.Group>
                             </Col>

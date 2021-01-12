@@ -52,8 +52,13 @@ const AddIngredientScreen = ({ history }) => {
         const currExtension = image.split(/[#?]/)[0].split('.').pop().trim()  // gets the extension
         if (imgExts.test(currExtension)) {
             const formatedName = name.split(' ').reduce((acc, curr) => acc + curr[0].toUpperCase() + curr.slice(1).toLowerCase() + ' ', '').slice(0, -1)
-            dispatch(addIngredient(formatedName, image, category, subCategory))
-            setCategory('')
+            if (category === 'alcohol' && subCategory === '') {
+                setAddMessage('Please select a sub category')
+            }
+            else {
+                dispatch(addIngredient(formatedName, image, category, subCategory))
+                setCategory('')
+            }
         }
         else {
             setAddMessage('Please enter a url with a jpg|jpeg|png|gif extension')
@@ -66,11 +71,12 @@ const AddIngredientScreen = ({ history }) => {
             <FormContainer>
                 {loading && <Loader />}
                 {error && (<Message variant='danger'>{error}</Message>)}
-                {addMessage && (<Message variant='light'>{addMessage}</Message>)}
+                {addMessage && (<Message variant={addMessage.split(' ')[0] === 'Please' ? 'danger' : 'light'}>{addMessage}</Message>)}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId="name">
                         <Form.Label>Ingredient Name</Form.Label>
-                        <Form.Control type="text" placeholder="Ingredient Name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <Form.Control type="text" placeholder="Ingredient Name" required
+                            value={name} onChange={(e) => setName(e.target.value)} />
                     </Form.Group>
                     {/* <Form.Group controlId="image">
                 <Form.Label>Ingredient Image</Form.Label>
@@ -78,7 +84,8 @@ const AddIngredientScreen = ({ history }) => {
                 </Form.Group> */}
                     <Form.Group controlId="image">
                         <Form.Label>Ingredient image url</Form.Label>
-                        <Form.Control type="text" placeholder="Image url" value={image} onChange={(e) => setImage(e.target.value)} />
+                        <Form.Control type="text" placeholder="Image url" required
+                            value={image} onChange={(e) => setImage(e.target.value)} />
                     </Form.Group>
                     <Form.Group >
                         <Form.Label >Ingredient Category</Form.Label>
@@ -89,6 +96,7 @@ const AddIngredientScreen = ({ history }) => {
                             name='category'
                             id='categoryAlcoholic'
                             checked={category && category === 'alcohol'}
+                            required
                         />
                         <Form.Check
                             type="radio"
@@ -97,6 +105,7 @@ const AddIngredientScreen = ({ history }) => {
                             name='category'
                             id='categoryNotAlcoholic'
                             checked={category && category === 'no alcohol'}
+                            required
                         />
 
                     </Form.Group>

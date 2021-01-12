@@ -43,8 +43,8 @@ function SingleCocktailScreen({ match, history }) {
                     (
                         <>
                             <h1> {cocktail.name} </h1>
-                            <Row className='p-3 '>
-                                <Col md={4}>
+                            <Row className='p-3'>
+                                <Col md={4} className='m-2'>
                                     <ListGroup >
                                         <ListGroupItem><Image src={cocktail.image} alt={cocktail.name} fluid rounded /></ListGroupItem>
                                         <ListGroupItem><Rating value={cocktail.rating} text={`${cocktail.numReviews} review${cocktail.numReviews > 1 ? 's' : ''}`} /></ListGroupItem>
@@ -64,7 +64,7 @@ function SingleCocktailScreen({ match, history }) {
                                         ))}
                                     </ListGroup>
                                 </Col>
-                                <Col md={3}>
+                                <Col md={4} >
                                     <h3>Steps</h3>
                                     <ListGroup >
                                         {cocktail.steps.map((s, index) => (

@@ -91,26 +91,28 @@ const getReviews = asyncHandler(async (req, res) => {
 // @route       POST /api/cocktails
 // @access      Private
 const addCocktail = asyncHandler(async (req, res) => {
-    const { name, image, ingredients, steps } = req.body;
+    const { name, image, ingredients, steps } = req.body
+    const filterdIngredients = ingredients.filter(ing => ing !== '')
+    const filterdSteps = steps.filter(step => step !== '')
     if (name) {
         if (await Cocktail.findOne({ name })) {
             res.status(400)
             throw new Error('This Cocktail Is Already In The System')
         }
         else {
-            if (!ingredients || ingredients.length === 0 || !steps || steps.length === 0) {
+            console.log(ingredients);
+            if (filterdIngredients.length === 0) {
                 res.status(400)
-                throw new Error('Problem with entered ingredients')
+                throw new Error('Add ingredients ')
             }
             else {
-                if (!steps || steps.length === 0) {
+                if (filterdSteps.length === 0) {
                     res.status(400)
-                    throw new Error('Problem with entered steps')
+                    throw new Error('Add steps')
                 }
                 else {
                     const allIngredientsFromDb = await Ingredient.find({})
-                    console.log(ingredients);
-                    const ingredientsFromDB = ingredients.map(ingredient => {
+                    const ingredientsFromDB = filterdIngredients.map(ingredient => {
                         const foundIngredient = allIngredientsFromDb.find(ing => ing.name.toString() === ingredient.toString())
                         if (foundIngredient) {
                             return foundIngredient
@@ -123,7 +125,7 @@ const addCocktail = asyncHandler(async (req, res) => {
                     const ingredientsForCocktail = ingredientsFromDB.map(ingredient => {
                         return { name: ingredient.name, image: ingredient.image, sub_category: ingredient.sub_category, ingredient: ingredient._id }
                     })
-                    const newCocktail = new Cocktail({ name: name, rating: 0, numReviews: 0, image: image, ingredients: ingredientsForCocktail, steps: steps })
+                    const newCocktail = new Cocktail({ name: name, rating: 0, numReviews: 0, image: image, ingredients: ingredientsForCocktail, steps: filterdSteps })
                     const createdCocktail = await newCocktail.save()
                     if (createdCocktail) {
                         res.status(200).json({ id: createdCocktail._id, name: createdCocktail.name, message: `${name} was added to our bar` })
