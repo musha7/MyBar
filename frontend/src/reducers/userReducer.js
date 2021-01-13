@@ -108,3 +108,33 @@ export const userGetIngredientsReducer = (state = { ingredients: [] }, action) =
             return state;
     }
 }
+
+export const usersListReducer = (state = { users: [] }, action) => {
+    switch (action.type) {
+        case 'USERS_LIST_REQUEST':
+            return { loading: true, users: [] }
+        case 'USERS_LIST_SUCCESS':
+            return { loading: false, users: action.payload.users }
+        case 'USERS_LIST_FAIL':
+            return { loading: false, error: action.payload }
+        case 'USERS_LIST_LOGOUT':
+            return {}
+        default:
+            return state;
+    }
+}
+
+export const userDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'USER_DELETE_REQUEST':
+            return { loading: true, success: false }
+        case 'USER_DELETE_SUCCESS':
+            return { loading: false, message: action.payload, success: true }
+        case 'USER_DELETE_FAIL':
+            return { loading: false, error: action.payload }
+        case 'USER_DELETE_COMPLETED':
+            return {}
+        default:
+            return state;
+    }
+}

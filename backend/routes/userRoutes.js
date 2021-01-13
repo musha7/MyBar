@@ -2,13 +2,13 @@ import express from 'express'
 import {
     getUsers, login, getUserProfile, register, deleteUser, updateUserProfile,
     getUserIngredients, addIngredientToUser, removeIngredientFromUser, getUserCocktails,
-    getMyReviews, updateReview
+    getMyReviews, updateReview, makeAdmin
 } from '../controllers/userController.js'
-import { protect } from '../middleware/authMiddleware.js'
+import { protect, isAdmin } from '../middleware/authMiddleware.js'
 
 const router = express.Router();
 
-router.route('/').get(getUsers).delete(deleteUser)
+router.route('/').get(protect, isAdmin, getUsers).delete(protect, isAdmin, deleteUser).put(protect, isAdmin, makeAdmin)
 router.route('/login').post(login)
 router.route('/register').post(register)
 

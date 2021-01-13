@@ -255,3 +255,4 @@
 [0112/012410.409:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
 [0112/012410.415:ERROR:exception_snapshot_win.cc(99)] thread ID 18340 not found in process
 [0112/113003.254:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[0113/105915.646:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

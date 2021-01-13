@@ -39,19 +39,19 @@ const Header = ({ history }) => {
                                     <LinkContainer to='/myCocktails'>
                                         <NavDropdown.Item >
                                             My Cocktails
-                                </NavDropdown.Item>
+                                        </NavDropdown.Item>
                                     </LinkContainer>
 
                                     <LinkContainer to='/myIngredients'>
                                         <NavDropdown.Item onClick={ingredientsPressed}>
                                             My Ingredients
-                                </NavDropdown.Item>
+                                        </NavDropdown.Item>
                                     </LinkContainer>
 
                                     <LinkContainer to='/profile'>
                                         <NavDropdown.Item onClick={profilePressed}>
                                             Profile
-                                </NavDropdown.Item>
+                                        </NavDropdown.Item>
                                     </LinkContainer>
                                     <NavDropdown.Divider />
                                     <LinkContainer to='/'>
@@ -63,13 +63,13 @@ const Header = ({ history }) => {
                                     <LinkContainer to='/addCocktail'>
                                         <NavDropdown.Item >
                                             Add Cocktail
-                            </NavDropdown.Item>
+                                        </NavDropdown.Item>
                                     </LinkContainer>
 
                                     <LinkContainer to='/addIngredient'>
                                         <NavDropdown.Item >
                                             Add Ingredient
-                            </NavDropdown.Item>
+                                        </NavDropdown.Item>
                                     </LinkContainer>
 
                                 </NavDropdown>
@@ -79,7 +79,15 @@ const Header = ({ history }) => {
                                     <Nav.Link ><i className='fas fa-user'></i> Sign In</Nav.Link>
                                 </LinkContainer>
                             )}
-
+                        {(userInfo && userInfo.isAdmin) && (
+                            <NavDropdown title='Admin' id="basic-nav-dropdown">
+                                <LinkContainer to='/usersList'>
+                                    <NavDropdown.Item >
+                                        Users List
+                                    </NavDropdown.Item>
+                                </LinkContainer>
+                            </NavDropdown>
+                        )}
                         <LinkContainer to='/cocktails'>
                             <Nav.Link > Cocktails </Nav.Link>
                         </LinkContainer>

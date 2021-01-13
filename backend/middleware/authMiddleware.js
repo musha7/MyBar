@@ -26,7 +26,16 @@ const protect = asyncHandler(async (req, res, next) => {
         res.status(401)
         throw new Error('No Authorization')
     }
-
 })
 
-export { protect }
+const isAdmin = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user._id)
+    if (user && user.isAdmin) {
+        next()
+    } else {
+        res.status(401)
+        throw new Error('Not authorized as an admin')
+    }
+})
+
+export { protect, isAdmin }

@@ -5,7 +5,7 @@ import Ingredient from '../models/ingredientModel.js'
 // @route       GET /api/ingredients
 // @access      Public
 const getIngredients = asyncHandler(async (req, res) => {
-    const ingredients = await Ingredient.find({})
+    const ingredients = await Ingredient.find({}).sort('sub_category').sort('name')
 
     res.json({ ingredients })
 })

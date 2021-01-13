@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { Link } from 'react-router-dom';
 
-const MyCocktailsScreen = () => {
+const MyCocktailsScreen = ({ history }) => {
 
     const userGetCocktails = useSelector(state => state.userGetCocktails);
     const { loading, error, cocktails } = userGetCocktails;
@@ -16,9 +16,12 @@ const MyCocktailsScreen = () => {
 
     const dispatch = useDispatch()
     useEffect(() => {
+        if (!userInfo) {
+            history.push('/login')
+        }
         dispatch(getUserProfile())
         dispatch(getUserCocktails())
-    }, [dispatch])
+    }, [dispatch, history, userInfo])
 
     return (
         <>

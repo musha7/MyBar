@@ -117,4 +117,57 @@ const ingredients = [
     },
 ]
 
+// ingredients.sort((a, b) => {
+
+//     const aCategory = a.category.toLowerCase();
+//     const bCategory = b.category.toLowerCase();
+//     if (aCategory < bCategory) {
+//         return -1;
+//     }
+//     else {
+//         if (aCategory > bCategory) {
+//             return 1;
+//         }
+//         else { // same category
+//             if (aCategory == 'alcohol') {
+//                 const aSubCategory = a.sub_category.toLowerCase();
+//                 const bSubCategory = b.sub_category.toLowerCase();
+//                 if (aSubCategory < bSubCategory) {
+
+//                     return 1;
+//                 }
+//                 else {
+//                     if (aSubCategory > bSubCategory) {
+//                         return -1;
+//                     }
+//                     else { // same alcohol sub category
+
+//                         if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) {
+//                             return 1;
+//                         }
+//                         else {
+//                             if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
+//                                 return -1
+//                             } else {
+//                                 return 0
+//                             }
+//                         }
+//                     }
+//                 }
+//             } else { // both not alcoholic
+//                 if (a.name > b.name) {
+//                     return 1;
+//                 }
+//                 else {
+//                     if (a.name < b.name) {
+//                         return -1
+//                     } else {
+//                         return 0
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// });
+
 export default ingredients

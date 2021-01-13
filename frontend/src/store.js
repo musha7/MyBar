@@ -3,7 +3,11 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { cocktailListReducer, cocktailByIdReducer, cocktailAddToAppReducer } from './reducers/cocktailReducer'
 import { ingredientListReducer, ingredientAddToAppReducer } from './reducers/ingredientReducer'
-import { userRegisterReducer, userLoginReducer, userGetProfileReducer, userUpdateProfileReducer, userIngredientChangeReducer, userGetIngredientsReducer, userGetCocktailsReducer } from './reducers/userReducer'
+import {
+    userRegisterReducer, userLoginReducer, userGetProfileReducer, userUpdateProfileReducer,
+    userIngredientChangeReducer, userGetIngredientsReducer, userGetCocktailsReducer, usersListReducer,
+    userDeleteReducer
+} from './reducers/userReducer'
 import { reviewAddReducer, reviewsByCocktailReducer } from './reducers/reviewReducer'
 
 const reducer = combineReducers({
@@ -19,6 +23,8 @@ const reducer = combineReducers({
     userUpdateProfile: userUpdateProfileReducer,
     userGetIngredients: userGetIngredientsReducer,
     userGetCocktails: userGetCocktailsReducer,
+    usersList: usersListReducer,
+    userDelete: userDeleteReducer,
     reviewAdd: reviewAddReducer,
     reviewsByCocktail: reviewsByCocktailReducer
 });

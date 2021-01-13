@@ -18,7 +18,7 @@ const getCocktails = asyncHandler(async (req, res) => {
 // @access      Public
 const getCocktailById = asyncHandler(async (req, res) => {
     const cocktail = await Cocktail.findById(req.params.id)
-
+    cocktail.ingredients.sort((a, b) => a.category < b.category ? -1 : 1)
     if (cocktail) {
         res.json({ cocktail })
     } else {

@@ -79,9 +79,9 @@ const IngredientsScreen = ({ history }) => {
                 <>
                     <h1 className='text-center'>Ingredients</h1>
                     {changeMessage && (<Message variant={ChangeInBarMessage ? 'light' : 'danger'}>{changeMessage}</Message>)}
-                    <h3> Alcohol Ingredients</h3>
+                    <h3> Alcoholic Ingredients</h3>
                     {showIngredients(alcoholIngredients)}
-                    <h3> No Alcohol Ingredients</h3>
+                    <h3> Not Alcoholic Ingredients</h3>
                     {showIngredients(notAlcoholIngredients)}
                 </>
             )}

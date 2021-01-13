@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Button, Col, FormLabel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer'
 import Message from '../components/Message';
@@ -29,6 +29,9 @@ const AddCocktailScreen = ({ history }) => {
     const cocktailAddToApp = useSelector(state => state.cocktailAddToApp);
     const { loading, error, success, payload } = cocktailAddToApp;
 
+    const alcoholIngredients = listOfIngredients.filter(ing => ing.category === 'alcohol');
+    const notAlcoholIngredients = listOfIngredients.filter(ing => ing.category !== 'alcohol');
+
     const dispatch = useDispatch()
 
     const addIngredient = () => {
@@ -40,7 +43,6 @@ const AddCocktailScreen = ({ history }) => {
     const removeIngredient = (name) => {
         const ings = [...ingredients]
         const indexToRemove = ings.findIndex(ing => ing === name)
-        console.log('indexToRemove:', indexToRemove);
         ings.splice(indexToRemove, 1)
         setIngredients(ings)
     }
@@ -127,14 +129,38 @@ const AddCocktailScreen = ({ history }) => {
                                 <Form.Row>
                                     <Col>
                                         <Form.Group controlId="alcoholIngredient">
-                                            <Form.Label><strong>Alcohol Ingredients</strong></Form.Label>
+                                            <Form.Label><strong>Alcoholic Ingredients</strong></Form.Label>
                                             <Form.Control
                                                 as="select"
                                                 custom
                                                 onChange={(e) => setCurrIngredient(e.target.value)}
                                             >
                                                 <option value="">Choose Ingredient</option>
-                                                {listOfIngredients.map(ing => (
+                                                {alcoholIngredients.map(ing => (
+                                                    <option key={ing._id} value={ing.name}>{ing.name}</option>
+                                                ))}
+
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col className="mt-3">
+                                        <Button className="mt-3" variant="info" type="button" onClick={() => addIngredient()}>
+                                            <i className="fas fa-plus-circle"></i>
+                                        </Button>
+                                    </Col>
+                                </Form.Row>
+
+                                <Form.Row>
+                                    <Col>
+                                        <Form.Group controlId="alcoholIngredient">
+                                            <Form.Label><strong>Not Alcoholic Ingredients</strong></Form.Label>
+                                            <Form.Control
+                                                as="select"
+                                                custom
+                                                onChange={(e) => setCurrIngredient(e.target.value)}
+                                            >
+                                                <option value="">Choose Ingredient</option>
+                                                {notAlcoholIngredients.map(ing => (
                                                     <option key={ing._id} value={ing.name}>{ing.name}</option>
                                                 ))}
 
@@ -164,6 +190,11 @@ const AddCocktailScreen = ({ history }) => {
                             </>
                         )
                     }
+                    <Form.Row >
+                        <FormLabel className='ml-1'>Don't have an ingredient?
+                            <Link to='/addIngredient'> add here!</Link>
+                        </FormLabel>
+                    </Form.Row>
 
                     <Form.Label><strong>Steps for making the Cocktail</strong></Form.Label>
                     {[...Array(numOfSteps)].map((x, i) => (

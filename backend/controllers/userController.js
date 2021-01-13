@@ -7,7 +7,7 @@ import Cocktail from '../models/cocktailModel.js'
 
 // @description Fetch all users
 // @route       GET /api/users
-// @access      Public
+// @access      Private, Admin only
 const getUsers = asyncHandler(async (req, res) => {
     const users = await User.find({})
 
@@ -103,8 +103,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     if (user) {
         const deleted = await User.deleteOne({ _id: user._id })
         if (deleted) {
-            res.status(200)
-            res.send('Successfully deleted')
+            res.status(200).json({ message: 'Successfully deleted' })
         } else {
             res.status(401)
             throw new Error('Could not delete user')
@@ -157,7 +156,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin,
+            //isAdmin: user.isAdmin,
             // cocktails: user.cocktails,
             ingredients: user.ingredients,
             reviews: user.reviews,
@@ -350,8 +349,23 @@ const updateReview = asyncHandler(async (req, res) => {
     }
 })
 
+// @description Update user to admin
+// @route       PUT /api/users
+// @access      Private, Admin
+const makeAdmin = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.body.id)
+    if (user) {
+        user.isAdmin = true;
+        await user.save()
+        res.status(200).send()
+    } else {
+        res.status(401)
+        throw new Error('User Not Found')
+    }
+})
+
 export {
     getUsers, login, getUserProfile, register, deleteUser, getUserById,
     updateUserProfile, getUserIngredients, addIngredientToUser, removeIngredientFromUser,
-    getUserCocktails, getMyReviews, updateReview
+    getUserCocktails, getMyReviews, updateReview, makeAdmin
 }
