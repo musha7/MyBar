@@ -59,5 +59,23 @@ const addIngredient = asyncHandler(async (req, res) => {
     }
 })
 
+// @description Delete ingredient by id
+// @route       DELETE /api/ingredients
+// @access      Private, Admin
+const deleteIngredient = asyncHandler(async (req, res) => {
+    const ingredient = await Ingredient.findById(req.body.id)
+    if (ingredient) {
+        const deleted = await Ingredient.deleteOne({ _id: ingredient._id })
+        if (deleted) {
+            res.status(200).json({ message: 'Successfully deleted' })
+        } else {
+            res.status(401)
+            throw new Error('Could not delete ingredient')
+        }
+    } else {
+        res.status(401)
+        throw new Error('Ingredient not found, could not delete')
+    }
+})
 
-export { getIngredients, getIngredientById, addIngredient }
+export { getIngredients, getIngredientById, addIngredient, deleteIngredient }

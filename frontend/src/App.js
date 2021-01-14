@@ -12,6 +12,8 @@ import MyIngredientsScreen from './screens/MyIngredientsScreen'
 import AddIngredientScreen from './screens/AddIngredientScreen'
 import AddCocktailScreen from './screens/AddCocktailScreen'
 import UsersListScreen from './screens/UsersListScreen'
+import IngredientsListScreen from './screens/IngredientsListScreen'
+import CocktailsListScreen from './screens/CocktailsListScreen'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -32,7 +34,9 @@ const App = () => {
           <Route path='/myIngredients' component={MyIngredientsScreen} />
           <Route path='/addIngredient' component={AddIngredientScreen} />
           <Route path='/addCocktail' component={AddCocktailScreen} />
-          <Route path='/usersList' component={UsersListScreen} />
+          <Route path='/admin/usersList' component={UsersListScreen} />
+          <Route path='/admin/ingredientsList' component={IngredientsListScreen} />
+          <Route path='/admin/cocktailsList' component={CocktailsListScreen} />
         </Container>
       </main>
       <Footer />

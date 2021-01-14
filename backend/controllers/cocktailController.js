@@ -143,4 +143,23 @@ const addCocktail = asyncHandler(async (req, res) => {
     }
 })
 
-export { getCocktails, getCocktailById, addReview, getReviews, addCocktail }
+// @description Delete cocktail by id
+// @route       DELETE /api/cocktails
+// @access      Private, Admin
+const deleteCocktail = asyncHandler(async (req, res) => {
+    const cocktail = await Cocktail.findById(req.body.id)
+    if (cocktail) {
+        const deleted = await Cocktail.deleteOne({ _id: cocktail._id })
+        if (deleted) {
+            res.status(200).json({ message: 'Successfully deleted' })
+        } else {
+            res.status(401)
+            throw new Error('Could not delete Cocktail')
+        }
+    } else {
+        res.status(401)
+        throw new Error('Cocktail not found, could not delete')
+    }
+})
+
+export { getCocktails, getCocktailById, addReview, getReviews, addCocktail, deleteCocktail }

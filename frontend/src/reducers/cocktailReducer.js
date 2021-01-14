@@ -39,3 +39,18 @@ export const cocktailAddToAppReducer = (state = {}, action) => {
             return state;
     }
 }
+
+export const cocktailDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'COCKTAIL_DELETE_REQUEST':
+            return { loading: true, success: false }
+        case 'COCKTAIL_DELETE_SUCCESS':
+            return { loading: false, message: action.payload, success: true }
+        case 'COCKTAIL_DELETE_FAIL':
+            return { loading: false, error: action.payload }
+        case 'COCKTAIL_DELETE_COMPLETED':
+            return {}
+        default:
+            return state;
+    }
+}

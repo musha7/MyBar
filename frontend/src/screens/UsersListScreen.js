@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsersList } from '../actions/userActions'
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { deleteUser, makeUserAdmin } from '../actions/userActions'
+import { deleteUser } from '../actions/userActions'
 
 const UsersListScreen = ({ history }) => {
     const [makeAdmin, setMakeAdmin] = useState(false)
@@ -48,6 +48,7 @@ const UsersListScreen = ({ history }) => {
                 headers: { 'Authorization': `Bearer ${userInfo.token}` },
             }
             const ret = await axios.put('/api/users', { id }, config)
+            console.log(ret);
             setMakeAdmin(true)
         } catch (error) {
             console.log(error);

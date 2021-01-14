@@ -42,3 +42,29 @@ export const addIngredient = (name, image, category, sub_category) => async (dis
         })
     }
 }
+
+export const deleteIngredient = (id) => async (dispatch, getState) => {
+    try {
+
+        dispatch({ type: 'INGREDIENT_DELETE_REQUEST' });
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` },
+            data: { id: id }
+        }
+
+        const { data } = await axios.delete('/api/ingredients', config)
+
+        dispatch({ type: 'INGREDIENT_DELETE_SUCCESS', payload: data })
+
+    } catch (error) {
+        dispatch({
+            type: 'INGREDIENT_DELETE_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}

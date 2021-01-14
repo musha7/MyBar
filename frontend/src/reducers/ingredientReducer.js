@@ -26,3 +26,18 @@ export const ingredientAddToAppReducer = (state = {}, action) => {
             return state;
     }
 }
+
+export const ingredientDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'INGREDIENT_DELETE_REQUEST':
+            return { loading: true, success: false }
+        case 'INGREDIENT_DELETE_SUCCESS':
+            return { loading: false, message: action.payload, success: true }
+        case 'INGREDIENT_DELETE_FAIL':
+            return { loading: false, error: action.payload }
+        case 'INGREDIENT_DELETE_COMPLETED':
+            return {}
+        default:
+            return state;
+    }
+}

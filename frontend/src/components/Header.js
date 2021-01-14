@@ -81,9 +81,19 @@ const Header = ({ history }) => {
                             )}
                         {(userInfo && userInfo.isAdmin) && (
                             <NavDropdown title='Admin' id="basic-nav-dropdown">
-                                <LinkContainer to='/usersList'>
+                                <LinkContainer to='/admin/usersList'>
                                     <NavDropdown.Item >
                                         Users List
+                                    </NavDropdown.Item>
+                                </LinkContainer>
+                                <LinkContainer to='/admin/ingredientsList'>
+                                    <NavDropdown.Item >
+                                        Ingredients List
+                                    </NavDropdown.Item>
+                                </LinkContainer>
+                                <LinkContainer to='/admin/cocktailsList'>
+                                    <NavDropdown.Item >
+                                        Cocktails List
                                     </NavDropdown.Item>
                                 </LinkContainer>
                             </NavDropdown>
