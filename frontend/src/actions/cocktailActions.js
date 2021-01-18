@@ -94,3 +94,21 @@ export const deleteCocktail = (id) => async (dispatch, getState) => {
         })
     }
 }
+
+export const getTopRatedCocktails = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: 'COCKTAIL_TOP_RATED_REQUEST' });
+
+        const { data } = await axios.get('/api/cocktails/top')
+
+        dispatch({ type: 'COCKTAIL_TOP_RATED_SUCCESS', payload: data })
+    } catch (error) {
+        dispatch({
+            type: 'COCKTAIL_TOP_RATED_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}

@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react'
 import { Table, Button, OverlayTrigger, Tooltip, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import Rating from '../components/Rating';
-import { getCocktailsList, deleteCocktail } from '../actions/cocktailActions'
+import Loader from '../../components/Loader';
+import Message from '../../components/Message';
+import { getIngredientsList, deleteIngredient } from '../../actions/ingredientAction'
 
-const CocktailsListScreen = ({ history }) => {
+const IngredientsListScreen = ({ history }) => {
 
-    const cocktailList = useSelector(state => state.cocktailList);
-    const { loading: cocktailListLoading, error: cocktailListError, cocktails } = cocktailList;
+    const ingredientList = useSelector(state => state.ingredientList);
+    const { loading: ingredientListLoading, error: ingredientListError, ingredients } = ingredientList;
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
-    const cocktailDelete = useSelector(state => state.cocktailDelete);
-    const { loading: cocktailDeleteLoading, error: cocktailDeleteError, success: cocktailDeleteSuccess } = cocktailDelete;
+    const ingredientDelete = useSelector(state => state.ingredientDelete);
+    const { loading: ingredientDeleteLoading, error: ingredientDeleteError, success: ingredientDeleteSuccess } = ingredientDelete;
 
     const dispatch = useDispatch()
 
@@ -23,54 +22,51 @@ const CocktailsListScreen = ({ history }) => {
         if (!userInfo) {
             history.push('/login')
         }
-        if (cocktails.length === 0) {
-            dispatch(getCocktailsList())
+        if (ingredients.length === 0) {
+            dispatch(getIngredientsList())
         }
-        if (cocktailDeleteSuccess) {
-            dispatch({ type: 'COCKTAIL_DELETE_COMPLETED' })
-            dispatch(getCocktailsList())
+        if (ingredientDeleteSuccess) {
+            dispatch({ type: 'INGREDIENT_DELETE_COMPLETED' })
+            dispatch(getIngredientsList())
         }
 
-    }, [dispatch, history, userInfo, cocktails.length, cocktailDeleteSuccess])
+    }, [dispatch, history, userInfo, ingredients.length, ingredientDeleteSuccess])
 
-    const handleDeleteCocktail = (id) => {
-        console.log(id);
-        dispatch(deleteCocktail(id))
+    const handleDeleteIngredient = (id) => {
+        dispatch(deleteIngredient(id))
     }
-    const handleEditCocktail = (id) => { }
+    const handleEditIngredient = (id) => { }
 
     return (
         <>
-            {(cocktailListLoading || cocktailDeleteLoading) && <Loader />}
-            {cocktailDeleteError && <Message variant='danger'> {cocktailDeleteError}</Message>}
-            {cocktailListError ? <Message variant='danger'> {cocktailListError}</Message> : (
+            {(ingredientListLoading || ingredientDeleteLoading) && <Loader />}
+            {ingredientDeleteError && <Message variant='danger'> {ingredientDeleteError}</Message>}
+            {ingredientListError ? <Message variant='danger'> {ingredientListError}</Message> : (
                 <>
-                    <h1 className='text-center'>Cocktail List</h1>
+                    <h1 className='text-center'>Ingredient List</h1>
                     <Table striped bordered hover className='text-center'>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Rating</th>
                                 <th>Delete</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {cocktails.map((cocktail, index) => (
+                            {ingredients.map((ingredient, index) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td><Image style={{ width: 70, height: 80 }} src={cocktail.image} alt={cocktail.name} fluid roundedCircle /></td>
-                                    <td>{cocktail.name}</td>
-                                    <td><Rating value={cocktail.rating} text={`${cocktail.numReviews} reviews`} /></td>
+                                    <td><Image style={{ width: 70, height: 80 }} src={ingredient.image} alt={ingredient.name} fluid roundedCircle /></td>
+                                    <td>{ingredient.name}</td>
                                     <td>
                                         <OverlayTrigger
                                             placement="right"
                                             delay={{ show: 250, hide: 400 }}
                                             overlay={<Tooltip id="button-tooltip-2">Delete</Tooltip>}
                                         >
-                                            <Button onClick={() => handleDeleteCocktail(cocktail._id)}><i className="fas fa-trash-alt"></i></Button>
+                                            <Button onClick={() => handleDeleteIngredient(ingredient._id)}><i className="fas fa-trash-alt"></i></Button>
                                         </OverlayTrigger>
                                     </td>
                                     <td>
@@ -79,7 +75,7 @@ const CocktailsListScreen = ({ history }) => {
                                             delay={{ show: 250, hide: 400 }}
                                             overlay={<Tooltip id="button-tooltip-2">Edit </Tooltip>}
                                         >
-                                            <Button disabled onClick={() => handleEditCocktail(cocktail._id)}><i className="fas fa-edit"></i></Button>
+                                            <Button disabled onClick={() => handleEditIngredient(ingredient._id)}><i className="fas fa-edit"></i></Button>
                                         </OverlayTrigger>
                                     </td>
                                 </tr>
@@ -93,4 +89,4 @@ const CocktailsListScreen = ({ history }) => {
     )
 }
 
-export default CocktailsListScreen
+export default IngredientsListScreen

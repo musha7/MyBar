@@ -101,12 +101,17 @@ const register = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.body.id)
     if (user) {
-        const deleted = await User.deleteOne({ _id: user._id })
-        if (deleted) {
-            res.status(200).json({ message: 'Successfully deleted' })
-        } else {
+        if (user.name === 'Michael Shlezinger') {
             res.status(401)
             throw new Error('Could not delete user')
+        } else {
+            const deleted = await User.deleteOne({ _id: user._id })
+            if (deleted) {
+                res.status(200).json({ message: 'Successfully deleted' })
+            } else {
+                res.status(401)
+                throw new Error('Could not delete user')
+            }
         }
     } else {
         res.status(401)

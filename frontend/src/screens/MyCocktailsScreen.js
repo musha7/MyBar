@@ -11,28 +11,31 @@ const MyCocktailsScreen = ({ history }) => {
     const userGetCocktails = useSelector(state => state.userGetCocktails);
     const { loading, error, cocktails } = userGetCocktails;
 
-    const userGetProfile = useSelector(state => state.userGetProfile);
-    const { loading: profileLoading, error: profileErorr, userInfo } = userGetProfile;
+    // const userGetProfile = useSelector(state => state.userGetProfile);
+    // const { loading: profileLoading, error: profileErorr, userInfo } = userGetProfile;
+
+    const userLogin = useSelector(state => state.userLogin);
+    const { loading: loginLoading, error: loginErorr, userInfo } = userLogin;
 
     const dispatch = useDispatch()
     useEffect(() => {
         if (!userInfo) {
             history.push('/login')
         }
-        dispatch(getUserProfile())
+        //dispatch(getUserProfile())
         dispatch(getUserCocktails())
     }, [dispatch, history, userInfo])
 
     return (
         <>
-            {profileLoading ? <Loader /> : (
+            {loginLoading ? <Loader /> : (
                 loading ? <Loader /> :
                     error ? (
                         <>
                             <Message variant='danger'>{error}</Message>
                             <Link className='btn btn-light my-3' to='/ingredients'>Add some new ingredients to your bar</Link>
                         </>) : (
-                            profileErorr ? (<Message variant='danger'>{profileErorr}</Message>) : (
+                            loginErorr ? (<Message variant='danger'>{loginErorr}</Message>) : (
                                 <>
                                     <h1 className='text-center'>{`${userInfo.name}`}'s Cocktails</h1>
                                     <ListGroup variant='flush'>

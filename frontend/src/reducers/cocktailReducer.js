@@ -54,3 +54,16 @@ export const cocktailDeleteReducer = (state = {}, action) => {
             return state;
     }
 }
+
+export const cocktailTopRatedReducer = (state = { cocktails: [] }, action) => {
+    switch (action.type) {
+        case 'COCKTAIL_TOP_RATED_REQUEST':
+            return { loading: true, cocktails: [] }
+        case 'COCKTAIL_TOP_RATED_SUCCESS':
+            return { loading: false, cocktails: action.payload.cocktails }
+        case 'COCKTAIL_TOP_RATED_FAIL':
+            return { loading: false, error: action.payload }
+        default:
+            return state;
+    }
+}

@@ -42,9 +42,10 @@ const MyIngredientsScreen = ({ history }) => {
     return (
         <>
             {changeMessage && (<Message variant='danger'>{changeMessage}</Message>)}
-            {getIngredientsLoading ? <Loader /> : (
-                <>
-                    {getIngredientsErorr ? (<Message variant='danger'>{getIngredientsErorr}</Message>) : (
+            {getIngredientsLoading && <Loader />}
+            {getIngredientsErorr ? (<Message variant='danger'>{getIngredientsErorr}</Message>) :
+                (ingredients &&
+                    (
                         ingredients.length === 0 ? (
                             <>
                                 <Message variant='danger'>You don't have any ingredient in your bar</Message>
@@ -70,8 +71,8 @@ const MyIngredientsScreen = ({ history }) => {
                                 </ListGroup>
                             </>
                     )
-                    }</>
-            )
+                )
+
             }
         </>
     )

@@ -122,11 +122,17 @@ const addCocktail = asyncHandler(async (req, res) => {
                             throw new Error(`Could not find ${ingredient.name} in the system, add ${ingredient.name} to the ingredients first`)
                         }
                     })
+
                     const ingredientsForCocktail = ingredientsFromDB.map(ingredient => {
                         return { name: ingredient.name, image: ingredient.image, sub_category: ingredient.sub_category, ingredient: ingredient._id }
                     })
                     const newCocktail = new Cocktail({ name: name, rating: 0, numReviews: 0, image: image, ingredients: ingredientsForCocktail, steps: filterdSteps })
                     const createdCocktail = await newCocktail.save()
+                    //add cocktail to all its ingredients
+                    for (const ingredient of ingredientsFromDB) {
+                        ingredient.cocktails.push({ name: createdCocktail.name, image: createdCocktail.image, cocktail: createdCocktail._id })
+                        await ingredient.save()
+                    }
                     if (createdCocktail) {
                         res.status(200).json({ id: createdCocktail._id, name: createdCocktail.name, message: `${name} was added to our bar` })
                     } else {
@@ -149,6 +155,13 @@ const addCocktail = asyncHandler(async (req, res) => {
 const deleteCocktail = asyncHandler(async (req, res) => {
     const cocktail = await Cocktail.findById(req.body.id)
     if (cocktail) {
+        const cocktailIngredients = cocktail.ingredients
+        for (const ingredient of cocktailIngredients) {
+            const currIng = await Ingredient.findById(ingredient.ingredient)
+            currIng.cocktails = currIng.cocktails.filter(c => c.cocktail.toString() !== cocktail._id.toString())
+            await currIng.save();
+        }
+
         const deleted = await Cocktail.deleteOne({ _id: cocktail._id })
         if (deleted) {
             res.status(200).json({ message: 'Successfully deleted' })
@@ -162,4 +175,12 @@ const deleteCocktail = asyncHandler(async (req, res) => {
     }
 })
 
-export { getCocktails, getCocktailById, addReview, getReviews, addCocktail, deleteCocktail }
+// @description Fetch the yop rated products
+// @route       GET /api/cocktails/top
+// @access      Public
+const getTopRatedCocktails = asyncHandler(async (req, res) => {
+    const cocktails = await Cocktail.find({}).sort('-rating').limit(3)
+    res.json({ cocktails })
+})
+
+export { getCocktails, getCocktailById, addReview, getReviews, addCocktail, deleteCocktail, getTopRatedCocktails }
