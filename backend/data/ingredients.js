@@ -61,14 +61,26 @@ const ingredients = [
         sub_category: 'Rum'
     },
     {
+        name: 'Captain Morgan Spiced Gold',
+        image: '/images/captain-morgan-spiced-gold-rum.jpg',
+        category: 'alcohol',
+        sub_category: 'Rum'
+    },
+    {
         name: 'Jose Cuervo Silver',
         image: '/images/joseCuervoSilver.jpg',
         category: 'alcohol',
         sub_category: 'Tequila'
     },
     {
-        name: 'Triple sec',
-        image: '/images/tripleSec.jpg',
+        name: 'Jose Cuervo Gold',
+        image: '/images/Jose-Cuervo-Reposado.jpg',
+        category: 'alcohol',
+        sub_category: 'Tequila'
+    },
+    {
+        name: 'The Kuyper',
+        image: '/images/theKuyper.jpg',
         category: 'alcohol',
         sub_category: 'Liqueur'
     },
@@ -85,6 +97,12 @@ const ingredients = [
         sub_category: 'Brandy'
     },
     {
+        name: 'Hennessy VSOP',
+        image: '/images/hennessy_VSOP.jpg',
+        category: 'alcohol',
+        sub_category: 'Cognac'
+    },
+    {
         name: 'Bombay Sapphire',
         image: '/images/bombaySapphire.jpg',
         category: 'alcohol',
@@ -93,6 +111,19 @@ const ingredients = [
     {
         name: 'Jamson',
         image: '/images/jamson.jpg',
+        category: 'alcohol',
+        sub_category: 'Whiskey'
+
+    },
+    {
+        name: 'Wild Turkey',
+        image: '/images/wild_turkey.jpg',
+        category: 'alcohol',
+        sub_category: 'Whiskey'
+    },
+    {
+        name: 'Johnnie Walker Double Black',
+        image: '/images/johnnie_walker_double_black.jpg',
         category: 'alcohol',
         sub_category: 'Whiskey'
 

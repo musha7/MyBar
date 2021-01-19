@@ -248,6 +248,7 @@ const removeIngredientFromUser = asyncHandler(async (req, res) => {
 const getUserCocktails = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id)
     const userIngredients = user.ingredients
+    //TODO: add here ingredient change**********************************************************************************
     const allCocktails = await Cocktail.find({})
     // const currUserCocktails = user.cocktails
     // const cocktailsToCheck = allCocktails.filter((cocktail)=> {
