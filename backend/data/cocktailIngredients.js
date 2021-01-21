@@ -29,7 +29,7 @@ const cocktailIngredients = [
         ingredients: ['Wild Turkey']
     },
     {
-        name: 'Scotch Whisky',
+        name: 'Scotch Whiskey',
         image: '/images/johnnie_walker_double_black.jpg',
         category: 'Whiskey',
         ingredients: ['Johnnie Walker Double Black']

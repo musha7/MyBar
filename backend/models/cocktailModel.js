@@ -52,11 +52,20 @@ const cocktailSchema = mongoose.Schema({
     {
       name: { type: String, required: true },
       image: { type: String, required: true },
-      category: { type: String, },
+      category: {
+        name: { type: String },
+        category: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'CocktailIngredientCategory'
+        },
+      },
       ingredient: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'CocktailIngredient'
+      },
+      ingredient: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ingredient'
       }
     }
   ],

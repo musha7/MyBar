@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Image, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { getUserCocktails, getUserProfile } from '../actions/userActions';
+import { getUserCocktails } from '../actions/userActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { Link } from 'react-router-dom';

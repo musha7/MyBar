@@ -5,9 +5,9 @@ const cocktailIngredientCategorySchema = mongoose.Schema({
         type: String,
         required: true
     },
-    sub_category: [{
+    subCategory: [{
         name: { type: String, required: true },
-        sub_category: {
+        subCategory: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'CocktailIngredient'

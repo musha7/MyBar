@@ -33,8 +33,8 @@ const IngredientsScreen = ({ history }) => {
         }
     }, [dispatch, ChangeInBarMessage, ChangeInBarError, ingredients.length])
 
-    const alcoholIngredients = ingredients.filter(ing => ing.category === 'alcohol');
-    const notAlcoholIngredients = ingredients.filter(ing => ing.category !== 'alcohol');
+    const alcoholIngredients = ingredients.filter(ing => ing.alcoholic)
+    const notAlcoholIngredients = ingredients.filter(ing => !ing.alcoholic)
     const addHandle = (e, ingredient) => {
         if (userInfo) {
             dispatch(addIngredientToUser(ingredient._id))

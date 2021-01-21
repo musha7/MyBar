@@ -1,15 +1,15 @@
 const cocktailIngredientCategory = [
     {
         name: 'Rum',
-        sub_category: ['White Rum', 'Spiced Rum']
+        subCategory: ['White Rum', 'Spiced Rum']
     },
     {
         name: 'Whiskey',
-        sub_category: ['Irish Whiskey', 'Bourbon Whiskey', 'Scotch Whisky']
+        subCategory: ['Irish Whiskey', 'Bourbon Whiskey', 'Scotch Whiskey']
     },
     {
         name: 'Tequila',
-        sub_category: ['Blanco Tequila', 'Reposado Tequila']
+        subCategory: ['Blanco Tequila', 'Reposado Tequila']
     },
 ]
 

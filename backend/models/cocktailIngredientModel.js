@@ -9,15 +9,10 @@ const cocktailIngredientSchema = mongoose.Schema({
         type: String,
         required: true
     },
-
-    // category: {
-    //     type: String,
-    // },
     category: {
         name: { type: String },
         category: {
             type: mongoose.Schema.Types.ObjectId,
-
             ref: 'CocktailIngredientCategory'
         }
     },

@@ -24,7 +24,20 @@ const userSchema = mongoose.Schema({
     ingredients: [{
         name: { type: String, required: true },
         image: { type: String, required: true },
-        sub_category: { type: String },
+        subCategory: {
+            name: { type: String },
+            subCategory: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'CocktailIngredient'
+            },
+        },
+        category: {
+            name: { type: String },
+            category: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'CocktailIngredientCategory'
+            },
+        },
         ingredient: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,

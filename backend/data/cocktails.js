@@ -113,8 +113,6 @@ const cocktails = [
             'Stir gently',
         ]
     },
-
-
 ]
 
 export default cocktails

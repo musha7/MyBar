@@ -26,8 +26,10 @@ const importData = async () => {
         await CocktailIngredient.deleteMany();
         await CocktailIngredientCategory.deleteMany();
 
-        const createdIngredients = await Ingredient.insertMany(ingredients);
         await User.insertMany(users);
+
+        const createdIngredients = await Ingredient.insertMany(ingredients);
+
         // Cocktail Ingredient:
         const sampleCocktailIngredients = cocktailIngredients.map(cIngredinet => {
             const ingredientsObj = cIngredinet.ingredients.map(ing =>
@@ -44,74 +46,86 @@ const importData = async () => {
 
         // Cocktail Ingredient Category:
         const sampleCategoryies = cocktailIngredientCategory.map(cat => {
-            let subCategoryObj = cat.sub_category.map(sub =>
+            let subCategoryObj = cat.subCategory.map(sub =>
                 createdCocktailIngredients.find(f => f.name.toLowerCase() === sub.toLowerCase()))
-            subCategoryObj = subCategoryObj.map(cat => ({ name: cat.name, sub_category: cat._id }))
+            subCategoryObj = subCategoryObj.map(cat => ({ name: cat.name, subCategory: cat._id }))
             return {
                 ...cat,
-                sub_category: subCategoryObj
+                subCategory: subCategoryObj
             }
         })
         const createdCocktailIngredientsCategory = await CocktailIngredientCategory.insertMany(sampleCategoryies);
-        //console.log('createdCocktailIngredientsCategory: ', createdCocktailIngredientsCategory)
+
         // Cocktail Ingredient Update(add categories):
         for (const createdCIngredient of createdCocktailIngredients) {
-            let sub_category_name = createdCIngredient.name
-
-            let categoryObj = createdCocktailIngredientsCategory.find(cat => cat.name === sub_category_name.split(' ')[1])
-            //console.log('categoryObj: ', categoryObj)
+            let subCategory_name = createdCIngredient.name
+            let categoryObj = createdCocktailIngredientsCategory.find(cat => cat.name === subCategory_name.split(' ')[1])
             if (categoryObj) {
                 categoryObj = { name: categoryObj.name, category: categoryObj._id }
-                createdCIngredient.category = categoryObj
+                await CocktailIngredient.updateOne({ _id: createdCIngredient._id }, { category: categoryObj })
             }
         }
-        // const createdCocktailIngredientsUpdated = createdCocktailIngredients.map(createdCIngredient => {
-        //     let sub_category_name = createdCIngredient.name
 
-        //     let categoryObj = createdCocktailIngredientsCategory.find(cat => cat.name === sub_category_name.split(' ')[1])
-        //     //console.log('categoryObj: ', categoryObj)
-        //     if (categoryObj) {
-        //         categoryObj = { name: categoryObj.name, category: categoryObj._id }
-        //         return {
-        //             ...createdCIngredient,
-        //             category: categoryObj
-        //         }
-        //     } else {
-        //         return createdCIngredient
-        //     }
-
-        // })
-        console.log('createdCocktailIngredients: ', createdCocktailIngredients)
-        for (const ing of createdCocktailIngredients) {
-            await CocktailIngredient.updateOne({ _id: ing._id }, { category: ing.category })
+        // Ingredient Update(add categories and sub categories):
+        for (const ingredient of createdIngredients) {
+            if (ingredient.subCategory.name) {
+                let subCategoryObj = createdCocktailIngredients.find(sub => sub.name === ingredient.subCategory.name)
+                subCategoryObj = { name: subCategoryObj.name, subCategory: subCategoryObj._id }
+                //console.log('subCategoryObj:', subCategoryObj);
+                await Ingredient.updateOne({ _id: ingredient._id }, { subCategory: subCategoryObj })
+            }
+            if (ingredient.category.name) {
+                let categoryObj = createdCocktailIngredientsCategory.find(cat => cat.name === ingredient.category.name)
+                categoryObj = { name: categoryObj.name, category: categoryObj._id }
+                await Ingredient.updateOne({ _id: ingredient._id }, { category: categoryObj })
+            }
         }
-        //const c = await CocktailIngredient.updateMany(createdCocktailIngredients)
-
 
         //Cocktails:
+        const updatedIngredients = await Ingredient.find({})
+        const updatedCocktailIngredients = await CocktailIngredient.find({})
         const sampleCocktails = cocktails.map((cocktail) => {
-            let cocktailIngredientsObj = cocktail.simpleIngredients.map(ing => (
-                createdCocktailIngredients.find(f => f.name.toLowerCase() === ing.toLowerCase())
-            ))
-            cocktailIngredientsObj = cocktailIngredientsObj.filter(cocktail => cocktail !== undefined)
-
-            // add the not alcoholic ingredients
-            for (const ing of cocktail.simpleIngredients) {
-                const found = createdIngredients.find(f => f.name.toLowerCase() === ing.toLowerCase())
-                if (found) {
-                    cocktailIngredientsObj.push(found)
+            let cocktailIngredientsObj = cocktail.simpleIngredients.map(ing => {
+                const foundCocktailIngredient = updatedCocktailIngredients.find(f => f.name.toLowerCase() === ing.toLowerCase())
+                if (foundCocktailIngredient) { // add the alcoholic ingredients
+                    return foundCocktailIngredient
                 }
-            }
+                else { // add the not alcoholic ingredients
+                    return updatedIngredients.find(f => f.name.toLowerCase() === ing.toLowerCase())
+                }
+            })
+            //cocktailIngredientsObj = cocktailIngredientsObj.filter(cocktail => cocktail !== undefined)
 
-            const cocktailIngredients = cocktailIngredientsObj.map(i => (
-                { name: i.name, image: i.image, sub_category: i.sub_category, ingredient: i._id }
-            ))
+            const cocktailIngredients = cocktailIngredientsObj.map(i => {
+                if (i.category) {
+                    return { name: i.name, image: i.image, category: i.category, ingredient: i._id }
+                } else {
+                    return { name: i.name, image: i.image, ingredient: i._id }
+                }
+            })
             return {
                 ...cocktail,
                 ingredients: cocktailIngredients
             }
         })
-        await Cocktail.insertMany(sampleCocktails);
+        const createdCocktail = await Cocktail.insertMany(sampleCocktails);
+        for (const ingredient of updatedIngredients) {
+            let foundCocktails = []
+
+            const ingredientCocktails = ingredients.find(ing => ing.name === ingredient.name)
+            console.log('ingredientCocktails: ', ingredientCocktails);
+            for (const cocktail of ingredientCocktails.simpleCocktails) {
+
+                let foundCocktail = createdCocktail.find(c => c.name === cocktail)
+                console.log('foundCocktail: ', foundCocktail);
+                if (foundCocktail) {
+                    foundCocktail = { name: foundCocktail.name, image: foundCocktail.image, cocktail: foundCocktail._id }
+                    foundCocktails.push(foundCocktail)
+                }
+            }
+            console.log('foundCocktails: ', foundCocktails);
+            await Ingredient.updateOne({ _id: ingredient._id }, { cocktails: foundCocktails })
+        }
 
         console.log('Data Imported!'.green.inverse);
         process.exit();
