@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer'
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getIngredientsList } from '../actions/ingredientAction'
+import { getIngredientsList, getCocktailIngredientsList } from '../actions/ingredientAction'
 import { getCocktailsList, addCocktail } from '../actions/cocktailActions'
 import { Link } from 'react-router-dom';
 
@@ -29,8 +29,17 @@ const AddCocktailScreen = ({ history }) => {
     const cocktailAddToApp = useSelector(state => state.cocktailAddToApp);
     const { loading, error, success, payload } = cocktailAddToApp;
 
-    const alcoholIngredients = listOfIngredients.filter(ing => ing.category === 'alcohol');
-    const notAlcoholIngredients = listOfIngredients.filter(ing => ing.category !== 'alcohol');
+    const cocktailIngredientList = useSelector(state => state.cocktailIngredientList);
+    const { loading: cocktailIngredientLoading, error: cocktailIngredientError, cocktailIngredients } = cocktailIngredientList;
+
+
+    // const alcoholIngredients = cocktailIngredients.find(c => c.name !== 'Liqueur')
+    // let liqueurs = cocktailIngredients.find(c => c.name === 'Liqueur')
+    // if (liqueurs) {
+    //     liqueurs = liqueurs.ingredients
+    // }
+
+    const notAlcoholIngredients = listOfIngredients.filter(ing => !ing.alcoholic);
 
     const dispatch = useDispatch()
 
@@ -54,6 +63,9 @@ const AddCocktailScreen = ({ history }) => {
         if (listOfIngredients.length === 0) {
             dispatch(getIngredientsList())
         }
+        if (cocktailIngredients.length === 0) {
+            dispatch(getCocktailIngredientsList())
+        }
 
         if (success) {
             setAddMessage(payload.message)
@@ -69,7 +81,7 @@ const AddCocktailScreen = ({ history }) => {
             dispatch(getCocktailsList())
         }
 
-    }, [dispatch, history, userInfo, numOfSteps, ingredients, listOfIngredients.length, success, payload])
+    }, [dispatch, history, userInfo, numOfSteps, ingredients, listOfIngredients.length, success, payload, cocktailIngredients.length])
 
     const handleInputStep = (e, i) => {
         const s = [...steps]
@@ -123,72 +135,81 @@ const AddCocktailScreen = ({ history }) => {
                         <Form.Control type="text" placeholder="Image url" required
                             value={image} onChange={(e) => setImage(e.target.value)} />
                     </Form.Group>
-                    {ingredientsLoading ? <Loader /> :
-                        ingredientsError ? <Message variant="danger">{ingredientsError}</Message> : (
-                            <>
-                                <Form.Row>
-                                    <Col>
-                                        <Form.Group controlId="alcoholIngredient">
-                                            <Form.Label><strong>Alcoholic Ingredients</strong></Form.Label>
-                                            <Form.Control
-                                                as="select"
-                                                custom
-                                                onChange={(e) => setCurrIngredient(e.target.value)}
-                                            >
-                                                <option value="">Choose Ingredient</option>
-                                                {alcoholIngredients.map(ing => (
-                                                    <option key={ing._id} value={ing.name}>{ing.name}</option>
-                                                ))}
-
-                                            </Form.Control>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col className="mt-3">
-                                        <Button className="mt-3" variant="info" type="button" onClick={() => addIngredient()}>
-                                            <i className="fas fa-plus-circle"></i>
-                                        </Button>
-                                    </Col>
-                                </Form.Row>
-
-                                <Form.Row>
-                                    <Col>
-                                        <Form.Group controlId="alcoholIngredient">
-                                            <Form.Label><strong>Not Alcoholic Ingredients</strong></Form.Label>
-                                            <Form.Control
-                                                as="select"
-                                                custom
-                                                onChange={(e) => setCurrIngredient(e.target.value)}
-                                            >
-                                                <option value="">Choose Ingredient</option>
-                                                {notAlcoholIngredients.map(ing => (
-                                                    <option key={ing._id} value={ing.name}>{ing.name}</option>
-                                                ))}
-
-                                            </Form.Control>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col className="mt-3">
-                                        <Button className="mt-3" variant="info" type="button" onClick={() => addIngredient()}>
-                                            <i className="fas fa-plus-circle"></i>
-                                        </Button>
-                                    </Col>
-                                </Form.Row>
-                                {ingredients.length !== 0 && <strong> Added Ingredients </strong>}
-                                {ingredients.map((ing, index) => (
-                                    <Form.Row key={index} >
-                                        <Col >
-                                            {ing}
-                                        </Col>
+                    {(ingredientsLoading || cocktailIngredientLoading) ? <Loader /> :
+                        ingredientsError ? <Message variant="danger">{ingredientsError}</Message> :
+                            cocktailIngredientError ? <Message variant="danger">{cocktailIngredientError}</Message> : (
+                                <>
+                                    <Form.Row>
                                         <Col>
-                                            <Button variant="danger" type="button" onClick={() => removeIngredient(ing)}>
-                                                <i className="fas fa-minus-circle"></i>
+                                            <Form.Group controlId="alcoholIngredient">
+                                                <Form.Label><strong>Alcoholic Ingredients</strong></Form.Label>
+                                                <Form.Control
+                                                    as="select"
+                                                    custom
+                                                    onChange={(e) => setCurrIngredient(e.target.value)}
+                                                >
+                                                    <option value="">Choose Ingredient</option>
+                                                    {cocktailIngredients.map(ing => {
+                                                        if (ing.name !== 'Liqueur') {
+                                                            return <option key={ing._id} value={ing.name}>{ing.name}</option>
+                                                        }
+                                                        else {
+                                                            return ing.ingredients.map(liqueur => (
+                                                                <option key={liqueur._id} value={liqueur.name}>{liqueur.name}</option>
+                                                            ))
+                                                        }
+
+                                                    })}
+
+                                                </Form.Control>
+                                            </Form.Group>
+                                        </Col>
+                                        <Col className="mt-3">
+                                            <Button className="mt-3" variant="info" type="button" onClick={() => addIngredient()}>
+                                                <i className="fas fa-plus-circle"></i>
                                             </Button>
                                         </Col>
                                     </Form.Row>
 
-                                ))}
-                            </>
-                        )
+                                    <Form.Row>
+                                        <Col>
+                                            <Form.Group controlId="alcoholIngredient">
+                                                <Form.Label><strong>Not Alcoholic Ingredients</strong></Form.Label>
+                                                <Form.Control
+                                                    as="select"
+                                                    custom
+                                                    onChange={(e) => setCurrIngredient(e.target.value)}
+                                                >
+                                                    <option value="">Choose Ingredient</option>
+                                                    {notAlcoholIngredients.map(ing => (
+                                                        <option key={ing._id} value={ing.name}>{ing.name}</option>
+                                                    ))}
+
+                                                </Form.Control>
+                                            </Form.Group>
+                                        </Col>
+                                        <Col className="mt-3">
+                                            <Button className="mt-3" variant="info" type="button" onClick={() => addIngredient()}>
+                                                <i className="fas fa-plus-circle"></i>
+                                            </Button>
+                                        </Col>
+                                    </Form.Row>
+                                    {ingredients.length !== 0 && <strong> Added Ingredients </strong>}
+                                    {ingredients.map((ing, index) => (
+                                        <Form.Row key={index} >
+                                            <Col >
+                                                {ing}
+                                            </Col>
+                                            <Col>
+                                                <Button variant="danger" type="button" onClick={() => removeIngredient(ing)}>
+                                                    <i className="fas fa-minus-circle"></i>
+                                                </Button>
+                                            </Col>
+                                        </Form.Row>
+
+                                    ))}
+                                </>
+                            )
                     }
                     <Form.Row >
                         <FormLabel className='ml-1'>Don't have an ingredient?

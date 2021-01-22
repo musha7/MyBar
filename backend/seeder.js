@@ -109,21 +109,19 @@ const importData = async () => {
             }
         })
         const createdCocktail = await Cocktail.insertMany(sampleCocktails);
+
+        //Add cocktails to Ingredients
         for (const ingredient of updatedIngredients) {
             let foundCocktails = []
-
             const ingredientCocktails = ingredients.find(ing => ing.name === ingredient.name)
-            console.log('ingredientCocktails: ', ingredientCocktails);
             for (const cocktail of ingredientCocktails.simpleCocktails) {
-
                 let foundCocktail = createdCocktail.find(c => c.name === cocktail)
-                console.log('foundCocktail: ', foundCocktail);
                 if (foundCocktail) {
                     foundCocktail = { name: foundCocktail.name, image: foundCocktail.image, cocktail: foundCocktail._id }
                     foundCocktails.push(foundCocktail)
                 }
             }
-            console.log('foundCocktails: ', foundCocktails);
+
             await Ingredient.updateOne({ _id: ingredient._id }, { cocktails: foundCocktails })
         }
 

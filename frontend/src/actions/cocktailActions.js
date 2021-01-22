@@ -80,7 +80,7 @@ export const deleteCocktail = (id) => async (dispatch, getState) => {
             headers: { 'Authorization': `Bearer ${userInfo.token}` },
             data: { id: id }
         }
-
+        console.log('deleteCocktail');
         const { data } = await axios.delete('/api/cocktails', config)
 
         dispatch({ type: 'COCKTAIL_DELETE_SUCCESS', payload: data })

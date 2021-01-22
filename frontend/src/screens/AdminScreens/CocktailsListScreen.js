@@ -34,7 +34,6 @@ const CocktailsListScreen = ({ history }) => {
     }, [dispatch, history, userInfo, cocktails.length, cocktailDeleteSuccess])
 
     const handleDeleteCocktail = (id) => {
-        console.log(id);
         dispatch(deleteCocktail(id))
     }
     const handleEditCocktail = (id) => { }

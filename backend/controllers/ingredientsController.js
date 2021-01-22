@@ -65,14 +65,12 @@ const addIngredient = asyncHandler(async (req, res) => {
             cocktails = cocktails.map(cocktail => {
                 found = undefined
                 cocktail.ingredients.forEach(ingredient => {
-                    //console.log('ingredient: ', ingredient)
-
                     if (sub) {
                         if (ingredient.ingredient.toString() !== liqueur._id.toString() && ingredient.ingredient.toString() === sub._id.toString()) {
                             found = { name: cocktail.name, image: cocktail.image, cocktail: cocktail._id }
                         }
                         else {
-                            if (ingredient.category.category && ingredient.category.category.toString() === sub.category.category.toString()) {
+                            if (ingredient.category.category && sub.category.category && ingredient.category.category.toString() === sub.category.category.toString()) {
                                 found = { name: cocktail.name, image: cocktail.image, cocktail: cocktail._id }
                             }
                         }
@@ -86,7 +84,6 @@ const addIngredient = asyncHandler(async (req, res) => {
                 return found
             })
             cocktails = cocktails.filter(cocktail => cocktail !== undefined)
-            console.log('cocktails:', cocktails);
             let ingsub;
             let ingcat;
             if (sub) {
@@ -94,9 +91,14 @@ const addIngredient = asyncHandler(async (req, res) => {
                 if (sub.category) {
                     ingcat = { name: sub.category.name, category: sub.category.category }
                 }
+
             }
             const newIngredient = new Ingredient({ name: name, image: image, alcoholic: alcoholic, category: ingcat, subCategory: ingsub, cocktails: cocktails })
             const createdIngredient = await newIngredient.save()
+            if (sub) {
+                sub.ingredients.push({ name: createdIngredient.name, ingredient: createdIngredient._id })
+                await sub.save()
+            }
             if (createdIngredient) {
                 res.status(200).json({ message: `${name} was added to our bar` })
             } else {
@@ -117,6 +119,14 @@ const addIngredient = asyncHandler(async (req, res) => {
 const deleteIngredient = asyncHandler(async (req, res) => {
     const ingredient = await Ingredient.findById(req.body.id)
     if (ingredient) {
+        const ingSubCategory = ingredient.subCategory
+        if (ingSubCategory) { // delete ingredient from CocktailIngredient
+            const subCategory = await CocktailIngredient.findById(ingSubCategory.subCategory)
+            if (subCategory) {
+                const filteredIngredientsSub = subCategory.ingredients.filter(ing => ing.ingredient.toString() !== ingredient._id.toString())
+                await CocktailIngredient.updateOne({ _id: subCategory._id }, { ingredients: filteredIngredientsSub })
+            }
+        }
         const deleted = await Ingredient.deleteOne({ _id: ingredient._id })
         if (deleted) {
             res.status(200).json({ message: 'Successfully deleted' })

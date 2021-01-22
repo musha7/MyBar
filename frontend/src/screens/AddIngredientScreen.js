@@ -25,15 +25,12 @@ const AddIngredientScreen = ({ history }) => {
     const cocktailIngredientList = useSelector(state => state.cocktailIngredientList);
     const { loading: cocktailIngredientLoading, error: cocktailIngredientError, cocktailIngredients } = cocktailIngredientList;
 
-
-
     const dispatch = useDispatch()
     useEffect(() => {
         if (!userInfo) {
             history.push('/')
         }
         if (cocktailIngredients.length === 0) {
-            console.log('in here:');
             dispatch(getCocktailIngredientsList())
         }
         if (success) {
