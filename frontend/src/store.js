@@ -1,7 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { cocktailListReducer, cocktailByIdReducer, cocktailAddToAppReducer, cocktailDeleteReducer, cocktailTopRatedReducer } from './reducers/cocktailReducer'
+import {
+    cocktailListReducer, cocktailByIdReducer, cocktailAddToAppReducer, cocktailDeleteReducer,
+    cocktailTopRatedReducer, cocktailUpdateReducer
+} from './reducers/cocktailReducer'
 import { ingredientListReducer, ingredientAddToAppReducer, ingredientDeleteReducer, cocktailIngredientListReducer } from './reducers/ingredientReducer'
 import {
     userRegisterReducer, userLoginReducer, userGetProfileReducer, userUpdateProfileReducer,
@@ -16,6 +19,7 @@ const reducer = combineReducers({
     cocktailAddToApp: cocktailAddToAppReducer,
     cocktailDelete: cocktailDeleteReducer,
     cocktailTopRated: cocktailTopRatedReducer,
+    cocktailUpdate: cocktailUpdateReducer,
     ingredientList: ingredientListReducer,
     ingredientAddToApp: ingredientAddToAppReducer,
     ingredientDelete: ingredientDeleteReducer,

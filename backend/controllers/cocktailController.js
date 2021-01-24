@@ -19,6 +19,7 @@ const getCocktails = asyncHandler(async (req, res) => {
 // @access      Public
 const getCocktailById = asyncHandler(async (req, res) => {
     const cocktail = await Cocktail.findById(req.params.id)
+    // console.log('cocktail:', cocktail);
     cocktail.ingredients.sort((a, b) => a.category < b.category ? -1 : 1)
     if (cocktail) {
         res.json({ cocktail })
@@ -230,4 +231,83 @@ const getTopRatedCocktails = asyncHandler(async (req, res) => {
     res.json({ cocktails })
 })
 
-export { getCocktails, getCocktailById, addReview, getReviews, addCocktail, deleteCocktail, getTopRatedCocktails }
+// @description Update a cocktail
+// @route       PUT /api/cocktails/:id
+// @access      Private, Admin
+const updateCocktail = asyncHandler(async (req, res) => {
+    const { name, image, ingredients, steps } = req.body
+    const cocktail = await Cocktail.findById(req.params.id)
+    const filterdSteps = steps.filter(step => step !== '')
+    const filterdIngredients = ingredients.filter(ing => ing !== '')
+
+    if (cocktail) {
+        cocktail.name = name || cocktail.name
+        cocktail.image = image || cocktail.image
+        cocktail.steps = filterdSteps || cocktail.steps
+        if (filterdIngredients.length > 0) {
+            const newIngredients = filterdIngredients.filter(ing => cocktail.ingredients.find(i => i.name === ing) ? false : true)
+            const prevIngredients = cocktail.ingredients.filter(ing => newIngredients.find(i => i.name === ing) ? false : true)
+
+            if (newIngredients.length > 0 || filterdIngredients.length !== cocktail.ingredients.length) { // update ingredinets only if there are new ingredients
+
+                let ingredientsFromDB = []
+                for (const ingredient of newIngredients) {
+                    let foundIngredient = await Ingredient.findOne({ name: ingredient })
+                    if (foundIngredient) {
+                        ingredientsFromDB.push(foundIngredient)
+
+                    } else {
+                        foundIngredient = await CocktailIngredient.findOne({ name: ingredient })
+                        if (foundIngredient) {
+                            ingredientsFromDB.push(foundIngredient)
+                        }
+                        else {
+                            res.status(400)
+                            throw new Error(`Could not find ${ingredient.name} in the system, add ${ingredient.name} to the ingredients first`)
+                        }
+                    }
+                }
+                const ingredientsForCocktail = ingredientsFromDB.map(ingredient => {
+                    if (ingredient.category.name) {
+                        const category = { name: ingredient.category.name, category: ingredient.category.category }
+                        return ({ name: ingredient.name, image: ingredient.image, category: category, ingredient: ingredient._id })
+                    }
+                    else {
+                        return { name: ingredient.name, image: ingredient.image, ingredient: ingredient._id }
+                    }
+
+                })
+                cocktail.ingredients = ingredientsForCocktail
+
+
+                //Update Ingredients:
+
+                //Remove the cocktail from the old ingredients:
+                for (const ingredient of prevIngredients) {
+                    let prevIngredient = await Ingredient.findById(ingredient.ingredient)
+                    if (prevIngredient) {
+                        prevIngredient.cocktails = prevIngredient.cocktails.filter(c => c.cocktail.toString() !== cocktail._id.toString())
+                        await prevIngredient.save()
+                    }
+                }
+                const cocktailObj = { name: cocktail.name, image: cocktail.image, cocktail: cocktail._id }
+                //Add the cocktail to the new ingredients:
+                for (const ingredient of ingredientsFromDB) {
+                    if (ingredient.cocktails) {
+                        ingredient.cocktails.push(cocktailObj)
+                        await ingredient.save()
+                    }
+                }
+            }
+        }
+        await cocktail.save()
+        res.status(200).json({ message: `${cocktail.name} updated` })
+    }
+    else {
+        res.status(401)
+        throw new Error('Cocktail Not Found')
+    }
+
+})
+
+export { getCocktails, getCocktailById, addReview, getReviews, addCocktail, deleteCocktail, getTopRatedCocktails, updateCocktail }

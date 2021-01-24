@@ -112,3 +112,28 @@ export const getTopRatedCocktails = () => async (dispatch) => {
         })
     }
 }
+
+export const updateCocktail = (id, name, image, ingredients, steps) => async (dispatch, getState) => {
+    try {
+
+        dispatch({ type: 'COCKTAIL_UPDATE_REQUEST' });
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` }
+        }
+
+        const { data } = await axios.put(`/api/cocktails/${id}`, { name, image, ingredients, steps }, config)
+        console.log(data);
+        dispatch({ type: 'COCKTAIL_UPDATE_SUCCESS', payload: data })
+
+    } catch (error) {
+        dispatch({
+            type: 'COCKTAIL_UPDATE_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}

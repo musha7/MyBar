@@ -23,7 +23,7 @@ const AddIngredientScreen = ({ history }) => {
     const { loading, error, success, message } = ingredientAddToApp;
 
     const cocktailIngredientList = useSelector(state => state.cocktailIngredientList);
-    const { loading: cocktailIngredientLoading, error: cocktailIngredientError, cocktailIngredients } = cocktailIngredientList;
+    const { error: cocktailIngredientError, cocktailIngredients } = cocktailIngredientList;
 
     const dispatch = useDispatch()
     useEffect(() => {
