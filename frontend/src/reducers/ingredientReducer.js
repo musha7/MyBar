@@ -54,3 +54,17 @@ export const ingredientDeleteReducer = (state = {}, action) => {
             return state;
     }
 }
+
+export const ingredientTopUsedReducer = (state = { ingredients: [] }, action) => {
+    console.log('action.payload:', action.payload);
+    switch (action.type) {
+        case 'INGREDIENT_TOP_USED_LIST_REQUEST':
+            return { loading: true, ingredients: [] }
+        case 'INGREDIENT_TOP_USED_LIST_SUCCESS':
+            return { loading: false, ingredients: action.payload.topIngredients }
+        case 'INGREDIENT_TOP_USED_LIST_FAIL':
+            return { loading: false, error: action.payload }
+        default:
+            return state;
+    }
+}

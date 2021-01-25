@@ -5,7 +5,7 @@ import {
     cocktailListReducer, cocktailByIdReducer, cocktailAddToAppReducer, cocktailDeleteReducer,
     cocktailTopRatedReducer, cocktailUpdateReducer
 } from './reducers/cocktailReducer'
-import { ingredientListReducer, ingredientAddToAppReducer, ingredientDeleteReducer, cocktailIngredientListReducer } from './reducers/ingredientReducer'
+import { ingredientListReducer, ingredientAddToAppReducer, ingredientDeleteReducer, cocktailIngredientListReducer, ingredientTopUsedReducer } from './reducers/ingredientReducer'
 import {
     userRegisterReducer, userLoginReducer, userGetProfileReducer, userUpdateProfileReducer,
     userIngredientChangeReducer, userGetIngredientsReducer, userGetCocktailsReducer, usersListReducer,
@@ -24,6 +24,7 @@ const reducer = combineReducers({
     ingredientAddToApp: ingredientAddToAppReducer,
     ingredientDelete: ingredientDeleteReducer,
     cocktailIngredientList: cocktailIngredientListReducer,
+    ingredientTopUsed: ingredientTopUsedReducer,
     userIngredientChange: userIngredientChangeReducer,
     userRegister: userRegisterReducer,
     userLogin: userLoginReducer,

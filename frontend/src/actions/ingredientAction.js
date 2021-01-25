@@ -85,3 +85,22 @@ export const deleteIngredient = (id) => async (dispatch, getState) => {
         })
     }
 }
+
+export const getTopUsedIngredientsList = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: '' });
+
+        const { data } = await axios.get('/api/ingredients/top')
+
+        dispatch({ type: 'INGREDIENT_TOP_USED_LIST_SUCCESS', payload: data })
+
+    } catch (error) {
+        dispatch({
+            type: 'INGREDIENT_TOP_USED_LIST_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}

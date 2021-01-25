@@ -141,27 +141,39 @@ const deleteIngredient = asyncHandler(async (req, res) => {
 })
 
 // @description Fetch all ingredients
-// @route       GET /api/ingredients
+// @route       GET /api/ingredients/top
 // @access      Public
 const getTopUsedIngredients = asyncHandler(async (req, res) => {
-    const ingredients = await Ingredient.find({})
+    const ingredients = await CocktailIngredient.find({})
     const cocktails = await Cocktail.find({})
     let ingredientMap = new Map()
-    ingredients.forEach(ingredient => {
-        if (!ingredientMap.has(ingredient.name)) {
-            ingredientMap.set(ingredient.name, 0)
+    for (const ingredient of ingredients) {
+        if (!ingredientMap.has(ingredient) && ingredient.name !== 'Liqueur') {
+            ingredientMap.set(ingredient, 0)
         }
-    });
+    }
+    const liqueur = ingredients.find(ing => ing.name === 'Liqueur')
+    for (const ingredient of liqueur.ingredients) {
+        if (!ingredientMap.has(ingredient)) {
+            ingredientMap.set(ingredient, 0)
+        }
+    }
     cocktails.forEach(cocktail => {
         cocktail.ingredients.forEach(ingredient => {
-            if (ingredientMap.has(ingredient.name)) {
-                ingredientMap.set(ingredient.name, ingredientMap.get(ingredient.name) + 1)
+            if (ingredientMap.has(ingredient)) {
+                ingredientMap.set(ingredient, ingredientMap.get(ingredient) + 1)
             }
         });
     });
-    console.log(ingredientMap);
+    //let sorted = ingredientMap.sort((a, b) => a.value - b.value)
+    const sortedMap = new Map([...ingredientMap.entries()].sort((a, b) => b[1] - a[1]));
+    const topIngredients = []
+    const keysIterator = sortedMap.keys()
+    for (let i = 0; i < 5; i++) {
+        topIngredients.push(keysIterator.next().value)
+    }
 
-    res.json({ ingredients })
+    res.status(200).json({ topIngredients })
 })
 
 export { getIngredients, getCocktailIngredients, getIngredientById, addIngredient, deleteIngredient, getTopUsedIngredients }
