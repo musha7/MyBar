@@ -89,7 +89,7 @@ export const deleteIngredient = (id) => async (dispatch, getState) => {
 export const getTopUsedIngredientsList = () => async (dispatch) => {
     try {
 
-        dispatch({ type: '' });
+        dispatch({ type: 'INGREDIENT_TOP_USED_LIST_REQUEST' });
 
         const { data } = await axios.get('/api/ingredients/top')
 

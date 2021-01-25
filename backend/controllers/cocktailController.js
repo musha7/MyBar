@@ -11,7 +11,6 @@ const getCocktails = asyncHandler(async (req, res) => {
     const cocktails = await Cocktail.find({})
 
     res.json({ cocktails })
-
 })
 
 // @description Get a cocktails by id
@@ -19,7 +18,6 @@ const getCocktails = asyncHandler(async (req, res) => {
 // @access      Public
 const getCocktailById = asyncHandler(async (req, res) => {
     const cocktail = await Cocktail.findById(req.params.id)
-    // console.log('cocktail:', cocktail);
     cocktail.ingredients.sort((a, b) => a.category < b.category ? -1 : 1)
     if (cocktail) {
         res.json({ cocktail })
@@ -113,39 +111,15 @@ const addCocktail = asyncHandler(async (req, res) => {
                     throw new Error('Add steps')
                 }
                 else {
-                    // let allIngredientsFromDb = await Ingredient.find({})
-                    // let cocktailIngredients = await CocktailIngredient.find({})
-                    // cocktailIngredients = cocktailIngredients.concat(allIngredientsFromDb)
-                    // console.log('cocktailIngredients: ', cocktailIngredients);
-
-                    // const ingredientsFromDB = filterdIngredients.map(ingredient => {
-                    //     const foundIngredient = allIngredientsFromDb.find(ing => ing.name.toString() === ingredient.toString())
-                    //     if (foundIngredient) {
-                    //         return foundIngredient
-                    //     }
-                    //     else {
-                    //         res.status(400)
-                    //         throw new Error(`Could not find ${ingredient.name} in the system, add ${ingredient.name} to the ingredients first`)
-                    //     }
-                    // })
                     let ingredientsFromDB = []
                     for (const ingredient of filterdIngredients) {
                         let foundIngredient = await Ingredient.findOne({ name: ingredient })
                         if (foundIngredient) {
                             ingredientsFromDB.push(foundIngredient)
-
-                            //ingredientsFromDB.push({ name: foundIngredient.name, image: foundIngredient.image, ingredient: foundIngredient._id })
                         } else {
                             foundIngredient = await CocktailIngredient.findOne({ name: ingredient })
                             if (foundIngredient) {
                                 ingredientsFromDB.push(foundIngredient)
-                                // if (foundIngredient.category.name) {
-                                //     const category = { name: foundIngredient.category.name, category: foundIngredient.category.category }
-                                //     ingredientsFromDB.push({ name: foundIngredient.name, image: foundIngredient.image, category: category, ingredient: foundIngredient._id })
-                                // }
-                                // else {
-                                //     ingredientsFromDB.push({ name: foundIngredient.name, image: foundIngredient.image, ingredient: foundIngredient._id })
-                                // }
                             }
                             else {
                                 res.status(400)
@@ -153,7 +127,6 @@ const addCocktail = asyncHandler(async (req, res) => {
                             }
                         }
                     }
-
                     console.log('ingredientsFromDB: ', ingredientsFromDB);
                     const ingredientsForCocktail = ingredientsFromDB.map(ingredient => {
                         if (ingredient.category.name) {
@@ -196,9 +169,7 @@ const addCocktail = asyncHandler(async (req, res) => {
 // @route       DELETE /api/cocktails
 // @access      Private, Admin
 const deleteCocktail = asyncHandler(async (req, res) => {
-    console.log('here:');
     const cocktail = await Cocktail.findById(req.body.id)
-    console.log('cocktail: ', cocktail);
     if (cocktail) {
         const cocktailIngredients = cocktail.ingredients
         for (const ingredient of cocktailIngredients) {
