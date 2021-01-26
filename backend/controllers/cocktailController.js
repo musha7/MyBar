@@ -59,7 +59,7 @@ const addReview = asyncHandler(async (req, res) => {
                 }
             } else {
                 res.status(400)
-                throw new Error('You already made a review for this cocktail. You can change it in your profile')
+                throw new Error('You already made a review for this cocktail.')
             }
 
         } else {

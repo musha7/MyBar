@@ -120,10 +120,6 @@ const AddCocktailScreen = ({ history }) => {
                         <Form.Control type="text" placeholder="Cocktail Name" required
                             value={name} onChange={(e) => setName(e.target.value)} />
                     </Form.Group>
-                    {/* <Form.Group controlId="image">
-                <Form.Label>Ingredient Image</Form.Label>
-                    <Form.File label="Ingredient Image" custom onChange={uploadFileHandler}/>
-                </Form.Group> */}
                     <Form.Group controlId="image">
                         <Form.Label><strong>Cocktail image url</strong></Form.Label>
                         <Form.Control type="text" placeholder="Image url" required
@@ -207,7 +203,7 @@ const AddCocktailScreen = ({ history }) => {
                     }
                     <Form.Row >
                         <FormLabel className='ml-1'>Don't have an ingredient?
-                            <Link to='/addIngredient'> add here!</Link>
+                            <Link className='btn btn-info ml-1' to='/addIngredient'> Add here!</Link>
                         </FormLabel>
                     </Form.Row>
 

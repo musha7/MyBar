@@ -264,11 +264,13 @@ const getUserCocktails = asyncHandler(async (req, res) => {
     if (user) {
         if (userIngredients) {
             // go through all available cocktails.
-            // for each go through thier ingredients,
+            // for each go through their ingredients,
             // and check if all of them are present in the user ingredients(or an ingredient from the same category)
             const liqueur = await CocktailIngredient.find({ name: 'Liqueur' })
+            let oneIngredientShortCockltails = []
             newUsersCocktails = allCocktails.filter((cocktail) => {
                 const numOfIngs = cocktail.ingredients.length
+                let absentIngredient = undefined;
                 const presentIngredients = cocktail.ingredients.filter((ing) => {
                     if (userIngredients.find((userIng => {
                         if (userIng.ingredient.toString() === ing.ingredient.toString()) {
@@ -290,22 +292,29 @@ const getUserCocktails = asyncHandler(async (req, res) => {
                     }))) {
                         return true
                     }
+                    absentIngredient = ing
                     return false
                 })
                 if (numOfIngs === presentIngredients.length) {
                     return true
                 }
-                return false
+                else {
+                    if (numOfIngs - 1 === presentIngredients.length && absentIngredient !== undefined) {
+                        oneIngredientShortCockltails.push({ cocktail, ingredient: absentIngredient })
+                    }
+                    return false
+                }
+
             })
             if (newUsersCocktails) {
                 user.cocktails = newUsersCocktails.map(newCocktail => { return { name: newCocktail.name, image: newCocktail.image, cocktail: newCocktail._id } })
                 await user.save()
             }
-            if (user.cocktails.length === 0) {
+            if (user.cocktails.length === 0 && oneIngredientShortCockltails.length === 0) {
                 res.status(400)
                 throw new Error('Sorry, You Do Not Have Enough Ingredients For Any Of Our Current Cocktails')
             }
-            res.status(200).json({ cocktails: user.cocktails })
+            res.status(200).json({ cocktails: user.cocktails, oneShort: oneIngredientShortCockltails })
         } else {
             res.status(400)
             throw new Error('No Ingredients In Your Bar')

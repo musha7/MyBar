@@ -42,6 +42,7 @@ const AddIngredientScreen = ({ history }) => {
             setAddSubCategory(false)
             dispatch({ type: 'INGREDIENT_ADD_TO_APP_RESET' })
             dispatch(getIngredientsList())
+            dispatch(getCocktailIngredientsList())
         }
         if (category === 'alcohol') {
             setAddSubCategory(true)

@@ -11,7 +11,7 @@ import {
     userIngredientChangeReducer, userGetIngredientsReducer, userGetCocktailsReducer, usersListReducer,
     userDeleteReducer
 } from './reducers/userReducer'
-import { reviewAddReducer, reviewsByCocktailReducer } from './reducers/reviewReducer'
+import { reviewAddReducer, reviewsByCocktailReducer, reviewUpdateReducer } from './reducers/reviewReducer'
 
 const reducer = combineReducers({
     cocktailList: cocktailListReducer,
@@ -35,7 +35,8 @@ const reducer = combineReducers({
     usersList: usersListReducer,
     userDelete: userDeleteReducer,
     reviewAdd: reviewAddReducer,
-    reviewsByCocktail: reviewsByCocktailReducer
+    reviewsByCocktail: reviewsByCocktailReducer,
+    reviewUpdate: reviewUpdateReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

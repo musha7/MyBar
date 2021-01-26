@@ -85,7 +85,6 @@ function SingleCocktailScreen({ match, history }) {
                                                 <Row key={review._id} className='p-3 m-3'>
                                                     <Col md={2}>
                                                         <h5>{review.user_name}:</h5>
-                                                        {/* {moment(review.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD HH:mm:ss')} */}
                                                     </Col>
                                                     <Col md={4}>
                                                         <ListGroup variant="flush">

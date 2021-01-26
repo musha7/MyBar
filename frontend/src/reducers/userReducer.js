@@ -79,12 +79,12 @@ export const userIngredientChangeReducer = (state = {}, action) => {
     }
 }
 
-export const userGetCocktailsReducer = (state = { cocktails: [] }, action) => {
+export const userGetCocktailsReducer = (state = { cocktails: [], oneShort: [] }, action) => {
     switch (action.type) {
         case 'USER_GET_COCKTAIL_REQUEST':
-            return { loading: true, cocktails: [] }
+            return { loading: true, cocktails: [], oneShort: [] }
         case 'USER_GET_COCKTAIL_SUCCESS':
-            return { loading: false, cocktails: action.payload.cocktails }
+            return { loading: false, cocktails: action.payload.cocktails, oneShort: action.payload.oneShort }
         case 'USER_GET_COCKTAIL_FAIL':
             return { loading: false, error: action.payload }
         case 'USER_GET_COCKTAIL_LOGOUT':
