@@ -4,7 +4,7 @@ Bar application by Michael Shlezinger
 Built with the MERN stack - Node.js, Express, Mongoose, React & Redux.
 
 A bar application where you can create your own bar with the ingredients you have at home. The app will give you the cocktails you can create with what you have.
-You can add new ingredients and cocktails to the app, that way everyone will see them.
+You can add new ingredients and cocktails to the app, that way everyone will see them. You can also review cocktails, and later on change your reviews in your profile if you changed your opinion about the cocktail
 
 ![Screenshot 2021-01-22 144829](https://user-images.githubusercontent.com/44841173/105493554-3656c880-5cc2-11eb-8475-942f1d535ff8.png)
 
