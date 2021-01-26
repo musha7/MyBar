@@ -131,7 +131,7 @@ const AddIngredientScreen = ({ history }) => {
                             {cocktailIngredients.map(CI => (
                                 <option key={CI._id} value={CI.name}>{CI.name}</option>
                             ))}
-                            <option value="Other">Other</option>
+
                         </Form.Control>
                     )}
 

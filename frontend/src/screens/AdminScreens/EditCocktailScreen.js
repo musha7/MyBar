@@ -159,7 +159,7 @@ const EditCocktailScreen = ({ match, history }) => {
             {cocktailByIdError ? (<Message variant='danger'>{cocktailByIdLoading}</Message>) :
                 cocktailByIdLoading ? <Loader /> : (<h1 className='text-center p-3'>Update {cocktail.name}</h1>)}
 
-            <FormContainer smd={9} sxs={15}>
+            <FormContainer md={9} xs={15}>
                 {(cocktailUpdateLoading) && <Loader />}
                 {cocktailUpdateError && (<Message variant='danger'>{cocktailUpdateError}</Message>)}
                 {updateMessage && (<Message variant='light'>{updateMessage}</Message>)}

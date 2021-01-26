@@ -125,78 +125,82 @@ const UserProfileScreen = ({ history }) => {
                         <hr className='m-3 p-3' />
                         <h3 className='m-3 p-3'> {userInfo.name.split(' ')[0]}'s Reviews</h3>
                         {reviews.map((review) => (
-                            <Row key={review._id} className=' m-3'>
-                                <Col md={2}><Image src={review.cocktail_image} alt={review.cocktail_name} fluid roundedCircle /></Col>
-                                <Col md={2}>
-                                    <Row><Link to={`/cocktails/${review.cocktail}`}><strong>{review.cocktail_name}</strong></Link></Row>
-                                    <Row>{moment(review.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD HH:mm:ss')}</Row>
-                                </Col>
-                                <Col md={4}>
-                                    <ListGroup variant="flush">
-                                        <ListGroupItem><Rating value={review.rating} /></ListGroupItem>
-                                        <ListGroupItem>{review.comment}</ListGroupItem>
-                                    </ListGroup>
-                                </Col>
-                                <Col>
-                                    <Button onClick={() => { setUpdateRevMessage(''); setReviewToUpdate(review._id) }}>Change Review</Button>
-                                </Col>
-                                {reviewToUpdate === review._id && (
-                                    <Form onSubmit={(e) => submitReviewHandler(e, review._id)}>
-                                        {reviewUpdateError && <Message variant='danger'>{reviewUpdateError}</Message>}
-                                        {updateRevMessage && <Message variant='light'>{updateRevMessage}</Message>}
-                                        <Form.Group controlId='rating'>
-                                            <Form.Label > <strong>Rating</strong> </Form.Label>
-                                            <Form.Check
-                                                type="radio"
-                                                label="1 - Was not tasty"
-                                                onChange={(e) => setRating(1)}
-                                                name='rating'
-                                                value={1}
-                                                checked={rating && rating === 1}
-                                            />
-                                            <Form.Check
-                                                type="radio"
-                                                label="2 - It was ok"
-                                                onChange={(e) => setRating(2)}
-                                                name='rating'
-                                                value={2}
-                                                checked={rating && rating === 2}
-                                            />
-                                            <Form.Check
-                                                type="radio"
-                                                label="3 - Pretty good"
-                                                onChange={(e) => setRating(3)}
-                                                name='rating'
-                                                value={3}
-                                                checked={rating && rating === 3}
-                                            />
-                                            <Form.Check
-                                                type="radio"
-                                                label="4 - Very good"
-                                                onChange={(e) => setRating(4)}
-                                                name='rating'
-                                                value={4}
-                                                checked={rating && rating === 4}
-                                            />
-                                            <Form.Check
-                                                type="radio"
-                                                label="5 - One of the best! I need one more"
-                                                onChange={(e) => setRating(5)}
-                                                name='rating'
-                                                value={5}
-                                                checked={rating && rating === 5}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group >
-                                            <Form.Label><strong>Write A Review</strong></Form.Label>
-                                            <Form.Control type="text" rows={3} placeholder="Write A Review" value={comment} onChange={(e) => setComment(e.target.value)} />
-                                        </Form.Group>
-                                        <Button variant="info" type="submit">
-                                            Update Review
+                            <>
+                                <Row key={review._id} className='m-3'>
+                                    <Col md={2} xs={4}><Image src={review.cocktail_image} alt={review.cocktail_name} fluid roundedCircle /></Col>
+                                    <Col md={2} xs={4}>
+                                        <Row><Link to={`/cocktails/${review.cocktail}`}><strong>{review.cocktail_name}</strong></Link></Row>
+                                        <Row>{moment(review.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD HH:mm:ss')}</Row>
+                                    </Col>
+                                    <Col md={3} xs={5}>
+                                        <ListGroup variant="flush">
+                                            <ListGroupItem><Rating value={review.rating} /></ListGroupItem>
+                                            <ListGroupItem>{review.comment}</ListGroupItem>
+                                        </ListGroup>
+                                    </Col>
+                                    <Col className='mt-3'>
+                                        <Button onClick={() => { setUpdateRevMessage(''); setReviewToUpdate(review._id) }}>Change Review</Button>
+                                    </Col>
+                                    {reviewToUpdate === review._id && (
+                                        <Form onSubmit={(e) => submitReviewHandler(e, review._id)}>
+                                            {reviewUpdateError && <Message variant='danger'>{reviewUpdateError}</Message>}
+                                            {updateRevMessage && <Message variant='light'>{updateRevMessage}</Message>}
+                                            <Form.Group controlId='rating'>
+                                                <Form.Label > <strong>Rating</strong> </Form.Label>
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="1 - Was not tasty"
+                                                    onChange={(e) => setRating(1)}
+                                                    name='rating'
+                                                    value={1}
+                                                    checked={rating && rating === 1}
+                                                />
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="2 - It was ok"
+                                                    onChange={(e) => setRating(2)}
+                                                    name='rating'
+                                                    value={2}
+                                                    checked={rating && rating === 2}
+                                                />
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="3 - Pretty good"
+                                                    onChange={(e) => setRating(3)}
+                                                    name='rating'
+                                                    value={3}
+                                                    checked={rating && rating === 3}
+                                                />
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="4 - Very good"
+                                                    onChange={(e) => setRating(4)}
+                                                    name='rating'
+                                                    value={4}
+                                                    checked={rating && rating === 4}
+                                                />
+                                                <Form.Check
+                                                    type="radio"
+                                                    label="5 - One of the best! I need one more"
+                                                    onChange={(e) => setRating(5)}
+                                                    name='rating'
+                                                    value={5}
+                                                    checked={rating && rating === 5}
+                                                />
+                                            </Form.Group>
+                                            <Form.Group >
+                                                <Form.Label><strong>Write A Review</strong></Form.Label>
+                                                <Form.Control type="text" rows={3} placeholder="Write A Review" value={comment} onChange={(e) => setComment(e.target.value)} />
+                                            </Form.Group>
+                                            <Button variant="info" type="submit">
+                                                Update Review
                                     </Button>
-                                    </Form>
-                                )}
-                            </Row>
+                                        </Form>
+                                    )}
+
+                                </Row>
+                                <hr className='m-3' />
+                            </>
                         ))}
                     </>
                 ))}

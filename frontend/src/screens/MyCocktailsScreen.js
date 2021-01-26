@@ -42,10 +42,10 @@ const MyCocktailsScreen = ({ history }) => {
                                         {cocktails.map((c) => (
                                             <ListGroupItem key={c._id}>
                                                 <Row>
-                                                    <Col md={2} >
+                                                    <Col md={2} xs={4}>
                                                         <Image src={`${c.image}`} alt={c.name} fluid roundedCircle />
                                                     </Col>
-                                                    <Col md={1}><h3><Link to={`/cocktails/${c.cocktail}`}><strong>{c.name}</strong></Link></h3></Col>
+                                                    <Col md={1} xs={3}><h3><Link to={`/cocktails/${c.cocktail}`}><strong>{c.name}</strong></Link></h3></Col>
                                                 </Row>
                                             </ListGroupItem>
                                         ))}
@@ -61,13 +61,13 @@ const MyCocktailsScreen = ({ history }) => {
                                                 {oneShort.map((c) => (
                                                     <ListGroupItem key={c.cocktail._id}>
                                                         <Row>
-                                                            <Col md={1} >
+                                                            <Col md={1} xs={3}>
                                                                 <Image src={`${c.cocktail.image}`} alt={c.cocktail.name} fluid roundedCircle />
                                                             </Col>
-                                                            <Col md={3}><h4><Link to={`/cocktails/${c.cocktail.cocktail}`}><strong>{c.cocktail.name}</strong></Link></h4></Col>
-                                                            <Col md={2}>Missing Ingredient: </Col>
-                                                            <Col md={1}><Image style={{ height: '50px' }} src={`${c.ingredient.image}`} alt={c.ingredient.name} fluid roundedCircle /> </Col>
-                                                            <Col md={1}>{c.ingredient.name}</Col>
+                                                            <Col md={3} xs={3}><h4><Link to={`/cocktails/${c.cocktail.cocktail}`}><strong>{c.cocktail.name}</strong></Link></h4></Col>
+                                                            <Col md={2} xs={2}>Missing Ingredient: </Col>
+                                                            <Col md={1} xs={2}><Image style={{ height: '50px' }} src={`${c.ingredient.image}`} alt={c.ingredient.name} fluid roundedCircle /> </Col>
+                                                            <Col md={1} xs={2}>{c.ingredient.name}</Col>
                                                         </Row>
                                                     </ListGroupItem>
                                                 ))}

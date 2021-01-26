@@ -33,8 +33,8 @@ const HomeScreen = () => {
 
                 {cocktailTopRatedLoading ? <Loader /> :
                     cocktailTopRatedError ? (<Message variant='danger'>{cocktailTopRatedError}</Message>) : (
-                        <Col md={5} className="mr-3">
-                            <h4><strong>Our top cocktails</strong></h4>
+                        <Col md={5} className="m-3">
+                            <h4 className="text-center" ><strong>Our top cocktails</strong></h4>
                             <Carousel >
                                 {topCocktails.map((cocktail, index) => (
                                     <Carousel.Item key={index}>
@@ -55,7 +55,7 @@ const HomeScreen = () => {
                 {ingredientTopUsedLoading ? <Loader /> :
                     ingredientTopUsedError ? (<Message variant='danger'>{ingredientTopUsedError}</Message>) : (
                         <Col md={4}>
-                            <h4><strong> Most used Ingredients</strong></h4>
+                            <h4 className="text-center"><strong> Most used Ingredients</strong></h4>
                             <ListGroup >
                                 {topIngredients.map((ing, index) => (
                                     <ListGroupItem variant='flush' key={index}>

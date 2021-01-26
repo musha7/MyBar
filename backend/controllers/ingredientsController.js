@@ -165,12 +165,19 @@ const getTopUsedIngredients = asyncHandler(async (req, res) => {
             }
         });
     });
-    //let sorted = ingredientMap.sort((a, b) => a.value - b.value)
     const sortedMap = new Map([...ingredientMap.entries()].sort((a, b) => b[1] - a[1]));
     const topIngredients = []
     const keysIterator = sortedMap.keys()
-    for (let i = 0; i < 5; i++) {
-        topIngredients.push(keysIterator.next().value)
+    let categories = []
+    while (topIngredients.length < 5) {
+        let next = keysIterator.next().value
+        if (next.category.category) {
+            if (categories.find(c => c.toString() === next.category.category.toString())) {
+                continue
+            }
+            categories.push(next.category.category)
+        }
+        topIngredients.push(next)
     }
 
     res.status(200).json({ topIngredients })
