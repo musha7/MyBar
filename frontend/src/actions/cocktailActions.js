@@ -55,7 +55,7 @@ export const addCocktail = (name, image, ingredients, steps) => async (dispatch,
         }
 
         const { data } = await axios.post('/api/cocktails', { name, image, ingredients, steps }, config)
-        console.log(data);
+
         dispatch({ type: 'COCKTAIL_ADD_TO_APP_SUCCESS', payload: data })
 
     } catch (error) {
@@ -80,7 +80,7 @@ export const deleteCocktail = (id) => async (dispatch, getState) => {
             headers: { 'Authorization': `Bearer ${userInfo.token}` },
             data: { id: id }
         }
-        console.log('deleteCocktail');
+
         const { data } = await axios.delete('/api/cocktails', config)
 
         dispatch({ type: 'COCKTAIL_DELETE_SUCCESS', payload: data })
@@ -125,7 +125,7 @@ export const updateCocktail = (id, name, image, ingredients, steps) => async (di
         }
 
         const { data } = await axios.put(`/api/cocktails/${id}`, { name, image, ingredients, steps }, config)
-        console.log(data);
+
         dispatch({ type: 'COCKTAIL_UPDATE_SUCCESS', payload: data })
 
     } catch (error) {

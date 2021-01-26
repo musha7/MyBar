@@ -87,10 +87,6 @@ const AddIngredientScreen = ({ history }) => {
                         <Form.Control type="text" placeholder="Ingredient Name" required
                             value={name} onChange={(e) => setName(e.target.value)} />
                     </Form.Group>
-                    {/* <Form.Group controlId="image">
-                <Form.Label>Ingredient Image</Form.Label>
-                    <Form.File label="Ingredient Image" custom onChange={uploadFileHandler}/>
-                </Form.Group> */}
                     <Form.Group controlId="image">
                         <Form.Label>Ingredient image url</Form.Label>
                         <Form.Control type="text" placeholder="Image url" required

@@ -100,7 +100,6 @@ const addCocktail = asyncHandler(async (req, res) => {
             throw new Error('This Cocktail Is Already In The System')
         }
         else {
-            console.log(ingredients);
             if (filterdIngredients.length === 0) {
                 res.status(400)
                 throw new Error('Add ingredients ')
@@ -127,7 +126,6 @@ const addCocktail = asyncHandler(async (req, res) => {
                             }
                         }
                     }
-                    console.log('ingredientsFromDB: ', ingredientsFromDB);
                     const ingredientsForCocktail = ingredientsFromDB.map(ingredient => {
                         if (ingredient.category.name) {
                             const category = { name: ingredient.category.name, category: ingredient.category.category }
@@ -141,7 +139,7 @@ const addCocktail = asyncHandler(async (req, res) => {
                     const newCocktail = new Cocktail({ name: name, rating: 0, numReviews: 0, image: image, ingredients: ingredientsForCocktail, steps: filterdSteps })
                     const createdCocktail = await newCocktail.save()
 
-                    //add cocktail to all its ingredients
+                    //Add cocktail to all its ingredients
                     for (const ingredient of ingredientsFromDB) {
                         if (ingredient.cocktails) {
                             ingredient.cocktails.push({ name: createdCocktail.name, image: createdCocktail.image, cocktail: createdCocktail._id })

@@ -26,7 +26,6 @@ const RegisterScreen = ({ history }) => {
     }, [dispatch, success, history])
 
     const submitHandler = (e) => {
-        //setPasswordMessage(false)
         e.preventDefault()
         if (password === confirmedPassword) {
             dispatch(register(email, name, password))

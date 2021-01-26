@@ -56,7 +56,6 @@ export const ingredientDeleteReducer = (state = {}, action) => {
 }
 
 export const ingredientTopUsedReducer = (state = { ingredients: [] }, action) => {
-    console.log('action.payload:', action.payload);
     switch (action.type) {
         case 'INGREDIENT_TOP_USED_LIST_REQUEST':
             return { loading: true, ingredients: [] }

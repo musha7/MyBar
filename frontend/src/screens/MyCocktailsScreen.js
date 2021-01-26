@@ -11,9 +11,6 @@ const MyCocktailsScreen = ({ history }) => {
     const userGetCocktails = useSelector(state => state.userGetCocktails);
     const { loading, error, cocktails, oneShort } = userGetCocktails;
 
-    // const userGetProfile = useSelector(state => state.userGetProfile);
-    // const { loading: profileLoading, error: profileErorr, userInfo } = userGetProfile;
-
     const userLogin = useSelector(state => state.userLogin);
     const { loading: loginLoading, error: loginErorr, userInfo } = userLogin;
 
@@ -22,7 +19,6 @@ const MyCocktailsScreen = ({ history }) => {
         if (!userInfo) {
             history.push('/login')
         }
-        //dispatch(getUserProfile())
         dispatch(getUserCocktails())
     }, [dispatch, history, userInfo])
 

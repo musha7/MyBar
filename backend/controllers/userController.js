@@ -46,7 +46,6 @@ const login = asyncHandler(async (req, res) => {
                 isAdmin: user.isAdmin,
                 cocktails: user.cocktails,
                 ingredients: user.ingredients,
-                //reviews: user.reviews,
                 token: generateToken(user._id)
             })
         } else {
@@ -132,7 +131,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            //cocktails: user.cocktails,
             ingredients: user.ingredients,
             reviews: user.reviews,
         })
@@ -162,8 +160,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            //isAdmin: user.isAdmin,
-            // cocktails: user.cocktails,
             ingredients: user.ingredients,
             reviews: user.reviews,
         })
@@ -351,13 +347,11 @@ const updateReview = asyncHandler(async (req, res) => {
     if (user) {
         const userReview = user.reviews.find((rev => rev._id.toString() === reviewId.toString()))
         const cocktail = await Cocktail.findById(userReview.cocktail)
-        console.log('userReview: ', userReview);
         if (cocktail) {
             userReview.rating = rating || userReview.rating
             userReview.comment = comment || userReview.comment
             await user.save();
             const cocktailReview = cocktail.reviews.find((rev => rev.user.toString() === user._id.toString()))
-            console.log('cocktailReview: ', cocktailReview);
             cocktailReview.rating = rating || cocktailReview.rating
             cocktailReview.comment = comment || cocktailReview.comment
             await cocktail.save();

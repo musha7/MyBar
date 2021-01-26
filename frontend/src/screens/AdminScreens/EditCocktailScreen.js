@@ -41,8 +41,6 @@ const EditCocktailScreen = ({ match, history }) => {
 
     useEffect(() => {
         if (secondLoad === 1) {
-            console.log('in here');
-            //setSecondLoad(2)
             setName(cocktail.name)
             setImage(cocktail.image)
             setSteps(cocktail.steps)
@@ -79,45 +77,6 @@ const EditCocktailScreen = ({ match, history }) => {
         ings.splice(indexToRemove, 1)
         setIngredients(ings)
     }
-
-    // useEffect(() => {
-    //     if (!userInfo) {
-    //         history.push('/')
-    //     }
-    //     console.log(match.params.id);
-    //     if (cocktail.ingredients.length === 0) {
-    //         console.log('cocktail:', cocktail);
-    //         dispatch(getCocktailById(match.params.id))
-    //     }
-    //     // else {
-    //     //     setName(cocktail.name)
-    //     //     setImage(cocktail.image)
-    //     //     setSteps(cocktail.steps)
-    //     //     setIngredients(cocktail.ingredients)
-    //     // }
-    //     // if (listOfIngredients.length === 0) {
-    //     //     dispatch(getIngredientsList())
-    //     // }
-    //     // if (cocktailIngredients.length === 0) {
-    //     //     dispatch(getCocktailIngredientsList())
-    //     // }
-
-
-    //     // if (success) {
-    //     //     setUpdateMessage(payload.message)
-    //     //     setCreatedCocktailName(payload.name)
-    //     //     setCreatedCocktailId(payload.id)
-    //     //     setName('')
-    //     //     setImage('')
-    //     //     setSteps([])
-    //     //     setNumOfSteps(1)
-    //     //     setIngredients([])
-    //     //     setCurrIngredient('')
-    //     //     dispatch({ type: 'COCKTAIL_ADD_TO_APP_RESET' })
-    //     //     dispatch(getCocktailsList())
-    //     // }
-    // }, [dispatch, history, match, userInfo, cocktail])
-    // //, numOfSteps, ingredients, listOfIngredients.length, cocktailIngredients.length])
 
     const handleInputStep = (e, i) => {
         const s = [...steps]
