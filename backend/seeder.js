@@ -71,7 +71,6 @@ const importData = async () => {
             if (ingredient.subCategory.name) {
                 let subCategoryObj = createdCocktailIngredients.find(sub => sub.name === ingredient.subCategory.name)
                 subCategoryObj = { name: subCategoryObj.name, subCategory: subCategoryObj._id }
-                //console.log('subCategoryObj:', subCategoryObj);
                 await Ingredient.updateOne({ _id: ingredient._id }, { subCategory: subCategoryObj })
             }
             if (ingredient.category.name) {
@@ -94,7 +93,6 @@ const importData = async () => {
                     return updatedIngredients.find(f => f.name.toLowerCase() === ing.toLowerCase())
                 }
             })
-            //cocktailIngredientsObj = cocktailIngredientsObj.filter(cocktail => cocktail !== undefined)
 
             const cocktailIngredients = cocktailIngredientsObj.map(i => {
                 if (i.category) {

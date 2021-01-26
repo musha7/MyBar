@@ -30,7 +30,6 @@ app.get('/', (req, res) => {
 })
 
 
-
 app.use('/api/users', userRoutes)
 app.use('/api/cocktails', cocktailRoutes)
 app.use('/api/ingredients', ingredientRoutes)

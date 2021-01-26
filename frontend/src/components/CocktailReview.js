@@ -102,16 +102,6 @@ const CocktailReview = ({ cocktail }) => {
                                 <Form.Control type="text" rows={3} placeholder="Write A Review" value={comment} onChange={(e) => setComment(e.target.value)} />
                             </Form.Group>
 
-                            {/* <Form.Group controlId='comment'>
-                                <Form.Label>Comment</Form.Label>
-                                <Form.Control
-                                    as='textarea'
-                                    row='3'
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
-                                ></Form.Control>
-                            </Form.Group> */}
-
                             <Button variant="primary" type="submit">
                                 Add Review
                             </Button>

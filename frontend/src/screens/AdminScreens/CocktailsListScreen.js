@@ -60,7 +60,11 @@ const CocktailsListScreen = ({ history }) => {
                             {cocktails.map((cocktail, index) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td><Image style={{ width: 70, height: 80 }} src={cocktail.image} alt={cocktail.name} fluid roundedCircle /></td>
+                                    <td>
+                                        <Link to={`/cocktails/${cocktail._id}`}>
+                                            <Image style={{ width: 70, height: 80 }} src={cocktail.image} alt={cocktail.name} fluid roundedCircle />
+                                        </Link>
+                                    </td>
                                     <td>{cocktail.name}</td>
                                     <td><Rating value={cocktail.rating} text={`${cocktail.numReviews} reviews`} /></td>
                                     <td>
