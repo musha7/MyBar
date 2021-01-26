@@ -29,12 +29,12 @@ const HomeScreen = () => {
             <h5 className='text-center'>See what cocktails you can make from them, and how to do it</h5>
             <h5 className='text-center mb-3'> Add new cocktails and ingredinets to make our bar as big as possible</h5>
 
-            <Row className="justify-content-center m-3">
+            <Row className='justify-content-center m-3'>
 
                 {cocktailTopRatedLoading ? <Loader /> :
                     cocktailTopRatedError ? (<Message variant='danger'>{cocktailTopRatedError}</Message>) : (
-                        <Col md={5} className="m-3">
-                            <h4 className="text-center" ><strong>Our top cocktails</strong></h4>
+                        <Col md={5} className='m-3'>
+                            <h4 className='text-center' ><strong>Our top cocktails</strong></h4>
                             <Carousel >
                                 {topCocktails.map((cocktail, index) => (
                                     <Carousel.Item key={index}>
@@ -55,7 +55,7 @@ const HomeScreen = () => {
                 {ingredientTopUsedLoading ? <Loader /> :
                     ingredientTopUsedError ? (<Message variant='danger'>{ingredientTopUsedError}</Message>) : (
                         <Col md={4}>
-                            <h4 className="text-center"><strong> Most used Ingredients</strong></h4>
+                            <h4 className='text-center'><strong> Most used Ingredients</strong></h4>
                             <ListGroup >
                                 {topIngredients.map((ing, index) => (
                                     <ListGroupItem variant='flush' key={index}>
