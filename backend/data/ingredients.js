@@ -2,118 +2,183 @@ const ingredients = [
     {
         name: 'Ice',
         image: '/images/ice.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Mojito', 'Margarita', 'Cuba Libre', 'Gin Tonic', 'Midori Sour', 'Whiskey Sour', 'Orgazma', 'White Russian']
     },
     {
         name: 'Mint',
         image: '/images/mint.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Mojito']
     },
     {
         name: 'Lemon',
         image: '/images/lemon.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Mojito', 'Margarita', 'Cuba Libre', 'Gin Tonic', 'Midori Sour', 'Whiskey Sour']
     },
     {
         name: 'Sprite',
         image: '/images/sprite.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: []
     },
     {
         name: 'Soda',
         image: '/images/soda.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Mojito']
     },
     {
         name: 'Sugar',
         image: '/images/sugar.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Mojito', 'Midori Sour', 'Whiskey Sour']
     },
     {
         name: 'Cola',
         image: '/images/cola.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Cuba Libre']
     },
     {
         name: 'Cranberry Juice',
         image: '/images/cranberryjuice.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: []
     },
     {
         name: 'Cream',
         image: '/images/cream.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Orgazma', 'White Russian']
     },
     {
         name: 'Salt',
         image: '/images/salt.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: []
     },
     {
         name: 'Tonic',
         image: '/images/tonic.jpg',
-        category: 'no alcohol'
+        alcoholic: false,
+        simpleCocktails: ['Gin Tonic']
+
     },
     {
         name: 'Bacardi',
         image: '/images/bacardi.jpg',
-        category: 'alcohol',
-        sub_category: 'Rum'
+        alcoholic: true,
+        subCategory: { name: 'White Rum' },
+        category: { name: 'Rum' },
+        simpleCocktails: ['Mojito', 'Cuba Libre']
+    },
+    {
+        name: 'Captain Morgan Spiced Gold',
+        image: '/images/captain-morgan-spiced-gold-rum.jpg',
+        alcoholic: true,
+        subCategory: { name: 'Spiced Rum' },
+        category: { name: 'Rum' },
+        simpleCocktails: ['Mojito', 'Cuba Libre']
     },
     {
         name: 'Jose Cuervo Silver',
         image: '/images/joseCuervoSilver.jpg',
-        category: 'alcohol',
-        sub_category: 'Tequila'
+        alcoholic: true,
+        subCategory: { name: 'Blanco Tequila' },
+        category: { name: 'Tequila' },
+        simpleCocktails: ['Margarita']
     },
     {
-        name: 'Triple sec',
-        image: '/images/tripleSec.jpg',
-        category: 'alcohol',
-        sub_category: 'Liqueur'
+        name: 'Jose Cuervo Gold',
+        image: '/images/Jose-Cuervo-Reposado.jpg',
+        alcoholic: true,
+        subCategory: { name: 'Reposado Tequila' },
+        category: { name: 'Tequila' },
+        simpleCocktails: ['Margarita']
+    },
+    {
+        name: 'The Kuyper',
+        image: '/images/theKuyper.jpg',
+        alcoholic: true,
+        subCategory: { name: 'Triple sec' },
+        simpleCocktails: ['Margarita']
     },
     {
         name: 'Baileys',
         image: '/images/baileys.jpg',
-        category: 'alcohol',
-        sub_category: 'Liqueur'
+        alcoholic: true,
+        subCategory: { name: 'Liqueur' },
+        simpleCocktails: ['Orgazma']
     },
     {
         name: 'E&J Brandy',
         image: '/images/brandy.jpg',
-        category: 'alcohol',
-        sub_category: 'Brandy'
+        alcoholic: true,
+        subCategory: { name: 'Brandy' },
+        simpleCocktails: []
+    },
+    {
+        name: 'Hennessy VSOP',
+        image: '/images/hennessy_VSOP.jpg',
+        alcoholic: true,
+        subCategory: { name: 'Cognac' },
+        simpleCocktails: []
     },
     {
         name: 'Bombay Sapphire',
         image: '/images/bombaySapphire.jpg',
-        category: 'alcohol',
-        sub_category: 'Gin'
+        alcoholic: true,
+        subCategory: { name: 'Gin' },
+        simpleCocktails: ['Gin Tonic']
     },
     {
         name: 'Jamson',
         image: '/images/jamson.jpg',
-        category: 'alcohol',
-        sub_category: 'Whiskey'
+        alcoholic: true,
+        subCategory: { name: 'Irish Whiskey' },
+        category: { name: 'Whiskey' },
+        simpleCocktails: ['Whiskey Sour']
+
+    },
+    {
+        name: 'Wild Turkey',
+        image: '/images/wild_turkey.jpg',
+        alcoholic: true,
+        subCategory: { name: 'Bourbon Whiskey' },
+        category: { name: 'Whiskey' },
+        simpleCocktails: ['Whiskey Sour']
+    },
+    {
+        name: 'Johnnie Walker Double Black',
+        image: '/images/johnnie_walker_double_black.jpg',
+        alcoholic: true,
+        subCategory: { name: 'Scotch Whiskey' },
+        category: { name: 'Whiskey' },
+        simpleCocktails: ['Whiskey Sour']
 
     },
     {
         name: 'Kahlua',
         image: '/images/kahlua.jpg',
-        category: 'alcohol',
-        sub_category: 'Liqueur'
+        alcoholic: true,
+        subCategory: { name: 'Liqueur' },
+        simpleCocktails: ['Orgazma', 'White Russian']
     },
     {
         name: 'Midori',
         image: '/images/midori.jpg',
-        category: 'alcohol',
-        sub_category: 'Liqueur'
+        alcoholic: true,
+        subCategory: { name: 'Liqueur' },
+        simpleCocktails: ['Midori Sour']
     },
     {
         name: 'Ketel One',
         image: '/images/ketelOne.jpg',
-        category: 'alcohol',
-        sub_category: 'Vodka'
+        alcoholic: true,
+        subCategory: { name: 'Vodka' },
+        simpleCocktails: ['Midori Sour', 'White Russian']
     },
 ]
 
@@ -130,8 +195,8 @@ const ingredients = [
 //         }
 //         else { // same category
 //             if (aCategory == 'alcohol') {
-//                 const aSubCategory = a.sub_category.toLowerCase();
-//                 const bSubCategory = b.sub_category.toLowerCase();
+//                 const aSubCategory = a.subCategory.toLowerCase();
+//                 const bSubCategory = b.subCategory.toLowerCase();
 //                 if (aSubCategory < bSubCategory) {
 
 //                     return 1;

@@ -67,3 +67,18 @@ export const cocktailTopRatedReducer = (state = { cocktails: [] }, action) => {
             return state;
     }
 }
+
+export const cocktailUpdateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'COCKTAIL_UPDATE_REQUEST':
+            return { loading: true, success: false }
+        case 'COCKTAIL_UPDATE_SUCCESS':
+            return { loading: false, message: action.payload, success: true }
+        case 'COCKTAIL_UPDATE_FAIL':
+            return { loading: false, error: action.payload }
+        case 'COCKTAIL_UPDATE_COMPLETED':
+            return {}
+        default:
+            return state;
+    }
+}

@@ -12,6 +12,19 @@ export const ingredientListReducer = (state = { ingredients: [] }, action) => {
     }
 }
 
+export const cocktailIngredientListReducer = (state = { cocktailIngredients: [] }, action) => {
+    switch (action.type) {
+        case 'COCKTAIL_INGREDIENT_LIST_REQUEST':
+            return { loading: true, cocktailIngredients: [] }
+        case 'COCKTAIL_INGREDIENT_LIST_SUCCESS':
+            return { loading: false, cocktailIngredients: action.payload.cocktailIngredients }
+        case 'COCKTAIL_INGREDIENT_LIST_FAIL':
+            return { loading: false, error: action.payload }
+        default:
+            return state;
+    }
+}
+
 export const ingredientAddToAppReducer = (state = {}, action) => {
     switch (action.type) {
         case 'INGREDIENT_ADD_TO_APP_REQUEST':
@@ -37,6 +50,20 @@ export const ingredientDeleteReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
         case 'INGREDIENT_DELETE_COMPLETED':
             return {}
+        default:
+            return state;
+    }
+}
+
+export const ingredientTopUsedReducer = (state = { ingredients: [] }, action) => {
+    console.log('action.payload:', action.payload);
+    switch (action.type) {
+        case 'INGREDIENT_TOP_USED_LIST_REQUEST':
+            return { loading: true, ingredients: [] }
+        case 'INGREDIENT_TOP_USED_LIST_SUCCESS':
+            return { loading: false, ingredients: action.payload.topIngredients }
+        case 'INGREDIENT_TOP_USED_LIST_FAIL':
+            return { loading: false, error: action.payload }
         default:
             return state;
     }

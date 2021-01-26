@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Table, Button, OverlayTrigger, Tooltip, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import Rating from '../../components/Rating';
@@ -34,10 +35,8 @@ const CocktailsListScreen = ({ history }) => {
     }, [dispatch, history, userInfo, cocktails.length, cocktailDeleteSuccess])
 
     const handleDeleteCocktail = (id) => {
-        console.log(id);
         dispatch(deleteCocktail(id))
     }
-    const handleEditCocktail = (id) => { }
 
     return (
         <>
@@ -70,7 +69,7 @@ const CocktailsListScreen = ({ history }) => {
                                             delay={{ show: 250, hide: 400 }}
                                             overlay={<Tooltip id="button-tooltip-2">Delete</Tooltip>}
                                         >
-                                            <Button onClick={() => handleDeleteCocktail(cocktail._id)}><i className="fas fa-trash-alt"></i></Button>
+                                            <Button className='my-3' onClick={() => handleDeleteCocktail(cocktail._id)}><i className="fas fa-trash-alt"></i></Button>
                                         </OverlayTrigger>
                                     </td>
                                     <td>
@@ -79,7 +78,7 @@ const CocktailsListScreen = ({ history }) => {
                                             delay={{ show: 250, hide: 400 }}
                                             overlay={<Tooltip id="button-tooltip-2">Edit </Tooltip>}
                                         >
-                                            <Button disabled onClick={() => handleEditCocktail(cocktail._id)}><i className="fas fa-edit"></i></Button>
+                                            <Link className='btn btn-dark my-3' to={`/admin/cocktails/${cocktail._id}`}><i className="fas fa-edit"></i></Link>
                                         </OverlayTrigger>
                                     </td>
                                 </tr>

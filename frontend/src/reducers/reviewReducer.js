@@ -28,3 +28,18 @@ export const reviewsByCocktailReducer = (state = { reviews: [] }, action) => {
             return state;
     }
 }
+
+export const reviewUpdateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'REVIEW_UPDATE_REQUEST':
+            return { loading: true, success: false }
+        case 'REVIEW_UPDATE_SUCCESS':
+            return { loading: false, message: action.payload.message, success: true }
+        case 'REVIEW_UPDATE_FAIL':
+            return { loading: false, error: action.payload }
+        case 'REVIEW_UPDATE_RESET':
+            return {}
+        default:
+            return state;
+    }
+}

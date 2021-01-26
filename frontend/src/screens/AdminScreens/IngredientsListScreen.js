@@ -66,7 +66,7 @@ const IngredientsListScreen = ({ history }) => {
                                             delay={{ show: 250, hide: 400 }}
                                             overlay={<Tooltip id="button-tooltip-2">Delete</Tooltip>}
                                         >
-                                            <Button onClick={() => handleDeleteIngredient(ingredient._id)}><i className="fas fa-trash-alt"></i></Button>
+                                            <Button className='my-3' onClick={() => handleDeleteIngredient(ingredient._id)}><i className="fas fa-trash-alt"></i></Button>
                                         </OverlayTrigger>
                                     </td>
                                     <td>
@@ -75,7 +75,7 @@ const IngredientsListScreen = ({ history }) => {
                                             delay={{ show: 250, hide: 400 }}
                                             overlay={<Tooltip id="button-tooltip-2">Edit </Tooltip>}
                                         >
-                                            <Button disabled onClick={() => handleEditIngredient(ingredient._id)}><i className="fas fa-edit"></i></Button>
+                                            <Button className='my-3' disabled onClick={() => handleEditIngredient(ingredient._id)}><i className="fas fa-edit"></i></Button>
                                         </OverlayTrigger>
                                     </td>
                                 </tr>

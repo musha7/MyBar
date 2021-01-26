@@ -36,14 +36,35 @@ const cocktailSchema = mongoose.Schema({
         ref: 'User'
       },
     }],
+  // ingredients: [
+  //   {
+  //     name: { type: String, required: true },
+  //     image: { type: String, required: true },
+  //     sub_category: { type: String },
+  //     ingredient: {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       required: true,
+  //       ref: 'Ingredient'
+  //     }
+  //   }
+  // ],
   ingredients: [
     {
       name: { type: String, required: true },
       image: { type: String, required: true },
-      sub_category: { type: String },
+      category: {
+        name: { type: String },
+        category: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'CocktailIngredientCategory'
+        },
+      },
       ingredient: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        ref: 'CocktailIngredient'
+      },
+      ingredient: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Ingredient'
       }
     }

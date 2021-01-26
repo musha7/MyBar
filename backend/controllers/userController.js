@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import User from '../models/userModel.js'
 import Ingredient from '../models/ingredientModel.js'
 import Cocktail from '../models/cocktailModel.js'
+import CocktailIngredient from '../models/cocktailIngredientModel.js'
 
 // @description Fetch all users
 // @route       GET /api/users
@@ -176,7 +177,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route       GET /api/users/ingredients
 // @access      Private
 const getUserIngredients = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id)
+    const user = await User.findById(req.user._id).sort('name')
     if (user) {
         const ingredients = user.ingredients
         res.status(200).json({ ingredients })
@@ -196,7 +197,17 @@ const addIngredientToUser = asyncHandler(async (req, res) => {
     if (user) {
         if (ingredient) {
             if (!user.ingredients.find(ing => ing.ingredient.toString() == ingredient._id.toString())) {
-                const ingredientToAdd = { name: ingredient.name, image: ingredient.image, sub_category: ingredient.sub_category, ingredient: ingredient._id }
+
+                let ingredientToAdd = {}
+                if (ingredient.subCategory) {
+                    ingredientToAdd = { name: ingredient.name, image: ingredient.image, subCategory: ingredient.subCategory, ingredient: ingredient._id }
+                    if (ingredient.category) {
+                        ingredientToAdd = { ...ingredientToAdd, category: ingredient.category }
+                    }
+                }
+                else {
+                    ingredientToAdd = { name: ingredient.name, image: ingredient.image, ingredient: ingredient._id }
+                }
                 user.ingredients.push(ingredientToAdd)
                 await user.save()
                 res.status(200).json({ message: `${ingredient.name} Was Added To Your Bar` })
@@ -248,54 +259,62 @@ const removeIngredientFromUser = asyncHandler(async (req, res) => {
 const getUserCocktails = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id)
     const userIngredients = user.ingredients
-    const allCocktails = await Cocktail.find({})
-    // const currUserCocktails = user.cocktails
-    // const cocktailsToCheck = allCocktails.filter((cocktail)=> {
-    //     if(currUserCocktails.find((c)=> cocktail._id.toString()===c.cocktail.toString())){
-    //         return false
-    //     }
-    //     return true
-    // })
-
+    const allCocktails = await Cocktail.find({}).sort('name')
     let newUsersCocktails = []
     if (user) {
         if (userIngredients) {
             // go through all available cocktails.
-            // for each go through thier ingredients,
+            // for each go through their ingredients,
             // and check if all of them are present in the user ingredients(or an ingredient from the same category)
+            const liqueur = await CocktailIngredient.find({ name: 'Liqueur' })
+            let oneIngredientShortCockltails = []
             newUsersCocktails = allCocktails.filter((cocktail) => {
                 const numOfIngs = cocktail.ingredients.length
+                let absentIngredient = undefined;
                 const presentIngredients = cocktail.ingredients.filter((ing) => {
                     if (userIngredients.find((userIng => {
                         if (userIng.ingredient.toString() === ing.ingredient.toString()) {
-                            return true
+                            return true //will be true for not alcoholic ingredients
                         }
                         else {
-                            if (ing.sub_category && ing.sub_category !== 'Liquer' && ing.sub_category === userIng.sub_category) {
-                                //same alcohol category but a different kind of brand
-                                return true;
+                            if (userIng.subCategory.subCategory && userIng.subCategory !== liqueur._id) { //same sub category
+                                if (userIng.subCategory.subCategory.toString() === ing.ingredient.toString()) {
+                                    return true
+                                }
+                            }
+                            if (userIng.category.category && ing.category.category) { //same category
+                                if (userIng.category.category.toString() === ing.category.category.toString()) {
+                                    return true
+                                }
                             }
                         }
                         return false
                     }))) {
                         return true
                     }
+                    absentIngredient = ing
                     return false
                 })
                 if (numOfIngs === presentIngredients.length) {
                     return true
                 }
-                return false
+                else {
+                    if (numOfIngs - 1 === presentIngredients.length && absentIngredient !== undefined) {
+                        oneIngredientShortCockltails.push({ cocktail, ingredient: absentIngredient })
+                    }
+                    return false
+                }
+
             })
             if (newUsersCocktails) {
                 user.cocktails = newUsersCocktails.map(newCocktail => { return { name: newCocktail.name, image: newCocktail.image, cocktail: newCocktail._id } })
                 await user.save()
             }
-            if (user.cocktails.length === 0) {
+            if (user.cocktails.length === 0 && oneIngredientShortCockltails.length === 0) {
                 res.status(400)
                 throw new Error('Sorry, You Do Not Have Enough Ingredients For Any Of Our Current Cocktails')
             }
-            res.status(200).json({ cocktails: user.cocktails })
+            res.status(200).json({ cocktails: user.cocktails, oneShort: oneIngredientShortCockltails })
         } else {
             res.status(400)
             throw new Error('No Ingredients In Your Bar')

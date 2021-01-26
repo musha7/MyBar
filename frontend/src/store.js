@@ -1,14 +1,17 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { cocktailListReducer, cocktailByIdReducer, cocktailAddToAppReducer, cocktailDeleteReducer, cocktailTopRatedReducer } from './reducers/cocktailReducer'
-import { ingredientListReducer, ingredientAddToAppReducer, ingredientDeleteReducer } from './reducers/ingredientReducer'
+import {
+    cocktailListReducer, cocktailByIdReducer, cocktailAddToAppReducer, cocktailDeleteReducer,
+    cocktailTopRatedReducer, cocktailUpdateReducer
+} from './reducers/cocktailReducer'
+import { ingredientListReducer, ingredientAddToAppReducer, ingredientDeleteReducer, cocktailIngredientListReducer, ingredientTopUsedReducer } from './reducers/ingredientReducer'
 import {
     userRegisterReducer, userLoginReducer, userGetProfileReducer, userUpdateProfileReducer,
     userIngredientChangeReducer, userGetIngredientsReducer, userGetCocktailsReducer, usersListReducer,
     userDeleteReducer
 } from './reducers/userReducer'
-import { reviewAddReducer, reviewsByCocktailReducer } from './reducers/reviewReducer'
+import { reviewAddReducer, reviewsByCocktailReducer, reviewUpdateReducer } from './reducers/reviewReducer'
 
 const reducer = combineReducers({
     cocktailList: cocktailListReducer,
@@ -16,9 +19,12 @@ const reducer = combineReducers({
     cocktailAddToApp: cocktailAddToAppReducer,
     cocktailDelete: cocktailDeleteReducer,
     cocktailTopRated: cocktailTopRatedReducer,
+    cocktailUpdate: cocktailUpdateReducer,
     ingredientList: ingredientListReducer,
     ingredientAddToApp: ingredientAddToAppReducer,
     ingredientDelete: ingredientDeleteReducer,
+    cocktailIngredientList: cocktailIngredientListReducer,
+    ingredientTopUsed: ingredientTopUsedReducer,
     userIngredientChange: userIngredientChangeReducer,
     userRegister: userRegisterReducer,
     userLogin: userLoginReducer,
@@ -29,7 +35,8 @@ const reducer = combineReducers({
     usersList: usersListReducer,
     userDelete: userDeleteReducer,
     reviewAdd: reviewAddReducer,
-    reviewsByCocktail: reviewsByCocktailReducer
+    reviewsByCocktail: reviewsByCocktailReducer,
+    reviewUpdate: reviewUpdateReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

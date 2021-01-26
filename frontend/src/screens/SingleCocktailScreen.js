@@ -44,13 +44,13 @@ function SingleCocktailScreen({ match, history }) {
                         <>
                             <h1> {cocktail.name} </h1>
                             <Row className='p-3'>
-                                <Col md={4} className='m-2'>
+                                <Col md={4} xs={6} className='m-2'>
                                     <ListGroup >
                                         <ListGroupItem><Image src={cocktail.image} alt={cocktail.name} fluid rounded /></ListGroupItem>
                                         <ListGroupItem><Rating value={cocktail.rating} text={`${cocktail.numReviews} review${cocktail.numReviews > 1 ? 's' : ''}`} /></ListGroupItem>
                                     </ListGroup>
                                 </Col>
-                                <Col md={3}>
+                                <Col md={3} xs={5}>
                                     <h3> Ingredients</h3>
                                     <ListGroup >
                                         {cocktail.ingredients.map((ing, index) => (
@@ -64,7 +64,7 @@ function SingleCocktailScreen({ match, history }) {
                                         ))}
                                     </ListGroup>
                                 </Col>
-                                <Col md={4} >
+                                <Col md={4} xs={6}>
                                     <h3>Steps</h3>
                                     <ListGroup >
                                         {cocktail.steps.map((s, index) => (
@@ -85,7 +85,6 @@ function SingleCocktailScreen({ match, history }) {
                                                 <Row key={review._id} className='p-3 m-3'>
                                                     <Col md={2}>
                                                         <h5>{review.user_name}:</h5>
-                                                        {/* {moment(review.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD HH:mm:ss')} */}
                                                     </Col>
                                                     <Col md={4}>
                                                         <ListGroup variant="flush">

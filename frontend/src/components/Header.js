@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { getUserProfile, logout, getUserIngredients } from '../actions/userActions';
 
 
-const Header = ({ history }) => {
+const Header = () => {
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;

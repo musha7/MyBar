@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 export const addReview = (id, review) => async (dispatch, getState) => {
     try {
         dispatch({ type: 'REVIEW_ADD_REQUEST' });
@@ -43,6 +42,29 @@ export const getReviewsForCocktail = (id) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: 'REVIEWS_BY_COCKTAIL_FAIL',
+            payload: error.response && error.response.data.message ?
+                error.response.data.message :
+                error.message
+        })
+    }
+}
+
+export const updateReview = (reviewId, rating, comment) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: 'REVIEW_UPDATE_REQUEST' });
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: { 'Authorization': `Bearer ${userInfo.token}` }
+        }
+        const { data } = await axios.put(`/api/users/reviews`, { reviewId, rating, comment }, config)
+
+        dispatch({ type: 'REVIEW_UPDATE_SUCCESS', payload: data })
+
+    } catch (error) {
+        dispatch({
+            type: 'REVIEW_UPDATE_FAIL',
             payload: error.response && error.response.data.message ?
                 error.response.data.message :
                 error.message

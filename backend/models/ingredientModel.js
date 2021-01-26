@@ -14,17 +14,30 @@ const ingredientSchema = mongoose.Schema({
         type: String,
         default: ''
     },
-    category: {
-        type: String,
+    alcoholic: {
+        type: Boolean,
         required: true
     },
-    sub_category: { type: String },
+
+    category: {
+        name: { type: String },
+        category: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'CocktailIngredientCategory'
+        },
+    },
+    subCategory: {
+        name: { type: String },
+        subCategory: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'CocktailIngredient'
+        },
+    },
     cocktails: [{
         name: { type: String, required: true },
-        image: { type: String, required: true },
+        image: { type: String },
         cocktail: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
             ref: 'Cocktail'
         }
     }],

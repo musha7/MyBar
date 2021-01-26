@@ -4,7 +4,8 @@ const cocktails = [
         image: '/images/mojito.jpg',
         rating: 4.5,
         numReviews: 4,
-        simpleIngredients: ['Bacardi', 'Mint', 'Sugar', 'Lemon', 'Soda', 'Ice'],
+        //simpleIngredients: ['Bacardi', 'Mint', 'Sugar', 'Lemon', 'Soda', 'Ice'],
+        simpleIngredients: ['White Rum', 'Mint', 'Sugar', 'Lemon', 'Soda', 'Ice'],
         steps: [
             'Put some mint, and a spoon of sugar into a highball glass',
             'Add 30ml of lemon juice and muddle the mint',
@@ -18,7 +19,8 @@ const cocktails = [
         image: '/images/margarita.jpg',
         rating: 4.1,
         numReviews: 3,
-        simpleIngredients: ['Jose Cuervo Silver', 'Triple sec', 'Lemon', 'ice'],
+        //simpleIngredients: ['Jose Cuervo Silver', 'Triple sec', 'Lemon', 'ice'],
+        simpleIngredients: ['Blanco Tequila', 'Triple sec', 'Lemon', 'ice'],
         steps: [
             'Rim the glass with salt',
             'Fill a Shaker with ice',
@@ -32,7 +34,8 @@ const cocktails = [
         image: '/images/cubalibre.jpg',
         rating: 4.0,
         numReviews: 2,
-        simpleIngredients: ['Bacardi', 'Cola', 'Lemon', 'ice'],
+        //simpleIngredients: ['Bacardi', 'Cola', 'Lemon', 'ice'],
+        simpleIngredients: ['White Rum', 'Cola', 'Lemon', 'ice'],
         steps: [
             'Fill a Highball with ice',
             'Pour 60 ml Rum, 100 ml Cola, 30 ml lemon juice',
@@ -45,7 +48,8 @@ const cocktails = [
         image: '/images/gintonic.jpg',
         rating: 4.5,
         numReviews: 4,
-        simpleIngredients: ['Bombay Sapphire', 'Tonic', 'Lemon', 'ice'],
+        //simpleIngredients: ['Bombay Sapphire', 'Tonic', 'Lemon', 'ice'],
+        simpleIngredients: ['Gin', 'Tonic', 'Lemon', 'ice'],
         steps: [
             'Fill a Highball with ice',
             'Pour 60 ml Gin, 100 ml Tonic',
@@ -59,7 +63,8 @@ const cocktails = [
         image: '/images/midorisour.jpg',
         rating: 4.3,
         numReviews: 1,
-        simpleIngredients: ['Ketel One', 'Midori', 'Lemon', 'Sugar', 'Ice'],
+        //simpleIngredients: ['Ketel One', 'Midori', 'Lemon', 'Sugar', 'Ice'],
+        simpleIngredients: ['Vodka', 'Midori', 'Lemon', 'Sugar', 'Ice'],
         steps: [
             'Fill a Shaker with ice',
             'Pour  50 ml Vodka, 20 ml Midori, 20 ml lemon juice, 10 ml sugar water',
@@ -72,7 +77,8 @@ const cocktails = [
         image: '/images/whiskeysour.jpg',
         rating: 4.4,
         numReviews: 4,
-        simpleIngredients: ['Jamson', 'Lemon', 'Sugar', 'Ice'],
+        //simpleIngredients: ['Jamson', 'Lemon', 'Sugar', 'Ice'],
+        simpleIngredients: ['Bourbon Whiskey', 'Lemon', 'Sugar', 'Ice'],
         steps: [
             'Fill a Shaker with ice',
             'Pour  60 ml Whiskey, 20 ml lemon juice, 20 ml sugar water',
@@ -99,15 +105,14 @@ const cocktails = [
         image: '/images/whiterussian.jpg',
         rating: 3.9,
         numReviews: 2,
-        simpleIngredients: ['Ketel One', 'Kahlua', 'Cream', 'Ice'],
+        //simpleIngredients: ['Ketel One', 'Kahlua', 'Cream', 'Ice'],
+        simpleIngredients: ['Vodka', 'Kahlua', 'Cream', 'Ice'],
         steps: [
             'Fill a Lowball with ice',
             'Pour 40 ml Vodka, 30 ml Kahlua, 30 ml Cream',
             'Stir gently',
         ]
     },
-
-
 ]
 
 export default cocktails

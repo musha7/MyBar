@@ -23,7 +23,7 @@ const CocktailsScreen = () => {
             {error ? (<Message variant='danger'>{error}</Message>) : (
                 <Row>
                     {cocktails.map((c, index) => (
-                        <Col key={index} sm={12} md={6} lg={4} xl={3}>
+                        <Col key={index} xs={10} md={6} lg={4} xl={3}>
                             <Cocktail cocktail={c} ings={false} />
                         </Col>
                     ))}

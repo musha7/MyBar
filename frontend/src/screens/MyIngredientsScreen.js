@@ -58,11 +58,11 @@ const MyIngredientsScreen = ({ history }) => {
                                     {ingredients.map((ingredient) => (
                                         <ListGroupItem key={ingredient._id}>
                                             <Row>
-                                                <Col md={3} >
+                                                <Col md={3} xs={4}>
                                                     <Image src={`${ingredient.image}`} alt={ingredient.name} fluid roundedCircle />
                                                 </Col>
-                                                <Col md={3} className='m-3 p-3'><h2><strong>{ingredient.name}</strong></h2></Col>
-                                                <Col md={3}>
+                                                <Col md={3} xs={4} className='m-3 p-3'><h2><strong>{ingredient.name}</strong></h2></Col>
+                                                <Col md={3} xs={4}>
                                                     <Button className='m-3 p-3' size='sm' variant='danger' onClick={(e) => { deleteHandle(e, ingredient) }}>Delete From My Bar</Button>
                                                 </Col>
                                             </Row>
