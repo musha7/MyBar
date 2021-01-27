@@ -110,7 +110,7 @@ const AddCocktailScreen = ({ history }) => {
                     {createdCocktailName} page and rate it!</Message>
             }
             <h1 className='text-center p-3'>Add a new Cocktail to our bar</h1>
-            <FormContainer smd={9} sxs={15}>
+            <FormContainer md={9} xs={15}>
                 {loading && <Loader />}
                 {error && (<Message variant='danger'>{error}</Message>)}
                 {addMessage && (<Message variant='light'>{addMessage}</Message>)}
@@ -130,7 +130,7 @@ const AddCocktailScreen = ({ history }) => {
                             cocktailIngredientError ? <Message variant="danger">{cocktailIngredientError}</Message> : (
                                 <>
                                     <Form.Row>
-                                        <Col>
+                                        <Col xs={9}>
                                             <Form.Group controlId="alcoholIngredient">
                                                 <Form.Label><strong>Alcoholic Ingredients</strong></Form.Label>
                                                 <Form.Control
@@ -154,7 +154,7 @@ const AddCocktailScreen = ({ history }) => {
                                                 </Form.Control>
                                             </Form.Group>
                                         </Col>
-                                        <Col className="mt-3">
+                                        <Col xs={2} className="mt-3">
                                             <Button className="mt-3" variant="info" type="button" onClick={() => addIngredient()}>
                                                 <i className="fas fa-plus-circle"></i>
                                             </Button>
@@ -162,7 +162,7 @@ const AddCocktailScreen = ({ history }) => {
                                     </Form.Row>
 
                                     <Form.Row>
-                                        <Col>
+                                        <Col xs={9}>
                                             <Form.Group controlId="alcoholIngredient">
                                                 <Form.Label><strong>Not Alcoholic Ingredients</strong></Form.Label>
                                                 <Form.Control
@@ -178,7 +178,7 @@ const AddCocktailScreen = ({ history }) => {
                                                 </Form.Control>
                                             </Form.Group>
                                         </Col>
-                                        <Col className="mt-3">
+                                        <Col xs={2} className="mt-3">
                                             <Button className="mt-3" variant="info" type="button" onClick={() => addIngredient()}>
                                                 <i className="fas fa-plus-circle"></i>
                                             </Button>
@@ -210,7 +210,7 @@ const AddCocktailScreen = ({ history }) => {
                     <Form.Label><strong>Steps for making the Cocktail</strong></Form.Label>
                     {[...Array(numOfSteps)].map((x, i) => (
                         <Form.Row key={i}>
-                            <Col xs={1}>{i + 1}.</Col>
+                            <Col className='mt-2' xs={1}>{i + 1}.</Col>
                             <Col >
                                 <Form.Group controlId="steps">
                                     <Form.Control type="text" placeholder="Cocktail Steps" required
@@ -220,14 +220,14 @@ const AddCocktailScreen = ({ history }) => {
                         </Form.Row>
                     ))}
                     <Form.Row >
-                        {<Col xs={10}></Col>}
+                        {<Col xs={9}></Col>}
                         <Col xs={1} >
                             <Button variant="info" type="button" onClick={() => setNumOfSteps(numOfSteps + 1)}>
                                 <i className="fas fa-plus-circle"></i>
                             </Button>
                         </Col>
                         <Col xs={1}>
-                            <Button variant="danger" type="button" onClick={() => setNumOfSteps(numOfSteps - 1)}>
+                            <Button className='ml-3' variant="danger" type="button" onClick={() => setNumOfSteps(numOfSteps - 1)}>
                                 <i className="fas fa-minus-circle"></i>
                             </Button>
                         </Col>

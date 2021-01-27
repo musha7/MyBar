@@ -56,7 +56,7 @@ const IngredientsScreen = ({ history }) => {
             <>
                 <Row>
                     {ings.map((ingredient, index) => (
-                        <Col key={index} xs={10} md={6} lg={4} xl={3} >
+                        <Col key={index} xs={12} md={6} lg={4} xl={3} >
                             <Card className='my-3 p-3'>
                                 <Card.Img variant='top' src={ingredient.image} alt={ingredient.name} />
                                 <Card.Body>
