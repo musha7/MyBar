@@ -28,16 +28,16 @@ export const userRegisterReducer = (state = {}, action) => {
     }
 }
 
-export const userGetProfileReducer = (state = { userInfo: { cocktails: [], ingredients: [], reviews: [] } }, action) => {
+export const userGetProfileReducer = (state = { userInfo: { ingredients: [], reviews: [] } }, action) => {
     switch (action.type) {
         case 'USER_GET_PROFILE_REQUEST':
-            return { loading: true, userInfo: { cocktails: [], ingredients: [], reviews: [] } }
+            return { loading: true, userInfo: { ingredients: [], reviews: [] } }
         case 'USER_GET_PROFILE_SUCCESS':
             return { loading: false, userInfo: action.payload }
         case 'USER_GET_PROFILE_FAIL':
             return { loading: false, error: action.payload }
         case 'USER_GET_PROFILE_LOGOUT':
-            return { cocktails: [], ingredients: [], reviews: [] }
+            return { ingredients: [], reviews: [] }
         default:
             return state;
     }

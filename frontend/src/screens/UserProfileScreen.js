@@ -36,7 +36,7 @@ const UserProfileScreen = ({ history }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (!userInfo) {
+        if (userInfo.name === undefined && (!loading)) {
             dispatch(getUserProfile())
         }
         else {
@@ -54,7 +54,7 @@ const UserProfileScreen = ({ history }) => {
             dispatch({ type: 'REVIEW_UPDATE_RESET' })
             dispatch(getUserProfile())
         }
-    }, [dispatch, success, history, userInfo, reviewUpdateSuccess])
+    }, [dispatch, success, history, userInfo, reviewUpdateSuccess, loading])
 
     const submitHandler = (e) => {
         setUpdateMessage(false)
@@ -141,7 +141,9 @@ const UserProfileScreen = ({ history }) => {
                                     <Col className='mt-3'>
                                         <Button onClick={() => { setUpdateRevMessage(''); setReviewToUpdate(review._id) }}>Change Review</Button>
                                     </Col>
-                                    {reviewToUpdate === review._id && (
+                                </Row>
+                                {reviewToUpdate === review._id && (
+                                    <Row>
                                         <Form onSubmit={(e) => submitReviewHandler(e, review._id)}>
                                             {reviewUpdateError && <Message variant='danger'>{reviewUpdateError}</Message>}
                                             {updateRevMessage && <Message variant='light'>{updateRevMessage}</Message>}
@@ -196,9 +198,8 @@ const UserProfileScreen = ({ history }) => {
                                                 Update Review
                                     </Button>
                                         </Form>
-                                    )}
-
-                                </Row>
+                                    </Row>
+                                )}
                                 <hr className='m-3' />
                             </>
                         ))}
