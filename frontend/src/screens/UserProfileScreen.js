@@ -121,32 +121,34 @@ const UserProfileScreen = ({ history }) => {
 
             {!reviews ? <Loader /> : (
                 reviews.length === 0 ? '' : (
-                    <>
+                    <Col>
                         <hr className='m-3 p-3' />
                         <h3 className='m-3 p-3'> {userInfo.name.split(' ')[0]}'s Reviews</h3>
                         {reviews.map((review) => (
                             <>
                                 <Row key={review._id} className='m-3'>
-                                    <Col md={2} xs={4}><Image src={review.cocktail_image} alt={review.cocktail_name} fluid roundedCircle /></Col>
-                                    <Col md={2} xs={4}>
+                                    <Col md={3} xs={5}><Image src={review.cocktail_image} alt={review.cocktail_name} fluid roundedCircle /></Col>
+                                    <Col md={2} xs={3} className='mt-3 ' >
                                         <Row><Link to={`/cocktails/${review.cocktail}`}><strong>{review.cocktail_name}</strong></Link></Row>
                                         <Row>{moment(review.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD HH:mm:ss')}</Row>
                                     </Col>
-                                    <Col md={3} xs={5}>
+                                    <Col md={4} xs={8}>
                                         <ListGroup variant="flush">
                                             <ListGroupItem><Rating value={review.rating} /></ListGroupItem>
                                             <ListGroupItem>{review.comment}</ListGroupItem>
                                         </ListGroup>
                                     </Col>
-                                    <Col className='mt-3'>
+                                    <Col xs={3} className='mt-3'>
                                         <Button onClick={() => { setUpdateRevMessage(''); setReviewToUpdate(review._id) }}>Change Review</Button>
                                     </Col>
                                 </Row>
                                 {reviewToUpdate === review._id && (
-                                    <Row>
+                                    <Row className='m-3'>
+
                                         <Form onSubmit={(e) => submitReviewHandler(e, review._id)}>
                                             {reviewUpdateError && <Message variant='danger'>{reviewUpdateError}</Message>}
                                             {updateRevMessage && <Message variant='light'>{updateRevMessage}</Message>}
+
                                             <Form.Group controlId='rating'>
                                                 <Form.Label > <strong>Rating</strong> </Form.Label>
                                                 <Form.Check
@@ -190,20 +192,21 @@ const UserProfileScreen = ({ history }) => {
                                                     checked={rating && rating === 5}
                                                 />
                                             </Form.Group>
+
                                             <Form.Group >
                                                 <Form.Label><strong>Write A Review</strong></Form.Label>
                                                 <Form.Control type="text" rows={3} placeholder="Write A Review" value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </Form.Group>
                                             <Button variant="info" type="submit">
                                                 Update Review
-                                    </Button>
+                                            </Button>
                                         </Form>
                                     </Row>
                                 )}
                                 <hr className='m-3' />
                             </>
                         ))}
-                    </>
+                    </Col>
                 ))}
         </>
     )

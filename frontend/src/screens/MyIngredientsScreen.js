@@ -54,21 +54,23 @@ const MyIngredientsScreen = ({ history }) => {
                         ) :
                             <>
                                 <h1 className='text-center'>{`${userInfo.name}`}'s Ingredients</h1>
-                                <ListGroup variant='flush'>
-                                    {ingredients.map((ingredient) => (
-                                        <ListGroupItem key={ingredient._id}>
-                                            <Row>
-                                                <Col md={3} xs={5}>
-                                                    <Image src={`${ingredient.image}`} alt={ingredient.name} fluid roundedCircle />
-                                                </Col>
-                                                <Col md={3} xs={3} className='m-3 p-3'><h3 className='text-center'><strong>{ingredient.name}</strong></h3></Col>
-                                                <Col md={3} xs={3}>
-                                                    <Button className='m-3 p-3' size='sm' variant='danger' onClick={(e) => { deleteHandle(e, ingredient) }}>Delete From My Bar</Button>
-                                                </Col>
-                                            </Row>
-                                        </ListGroupItem>
-                                    ))}
-                                </ListGroup>
+                                <Col>
+                                    <ListGroup variant='flush'>
+                                        {ingredients.map((ingredient) => (
+                                            <ListGroupItem key={ingredient._id}>
+                                                <Row >
+                                                    <Col>
+                                                        <Image src={`${ingredient.image}`} alt={ingredient.name} fluid />
+                                                    </Col>
+                                                    <Col ><h3 className='text-center  mr-3'><strong>{ingredient.name}</strong></h3></Col>
+                                                    <Col >
+                                                        <Button variant='danger' onClick={(e) => { deleteHandle(e, ingredient) }}>Delete From My Bar</Button>
+                                                    </Col>
+                                                </Row>
+                                            </ListGroupItem>
+                                        ))}
+                                    </ListGroup>
+                                </Col>
                             </>
                     )
                 )

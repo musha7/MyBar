@@ -44,27 +44,27 @@ function SingleCocktailScreen({ match, history }) {
                         <>
                             <h1> {cocktail.name} </h1>
                             <Row className='p-3'>
-                                <Col md={4} xs={6} className='m-2'>
+                                <Col md={4} xs={12} className='m-2'>
                                     <ListGroup >
                                         <ListGroupItem><Image src={cocktail.image} alt={cocktail.name} fluid rounded /></ListGroupItem>
                                         <ListGroupItem><Rating value={cocktail.rating} text={`${cocktail.numReviews} review${cocktail.numReviews > 1 ? 's' : ''}`} /></ListGroupItem>
                                     </ListGroup>
                                 </Col>
-                                <Col md={3} xs={5}>
+                                <Col md={3} xs={12}>
                                     <h3> Ingredients</h3>
                                     <ListGroup >
                                         {cocktail.ingredients.map((ing, index) => (
                                             <ListGroupItem key={ing.ingredient} >
                                                 <Row >
-                                                    <Col>{index + 1}. {ing.name}</Col>
-                                                    <Col><Image style={{ height: '50px' }} src={ing.image} alt={ing.name} fluid /></Col>
+                                                    <Col className='mt-3'>{index + 1}. {ing.name}</Col>
+                                                    <Col><Image style={{ height: '60px' }} src={ing.image} alt={ing.name} fluid /></Col>
                                                 </Row>
 
                                             </ListGroupItem>
                                         ))}
                                     </ListGroup>
                                 </Col>
-                                <Col md={4} xs={6}>
+                                <Col md={4} xs={12}>
                                     <h3>Steps</h3>
                                     <ListGroup >
                                         {cocktail.steps.map((s, index) => (
