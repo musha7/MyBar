@@ -28,8 +28,6 @@ app.use('/api/users', userRoutes)
 app.use('/api/cocktails', cocktailRoutes)
 app.use('/api/ingredients', ingredientRoutes)
 
-app.use(notFound)
-app.use(errorHandle)
 
 const __dirname = path.resolve()
 
@@ -43,6 +41,9 @@ else {
         res.send('API is running')
     })
 }
+
+app.use(notFound)
+app.use(errorHandle)
 
 
 const PORT = process.env.PORT || 5000
