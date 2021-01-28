@@ -60,10 +60,10 @@ const MyCocktailsScreen = ({ history }) => {
                                                             <Col md={2} xs={3}>
                                                                 <Image src={`${c.cocktail.image}`} alt={c.cocktail.name} fluid roundedCircle />
                                                             </Col>
-                                                            <Col md={3} xs={3} style={{ 'font-size': '1.4em', 'font-weight': 'bold' }} className='text-left'><Link to={`/cocktails/${c.cocktail._id}`}><strong>{c.cocktail.name}</strong></Link></Col>
-                                                            <Col md={2} xs={2} style={{ 'font-size': '1em' }} className='mr-2 text-left'>Missing Ingredient: </Col>
-                                                            <Col md={1} xs={2}><Image style={{ height: '55px' }} src={`${c.ingredient.image}`} alt={c.ingredient.name} fluid roundedCircle /> </Col>
-                                                            <Col md={1} xs={1} className='mr-3 text-left'>{c.ingredient.name}</Col>
+                                                            <Col md={3} xs={6} style={{ 'font-size': '1.4em', 'font-weight': 'bold' }} className='text-center my-3'><Link to={`/cocktails/${c.cocktail._id}`}><strong>{c.cocktail.name}</strong></Link></Col>
+                                                            <Col md={2} xs={3} style={{ 'font-size': '1em' }} className='mr-2  my-3 text-left'>Missing Ingredient: </Col>
+                                                            <Col md={1} xs={3} className='my-3'><Image style={{ height: '55px' }} src={`${c.ingredient.image}`} alt={c.ingredient.name} fluid roundedCircle /> </Col>
+                                                            <Col md={1} xs={3} className='mr-3 my-3 text-left'>{c.ingredient.name}</Col>
                                                         </Row>
                                                     </ListGroupItem>
                                                 ))}
