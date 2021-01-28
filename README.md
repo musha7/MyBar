@@ -3,6 +3,8 @@ Bar application by Michael Shlezinger
 
 Built with the MERN stack - Node.js, Express, Mongoose, React & Redux.
 
+Website : https://michaelmybar.herokuapp.com/
+
 A bar application where you can create your own bar with the ingredients you have at home. The app will give you the cocktails you can create with what you have.
 You can add new ingredients and cocktails to the app, that way everyone will see them. You can also review cocktails, and later on change your reviews in your profile if you changed your opinion about the cocktail
 
