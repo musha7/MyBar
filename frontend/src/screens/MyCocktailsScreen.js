@@ -50,7 +50,7 @@ const MyCocktailsScreen = ({ history }) => {
                                     <hr className='m-3' />
 
                                     {oneShort.length > 0 && (
-                                        <Col>
+                                        <Col xs={14}>
                                             <h4 className='text-center'>Cocktails you need one more ingredient to make</h4>
                                             <h5 className='text-center'>Better go get it fast...</h5>
                                             <ListGroup variant='flush'>
@@ -60,8 +60,8 @@ const MyCocktailsScreen = ({ history }) => {
                                                             <Col md={2} xs={3}>
                                                                 <Image src={`${c.cocktail.image}`} alt={c.cocktail.name} fluid roundedCircle />
                                                             </Col>
-                                                            <Col md={3} xs={3}><h4 className='text-center'><Link to={`/cocktails/${c.cocktail._id}`}><strong>{c.cocktail.name}</strong></Link></h4></Col>
-                                                            <Col md={2} xs={2} className='mr-3 text-left'>Missing Ingredient: </Col>
+                                                            <Col md={3} xs={3} style={{ 'font-size': '1.4em', 'font-weight': 'bold' }} className='text-left'><Link to={`/cocktails/${c.cocktail._id}`}><strong>{c.cocktail.name}</strong></Link></Col>
+                                                            <Col md={2} xs={2} style={{ 'font-size': '1em' }} className='mr-2 text-left'>Missing Ingredient: </Col>
                                                             <Col md={1} xs={2}><Image style={{ height: '55px' }} src={`${c.ingredient.image}`} alt={c.ingredient.name} fluid roundedCircle /> </Col>
                                                             <Col md={1} xs={1} className='mr-3 text-left'>{c.ingredient.name}</Col>
                                                         </Row>

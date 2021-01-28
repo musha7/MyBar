@@ -54,7 +54,7 @@ const MyIngredientsScreen = ({ history }) => {
                         ) :
                             <>
                                 <h1 className='text-center'>{`${userInfo.name}`}'s Ingredients</h1>
-                                <Col>
+                                <Col md={10} xs={12}>
                                     <ListGroup variant='flush'>
                                         {ingredients.map((ingredient) => (
                                             <ListGroupItem key={ingredient._id}>
@@ -62,7 +62,7 @@ const MyIngredientsScreen = ({ history }) => {
                                                     <Col>
                                                         <Image src={`${ingredient.image}`} alt={ingredient.name} fluid />
                                                     </Col>
-                                                    <Col ><h3 className='text-center  mr-3'><strong>{ingredient.name}</strong></h3></Col>
+                                                    <Col style={{ 'font-size': '1.5em', 'font-weight': 'bold' }} className='text-center  mr-3' ><strong>{ingredient.name}</strong></Col>
                                                     <Col >
                                                         <Button variant='danger' onClick={(e) => { deleteHandle(e, ingredient) }}>Delete From My Bar</Button>
                                                     </Col>
