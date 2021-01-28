@@ -62,8 +62,8 @@ const MyIngredientsScreen = ({ history }) => {
                                                     <Col xs={4}>
                                                         <Image src={`${ingredient.image}`} alt={ingredient.name} fluid />
                                                     </Col>
-                                                    <Col style={{ 'font-size': '1.5em', 'font-weight': 'bold' }} className='text-center' ><strong>{ingredient.name}</strong></Col>
-                                                    <Col >
+                                                    <Col xs={3} style={{ 'font-size': '1.5em', 'font-weight': 'bold' }} className='text-center' ><strong>{ingredient.name}</strong></Col>
+                                                    <Col xs={4}>
                                                         <Button variant='danger' onClick={(e) => { deleteHandle(e, ingredient) }}>Delete From My Bar</Button>
                                                     </Col>
                                                 </Row>
